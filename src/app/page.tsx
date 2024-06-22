@@ -9,23 +9,36 @@ export default function Home() {
         <p>
           Alice is officially learning Next.js. <i>Sigh.</i>
         </p>
-        <ReusableComponent />
-        <div className={styles.grid}>
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-        </div>
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
+        <Grid />
       </div>
     </main>
   );
 }
 
-function ReusableComponent() {
-  return <p>This is a reusable component.</p>;
-}
+const Grid = () => {
+  return (
+    <div className={styles.grid}>
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+      <Square />
+    </div>
+  );
+};

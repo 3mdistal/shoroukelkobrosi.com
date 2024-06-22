@@ -13,6 +13,19 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-bottom: 10px;
+
+  &:nth-child(2n) {
+    & > :nth-child(2n) {
+      background-color: #444;
+    }
+  }
+
+  &:nth-child(2n + 1) {
+    & > :nth-child(2n + 1) {
+      background-color: #444;
+    }
+  }
 }
 
 .main {
