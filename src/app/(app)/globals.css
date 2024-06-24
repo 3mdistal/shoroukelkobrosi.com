@@ -1,24 +1,23 @@
 @import "tailwindcss";
 
-:theme {
+@theme {
   /* Tailwind */
 }
 
-* {
-  @apply m-0 p-0 box-border;
-}
-
-body {
-  @apply bg-[#222] text-[#ddd];
-}
-
-h1 {
-  @apply font-thin text-5xl tracking-wide mb-4;
-}
-
-p {
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+  
+  body {
+    @apply bg-[#222] text-[#ddd];
+  }
+  
+  h1 {
+    @apply font-thin text-5xl tracking-wide mb-4;
+  }
+  
+  p {
+    @apply text-lg font-light leading-7 mb-4;
+  }
 }
