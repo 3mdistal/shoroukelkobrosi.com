@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import { Square } from "./square";
 
 export default function Home() {
+  const grids: null[] = Array.from({ length: 3 });
   return (
     <main className={styles.main}>
       <div>
@@ -9,36 +10,21 @@ export default function Home() {
         <p>
           Alice is officially learning Next.js. <i>Sigh.</i>
         </p>
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
-        <Grid />
+        {grids.map((_, i) => (
+          <Grid key={i} />
+        ))}
       </div>
     </main>
   );
 }
 
-const Grid = () => {
+function Grid() {
+  const squares: null[] = Array.from({ length: 9 });
   return (
     <div className={styles.grid}>
-      <Square />
-      <Square />
-      <Square />
-      <Square />
-      <Square />
-      <Square />
-      <Square />
-      <Square />
-      <Square />
+      {squares.map((_, i) => (
+        <Square key={i} />
+      ))}
     </div>
   );
-};
+}
