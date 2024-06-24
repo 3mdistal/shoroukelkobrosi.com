@@ -6,18 +6,18 @@
 
 @layer base {
   * {
-    @apply m-0 p-0 box-border;
+    @apply m-0 box-border p-0;
   }
-  
+
   body {
     @apply bg-[#222] text-[#ddd];
   }
-  
+
   h1 {
-    @apply font-thin text-5xl tracking-wide mb-4;
+    @apply mb-4 text-5xl font-thin tracking-wide;
   }
-  
+
   p {
-    @apply text-lg font-light leading-7 mb-4;
+    @apply mb-4 text-lg font-light leading-7;
   }
 }
