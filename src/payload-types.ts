@@ -8,6 +8,7 @@
 
 export interface Config {
   collections: {
+    fuckers: Fucker;
     users: User;
     media: Media;
     'payload-preferences': PayloadPreference;
@@ -18,6 +19,16 @@ export interface Config {
   user: User & {
     collection: 'users';
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fuckers".
+ */
+export interface Fucker {
+  id: string;
+  'Who to fuck up': string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

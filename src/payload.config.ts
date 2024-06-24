@@ -6,6 +6,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { Fuckers } from './collections/Fuckers'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
@@ -16,7 +17,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media],
+  collections: [Fuckers, Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
