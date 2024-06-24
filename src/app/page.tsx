@@ -2,7 +2,7 @@ import styles from "./page.module.css";
 import { Square } from "./square";
 
 export default function Home() {
-  const grids: null[] = Array.from({ length: 3 });
+  const grids = Array.from({ length: 3 });
   return (
     <main className={styles.main}>
       <div>
@@ -19,7 +19,7 @@ export default function Home() {
 }
 
 function Grid() {
-  const squares: null[] = Array.from({ length: 9 });
+  const squares = Array.from({ length: 9 });
   return (
     <div className={styles.grid}>
       {squares.map((_, i) => (
