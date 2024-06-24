@@ -9,10 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@payloadcms/db-mongodb": "3.0.0-beta.53",
+    "@payloadcms/next": "3.0.0-beta.53",
+    "@payloadcms/plugin-cloud": "3.0.0-beta.53",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.53",
     "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
+    "graphql": "^16.8.1",
     "next": "15.0.0-rc.0",
+    "payload": "3.0.0-beta.53",
     "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522"
+    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@types/node": "^20.14.8",
