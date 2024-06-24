@@ -7,9 +7,9 @@ export const Fuckers: CollectionConfig = {
   },
   fields: [
     {
-        name: 'Who to fuck up',
-        type: 'text',
-        required: true
-    }
+      name: "Who to fuck up",
+      type: "text",
+      required: true,
+    },
   ],
 };

@@ -1,24 +1,23 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "tailwindcss";
+
+@theme {
+  /* Tailwind */
 }
 
-body {
-  background-color: #222;
-  color: #ddd;
-}
+@layer base {
+  * {
+    @apply m-0 box-border p-0;
+  }
 
-h1 {
-  font-weight: 100;
-  font-size: 3rem;
-  letter-spacing: 0.1rem;
-  margin-bottom: 1rem;
-}
+  body {
+    @apply bg-[#222] text-[#ddd];
+  }
 
-p {
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+  h1 {
+    @apply mb-4 text-5xl font-thin tracking-wide;
+  }
+
+  p {
+    @apply mb-4 text-lg font-light leading-7;
+  }
 }
