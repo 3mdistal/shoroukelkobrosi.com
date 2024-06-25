@@ -13,10 +13,10 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 const mongo = mongooseAdapter({
-  url: process.env.DATABASE_URI || "",
+  url: process.env.MONGO_DATABASE_URI || "",
 })
 const postgres = mongooseAdapter({
-  url: process.env.DATABASE_URI || "",
+  url: process.env.MONGO_DATABASE_URI || "",
 })
 
 export default buildConfig({
