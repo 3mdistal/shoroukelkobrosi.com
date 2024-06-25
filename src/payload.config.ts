@@ -21,6 +21,7 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
+    declare: false
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",

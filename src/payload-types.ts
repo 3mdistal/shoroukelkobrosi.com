@@ -89,9 +89,3 @@ export interface PayloadMigration {
   updatedAt: string;
   createdAt: string;
 }
-
-
-declare module 'payload' {
-  // @ts-ignore
-  export interface GeneratedTypes extends Config {}
-}
