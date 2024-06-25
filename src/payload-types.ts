@@ -8,6 +8,7 @@
 
 export interface Config {
   collections: {
+    first: First;
     users: User;
     media: Media;
     'payload-preferences': PayloadPreference;
@@ -18,6 +19,25 @@ export interface Config {
   user: User & {
     collection: 'users';
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "first".
+ */
+export interface First {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
