@@ -12,6 +12,13 @@ import { Media } from "./collections/Media";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+const mongo = mongooseAdapter({
+  url: process.env.DATABASE_URI || "",
+})
+const postgres = mongooseAdapter({
+  url: process.env.DATABASE_URI || "",
+})
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -23,9 +30,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
     declare: false
   },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
-  }),
+  db: process.env.VERCEL_ENV === "development" ? mongo : postgres,
   sharp,
   plugins: [
     // storage-adapter-placeholder
