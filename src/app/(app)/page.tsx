@@ -4,10 +4,12 @@ import { Square } from "./square";
 export default function Home() {
   const grids = Array.from({ length: 3 });
   return (
-    <main className={styles.main}>
-      <div>
-        <h1>Hello, world.</h1>
-        <p>
+    <main className="grid aspect-square place-content-center bg-[#333] p-4">
+      <div className="w-[75vw] bg-black p-[10%]">
+        <h1 className="mb-4 text-6xl font-thin tracking-wide text-[#ddd]">
+          Hello, world.
+        </h1>
+        <p className="leading-10 text-[#ccc]">
           Here we go again. <i>Sigh.</i>
         </p>
         {grids.map((_, i) => (

@@ -5,6 +5,7 @@ import "./globals.css";
 const lato = Lato({
   weight: ["100", "300", "400", "700"],
   subsets: ["latin-ext"],
+  variable: "--font-lato",
 });
 
 export const metadata: Metadata = {
@@ -18,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={lato.className}>{children}</body>
+    <html lang="en" className={`${lato.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
