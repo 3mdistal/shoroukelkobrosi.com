@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Lora } from "next/font/google";
 import "./globals.css";
 
-const lato = Lato({
-  weight: ["100", "300", "400", "700"],
-  subsets: ["latin-ext"],
-  variable: "--font-lato",
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable}`}>
+    <html lang="en" className={`${lora.variable}`}>
       <body>{children}</body>
     </html>
   );

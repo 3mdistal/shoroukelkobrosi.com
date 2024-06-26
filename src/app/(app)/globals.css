@@ -4,7 +4,7 @@
   /* Tailwind */
 
   /* Fonts */
-  --font-family-sans: var(--font-lato);
+  --font-family-main: var(--font-lora);
 }
 
 @layer base {
@@ -17,7 +17,7 @@
   h5,
   h6,
   p {
-    @apply font-sans;
+    @apply font-main;
   }
 }
 
