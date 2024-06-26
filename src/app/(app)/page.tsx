@@ -8,7 +8,7 @@ export default function Home() {
       <div>
         <h1>Hello, world.</h1>
         <p>
-          Alice is officially learning Next.js. <i>Sigh.</i>
+          Here we go again. <i>Sigh.</i>
         </p>
         {grids.map((_, i) => (
           <Grid key={i} />

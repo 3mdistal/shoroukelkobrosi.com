@@ -5,19 +5,13 @@
 }
 
 @layer base {
-  * {
-    @apply m-0 box-border p-0;
-  }
+  /* Tailwind Base */
+}
 
-  body {
-    @apply bg-[#222] text-[#ddd];
-  }
+@layer components {
+  /* Tailwind Components */
+}
 
-  h1 {
-    @apply mb-4 text-5xl font-thin tracking-wide;
-  }
-
-  p {
-    @apply mb-4 text-lg font-light leading-7;
-  }
+@layer utilities {
+  /* Tailwind Utilities */
 }
