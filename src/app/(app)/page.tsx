@@ -1,5 +1,3 @@
-import styles from "./page.module.css";
-
 export default function Home() {
   const grids = Array.from({ length: 3 });
   return (
