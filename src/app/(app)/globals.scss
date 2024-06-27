@@ -39,50 +39,118 @@
 
   /* Font Sizes */
   --font-multiplier-base: 4; // Tweak to adjust smallest font size.
-  --font-multiplier-scaler: .75; // Tweak to adjust the spread between small and large fonts.
+  --font-multiplier-scaler: 0.75; // Tweak to adjust the spread between small and large fonts.
 
   --font-multiplier-xs: var(--font-multiplier-base);
-  --font-multiplier-sm: calc(var(--font-multiplier-xs) * var(--font-multiplier-scaler));
-  --font-multiplier-md: calc(var(--font-multiplier-sm) * var(--font-multiplier-scaler));
-  --font-multiplier-lg: calc(var(--font-multiplier-md) * var(--font-multiplier-scaler));
-  --font-multiplier-xl: calc(var(--font-multiplier-lg) * var(--font-multiplier-scaler));
+  --font-multiplier-sm: calc(
+    var(--font-multiplier-xs) * var(--font-multiplier-scaler)
+  );
+  --font-multiplier-md: calc(
+    var(--font-multiplier-sm) * var(--font-multiplier-scaler)
+  );
+  --font-multiplier-lg: calc(
+    var(--font-multiplier-md) * var(--font-multiplier-scaler)
+  );
+  --font-multiplier-xl: calc(
+    var(--font-multiplier-lg) * var(--font-multiplier-scaler)
+  );
 
-  --font-size-body-xs: round(calc(var(--body-xs) * var(--font-multiplier-xs)), var(--base-unit));
-  --font-size-body-sm: round(calc(var(--body-sm) * var(--font-multiplier-sm)), var(--base-unit));
-  --font-size-body-md: round(calc(var(--body-md) * var(--font-multiplier-md)), var(--base-unit));
-  --font-size-body-lg: round(calc(var(--body-lg) * var(--font-multiplier-lg)), var(--base-unit));
-  --font-size-body-xl: round(calc(var(--body-xl) * var(--font-multiplier-xl)), var(--base-unit));
+  --font-size-body-xs: round(
+    calc(var(--body-xs) * var(--font-multiplier-xs)),
+    var(--base-unit)
+  );
+  --font-size-body-sm: round(
+    calc(var(--body-sm) * var(--font-multiplier-sm)),
+    var(--base-unit)
+  );
+  --font-size-body-md: round(
+    calc(var(--body-md) * var(--font-multiplier-md)),
+    var(--base-unit)
+  );
+  --font-size-body-lg: round(
+    calc(var(--body-lg) * var(--font-multiplier-lg)),
+    var(--base-unit)
+  );
+  --font-size-body-xl: round(
+    calc(var(--body-xl) * var(--font-multiplier-xl)),
+    var(--base-unit)
+  );
 
-  --font-size-title-xs: round(calc(var(--title-xs) * var(--font-multiplier-xs)), var(--base-unit));
-  --font-size-title-sm: round(calc(var(--title-sm) * var(--font-multiplier-sm)), var(--base-unit));
-  --font-size-title-md: round(calc(var(--title-md) * var(--font-multiplier-md)), var(--base-unit));
-  --font-size-title-lg: round(calc(var(--title-lg) * var(--font-multiplier-lg)), var(--base-unit));
-  --font-size-title-xl: round(calc(var(--title-xl) * var(--font-multiplier-xl)), var(--base-unit));
+  --font-size-title-xs: round(
+    calc(var(--title-xs) * var(--font-multiplier-xs)),
+    var(--base-unit)
+  );
+  --font-size-title-sm: round(
+    calc(var(--title-sm) * var(--font-multiplier-sm)),
+    var(--base-unit)
+  );
+  --font-size-title-md: round(
+    calc(var(--title-md) * var(--font-multiplier-md)),
+    var(--base-unit)
+  );
+  --font-size-title-lg: round(
+    calc(var(--title-lg) * var(--font-multiplier-lg)),
+    var(--base-unit)
+  );
+  --font-size-title-xl: round(
+    calc(var(--title-xl) * var(--font-multiplier-xl)),
+    var(--base-unit)
+  );
 
-  --font-size-display-xs: round(calc(var(--display-xs) * var(--font-multiplier-xs)), var(--base-unit));
-  --font-size-display-sm: round(calc(var(--display-sm) * var(--font-multiplier-sm)), var(--base-unit));
-  --font-size-display-md: round(calc(var(--display-md) * var(--font-multiplier-md)), var(--base-unit));
-  --font-size-display-lg: round(calc(var(--display-lg) * var(--font-multiplier-lg)), var(--base-unit));
-  --font-size-display-xl: round(calc(var(--display-xl) * var(--font-multiplier-xl)), var(--base-unit));
+  --font-size-display-xs: round(
+    calc(var(--display-xs) * var(--font-multiplier-xs)),
+    var(--base-unit)
+  );
+  --font-size-display-sm: round(
+    calc(var(--display-sm) * var(--font-multiplier-sm)),
+    var(--base-unit)
+  );
+  --font-size-display-md: round(
+    calc(var(--display-md) * var(--font-multiplier-md)),
+    var(--base-unit)
+  );
+  --font-size-display-lg: round(
+    calc(var(--display-lg) * var(--font-multiplier-lg)),
+    var(--base-unit)
+  );
+  --font-size-display-xl: round(
+    calc(var(--display-xl) * var(--font-multiplier-xl)),
+    var(--base-unit)
+  );
 
   /* Typeography */
-  --font-body-xs: 300 var(--font-size-body-xs)/var(--xs-line-height) var(--font-body);
-  --font-body-sm: 300 var(--font-size-body-sm)/var(--sm-line-height) var(--font-body);
-  --font-body-md: 300 var(--font-size-body-md)/var(--md-line-height) var(--font-body);
-  --font-body-lg: 300 var(--font-size-body-lg)/var(--lg-line-height) var(--font-body);
-  --font-body-xl: 300 var(--font-size-body-xl)/var(--xl-line-height) var(--font-body);
+  --font-body-xs: 300 var(--font-size-body-xs) / var(--xs-line-height)
+    var(--font-body);
+  --font-body-sm: 300 var(--font-size-body-sm) / var(--sm-line-height)
+    var(--font-body);
+  --font-body-md: 300 var(--font-size-body-md) / var(--md-line-height)
+    var(--font-body);
+  --font-body-lg: 300 var(--font-size-body-lg) / var(--lg-line-height)
+    var(--font-body);
+  --font-body-xl: 300 var(--font-size-body-xl) / var(--xl-line-height)
+    var(--font-body);
 
-  --font-title-xs: 400 var(--font-size-title-xs)/var(--xs-line-height) var(--font-title);
-  --font-title-sm: 400 var(--font-size-title-sm)/var(--sm-line-height) var(--font-title);
-  --font-title-md: 400 var(--font-size-title-md)/var(--md-line-height) var(--font-title);
-  --font-title-lg: 400 var(--font-size-title-lg)/var(--lg-line-height) var(--font-title);
-  --font-title-xl: 400 var(--font-size-title-xl)/var(--xl-line-height) var(--font-title);
+  --font-title-xs: 400 var(--font-size-title-xs) / var(--xs-line-height)
+    var(--font-title);
+  --font-title-sm: 400 var(--font-size-title-sm) / var(--sm-line-height)
+    var(--font-title);
+  --font-title-md: 400 var(--font-size-title-md) / var(--md-line-height)
+    var(--font-title);
+  --font-title-lg: 400 var(--font-size-title-lg) / var(--lg-line-height)
+    var(--font-title);
+  --font-title-xl: 400 var(--font-size-title-xl) / var(--xl-line-height)
+    var(--font-title);
 
-  --font-display-xs: 400 var(--font-size-display-xs)/var(--xs-line-height) var(--font-display);
-  --font-display-sm: 400 var(--font-size-display-sm)/var(--sm-line-height) var(--font-display);
-  --font-display-md: 400 var(--font-size-display-md)/var(--md-line-height) var(--font-display);
-  --font-display-lg: 400 var(--font-size-display-lg)/var(--lg-line-height) var(--font-display);
-  --font-display-xl: 400 var(--font-size-display-xl)/var(--xl-line-height) var(--font-display);
+  --font-display-xs: 400 var(--font-size-display-xs) / var(--xs-line-height)
+    var(--font-display);
+  --font-display-sm: 400 var(--font-size-display-sm) / var(--sm-line-height)
+    var(--font-display);
+  --font-display-md: 400 var(--font-size-display-md) / var(--md-line-height)
+    var(--font-display);
+  --font-display-lg: 400 var(--font-size-display-lg) / var(--lg-line-height)
+    var(--font-display);
+  --font-display-xl: 400 var(--font-size-display-xl) / var(--xl-line-height)
+    var(--font-display);
 
   /* Color [TODO] */
 
@@ -105,7 +173,6 @@
   }
 }
 
-
 @layer theme {
   @each $size in xs, sm, md, lg, xl {
     .font-body-#{$size} {
@@ -118,8 +185,9 @@
       font: var(--font-display-#{$size});
     }
   }
-}
 
+  // Note to self: Controls I want are: min-size, max-size, spread, ratio from body to title and body to display)
+}
 
 @layer components {
 }
