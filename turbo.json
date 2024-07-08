@@ -1,5 +1,4 @@
 {
-  "globalEnv": ["PAYLOAD_SECRET", "POSTGRES_URL"],
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
@@ -7,6 +6,7 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
       "persistent": true,
       "cache": false
     },
