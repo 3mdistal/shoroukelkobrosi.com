@@ -9,6 +9,7 @@
 
 # vscode
 **/.vscode
+teenylilapps.code-workspace
 
 # misc
 .DS_Store
