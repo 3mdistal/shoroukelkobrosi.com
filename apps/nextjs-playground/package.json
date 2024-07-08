@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo & open http://localhost:3000",
+    "dev": "next dev --turbo",
     "build": "next build && payload migrate",
     "start": "next start",
     "lint": "next lint",
@@ -49,5 +49,5 @@
     "turbo": "^2.0.6",
     "typescript": "^5.5.3"
   },
-  "packageManager": "pnpm@8.7.4+sha512.fdb4396d7a7c97b92b866d905d0546b8f8f3342fd9fe9d1f2b8930f1a22ba86d18b614d2f5a9112861e25b26875fadb7967b42ae21c16593ea85b5dccea48d56"
+  "packageManager": "pnpm@9.5.0"
 }
