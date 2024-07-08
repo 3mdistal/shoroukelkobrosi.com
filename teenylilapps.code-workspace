@@ -7,6 +7,9 @@
 		{
 			"name": "nextjs-playground",
 			"path": "apps/nextjs-playground"
+		},
+		{
+			"path": "apps/shoroukelkobrsi.com"
 		}
 	],
 	"settings": {}
