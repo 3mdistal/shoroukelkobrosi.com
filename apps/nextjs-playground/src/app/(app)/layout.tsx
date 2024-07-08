@@ -16,9 +16,9 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.ReactElement {
   return (
-    <html lang="en" className={`${lora.variable}`}>
+    <html lang="en" className={lora.variable}>
       <body>{children}</body>
     </html>
   );
