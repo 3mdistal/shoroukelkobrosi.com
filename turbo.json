@@ -1,20 +1,23 @@
 {
-    "$schema": "https://turbo.build/schema.json",
-    "tasks": {
-      "build": {
-        "dependsOn": ["^build"],
-        "outputs": [".next/**", "!.next/cache/**"]
-      },
-      "dev": {
-        "persistent": true,
-        "cache": false
-      },
-      "storybook": {
-        "persistent": true,
-        "cache": false
-      },
-      "lint": {
-        "outputs": ["node_modules/.cache/.eslintcache"]
-      }
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "storybook": {
+      "persistent": true,
+      "cache": false
+    },
+    "build-storybook": {
+      "outputs": ["storybook-static/**"]
+    },
+    "lint": {
+      "outputs": ["node_modules/.cache/.eslintcache"]
     }
   }
+}
