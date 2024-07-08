@@ -1,5 +1,4 @@
-export default function Home() {
-  const grids = Array.from({ length: 3 });
+export default function Home(): React.ReactElement {
   return (
     <div>
       <p className="font-display-xl">Display.</p>

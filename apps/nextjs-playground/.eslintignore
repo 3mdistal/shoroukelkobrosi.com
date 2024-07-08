@@ -1,1 +1,6 @@
 # Payload
+src/payload-types.ts
+src/migrations/*
+src/app/(payload)/layout.tsx
+src/app/(payload)/admin/*
+src/app/(payload)/api/*

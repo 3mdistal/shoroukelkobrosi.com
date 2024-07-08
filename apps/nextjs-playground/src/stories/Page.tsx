@@ -1,22 +1,27 @@
-import React from "react";
-
-import { Header } from "./Header";
+import React, { useState } from "react";
+import { Header } from "./header";
 import "./page.css";
 
-type User = {
+interface User {
   name: string;
-};
+}
 
-export const Page: React.FC = () => {
-  const [user, setUser] = React.useState<User>();
+export function Page(): React.ReactElement {
+  const [user, setUser] = useState<User | undefined>();
 
   return (
     <article>
       <Header
         user={user}
-        onLogin={() => setUser({ name: "Jane Doe" })}
-        onLogout={() => setUser(undefined)}
-        onCreateAccount={() => setUser({ name: "Jane Doe" })}
+        onLogin={() => {
+          setUser({ name: "Jane Doe" });
+        }}
+        onLogout={() => {
+          setUser(undefined);
+        }}
+        onCreateAccount={() => {
+          setUser({ name: "Jane Doe" });
+        }}
       />
 
       <section className="storybook-page">
@@ -88,4 +93,4 @@ export const Page: React.FC = () => {
       </section>
     </article>
   );
-};
+}
