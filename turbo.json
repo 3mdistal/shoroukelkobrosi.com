@@ -5,9 +5,6 @@
         "dependsOn": ["^build"],
         "outputs": [".next/**", "!.next/cache/**"]
       },
-      "check-types": {
-        "dependsOn": ["^check-types"]
-      },
       "dev": {
         "persistent": true,
         "cache": false
@@ -15,6 +12,9 @@
       "storybook": {
         "persistent": true,
         "cache": false
+      },
+      "lint": {
+        "outputs": ["node_modules/.cache/.eslintcache"]
       }
     }
   }
