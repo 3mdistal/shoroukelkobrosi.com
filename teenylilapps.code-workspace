@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "teenylilapps",
+			"path": "."
+		},
+		{
+			"name": "nextjs-playground",
+			"path": "apps/nextjs-playground"
+		}
+	],
+	"settings": {}
+}
