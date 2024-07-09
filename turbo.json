@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -19,6 +20,11 @@
     },
     "lint": {
       "outputs": ["node_modules/.cache/.eslintcache"]
+    },
+    "migrate:create": {
+      "outputs": ["migrations/**"],
+      "interactive": true,
+      "cache": false
     }
   }
 }
