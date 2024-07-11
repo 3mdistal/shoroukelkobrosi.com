@@ -5,6 +5,254 @@
 }
 
 @layer base {
+  :root {
+    /* Core Variables - These are the ones you'd expose in your UI */
+    --base-unit: 16px; /* Base unit for calculations */
+    --scale-ratio: 1.25; /* Major third */
+    --space-ratio: 0.5; /* Ratio of space scale to typography scale */
+
+    /* Unified Scale */
+    --scale-3xs: calc(
+      var(--base-unit) / var(--scale-ratio) / var(--scale-ratio) /
+        var(--scale-ratio)
+    );
+    --scale-2xs: calc(
+      var(--base-unit) / var(--scale-ratio) / var(--scale-ratio)
+    );
+    --scale-xs: calc(var(--base-unit) / var(--scale-ratio));
+    --scale-sm: calc(var(--base-unit) * var(--scale-ratio));
+    --scale-md: var(--base-unit);
+    --scale-lg: calc(var(--base-unit) * var(--scale-ratio));
+    --scale-xl: calc(
+      var(--base-unit) * var(--scale-ratio) * var(--scale-ratio)
+    );
+    --scale-2xl: calc(
+      var(--base-unit) * var(--scale-ratio) * var(--scale-ratio) *
+        var(--scale-ratio)
+    );
+    --scale-3xl: calc(
+      var(--base-unit) * var(--scale-ratio) * var(--scale-ratio) *
+        var(--scale-ratio) * var(--scale-ratio)
+    );
+
+    /* Spacing Scale */
+    --space-3xs: calc(var(--scale-3xs) * var(--space-ratio));
+    --space-2xs: calc(var(--scale-2xs) * var(--space-ratio));
+    --space-xs: calc(var(--scale-xs) * var(--space-ratio));
+    --space-sm: calc(var(--scale-sm) * var(--space-ratio));
+    --space-md: calc(var(--scale-md) * var(--space-ratio));
+    --space-lg: calc(var(--scale-lg) * var(--space-ratio));
+    --space-xl: calc(var(--scale-xl) * var(--space-ratio));
+    --space-2xl: calc(var(--scale-2xl) * var(--space-ratio));
+    --space-3xl: calc(var(--scale-3xl) * var(--space-ratio));
+
+    /* Font Sizes */
+    --font-size-3xs: var(--scale-3xs);
+    --font-size-2xs: var(--scale-2xs);
+    --font-size-xs: var(--scale-xs);
+    --font-size-sm: var(--scale-sm);
+    --font-size-md: var(--scale-md);
+    --font-size-lg: var(--scale-lg);
+    --font-size-xl: var(--scale-xl);
+    --font-size-2xl: var(--scale-2xl);
+    --font-size-3xl: var(--scale-3xl);
+
+    /* Line Heights */
+    --line-height-tight: 1.1;
+    --line-height-snug: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* Font Families */
+    --font-display: var(--font-lora), serif;
+    --font-title: var(--font-lora), serif;
+    --font-body: var(--font-lora), serif;
+
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* Typography Presets */
+    --text-body: var(--font-weight-normal) var(--font-size-md) /
+      var(--line-height-normal) var(--font-body);
+    --text-body-small: var(--font-weight-normal) var(--font-size-sm) /
+      var(--line-height-normal) var(--font-body);
+    --text-title: var(--font-weight-bold) var(--font-size-xl) /
+      var(--line-height-tight) var(--font-title);
+    --text-display: var(--font-weight-bold) var(--font-size-3xl) /
+      var(--line-height-tight) var(--font-display);
+
+    /* Colors */
+    /* not working, bc Sass compiles at build, while CSS vars are available in runtime. */
+    /* todo: Need to rethink the strategy, but I do like where I've gotten with calculations. */
+
+    /* Base color adjustment variables */
+    --hue-adjustment: 5;
+    --saturation-adjustment: 10%;
+    --lightness-adjustment: 15%;
+
+    /* Base color definitions as CSS variables */
+    --base-bg: 60 30% 96%;
+    --base-text: 0 0% 20%;
+    --base-primary: 270 60% 80%;
+    --base-secondary: 120 25% 70%;
+    --base-tertiary: 300 50% 30%;
+    --base-error: 0 65% 65%;
+    --base-warning: 30 90% 70%;
+    --base-success: 120 40% 60%;
+    --base-info: 200 75% 65%;
+  }
+
+  /* Sass functions */
+  /* @function hsl-var-to-list($var-name) {
+    $hsl-string: var(#{$var-name});
+    $hsl-list: ();
+    @each $value in $hsl-string {
+      $hsl-list: append($hsl-list, $value);
+    }
+    @return $hsl-list;
+  }
+
+  @function extract-hue($hsl-list) {
+    @return nth($hsl-list, 1);
+  }
+
+  @function extract-saturation($hsl-list) {
+    @return nth($hsl-list, 2);
+  }
+
+  @function extract-lightness($hsl-list) {
+    @return nth($hsl-list, 3);
+  }
+
+  @function invert-lightness($hsl-list) {
+    $hue: extract-hue($hsl-list);
+    $saturation: extract-saturation($hsl-list);
+    $lightness: extract-lightness($hsl-list);
+    @return ($hue #{$saturation} #{100% - $lightness});
+  }
+
+  @function dark-mode-color($hsl-list) {
+    $hue: extract-hue($hsl-list);
+    $saturation: extract-saturation($hsl-list);
+    $lightness: extract-lightness($hsl-list);
+
+    $new-saturation: if(
+      str-index($saturation, "%") and parseInt($saturation) < 10,
+      min(100%, parseInt($saturation) + 10) * 1%,
+      min(100%, parseInt($saturation) * 1.1) * 1%
+    );
+
+    $new-lightness: if(
+      str-index($lightness, "%") and
+        (parseInt($lightness) > 90 or parseInt($lightness) < 10),
+      #{100% - parseInt($lightness) * 1%},
+      #{80% - parseInt($lightness) * 1%}
+    );
+
+    $new-lightness: max(10%, min(90%, $new-lightness));
+
+    @return ($hue #{$new-saturation} #{$new-lightness});
+  }
+
+  @function adjust-color(
+    $hsl-list,
+    $hue-adjustment,
+    $saturation-adjustment,
+    $lightness-adjustment
+  ) {
+    $hue: extract-hue($hsl-list);
+    $saturation: extract-saturation($hsl-list);
+    $lightness: extract-lightness($hsl-list);
+
+    $new-hue: $hue + $hue-adjustment;
+    $new-saturation: max(
+        0%,
+        min(100%, parseInt($saturation) + parseInt($saturation-adjustment))
+      ) * 1%;
+    $new-lightness: max(
+        0%,
+        min(100%, parseInt($lightness) + parseInt($lightness-adjustment))
+      ) * 1%;
+
+    @return ($new-hue #{$new-saturation} #{$new-lightness});
+  } */
+
+  /* Mixin for generating color variants */
+  /* @mixin generate-color-variants($color-name, $base-var-name) {
+    --#{$color-name}: hsl(var(#{$base-var-name}));
+    --#{$color-name}-light: #{hsl(
+        adjust-color(
+          hsl-var-to-list($base-var-name),
+          var(--hue-adjustment) * -1,
+          var(--saturation-adjustment) * -1,
+          var(--lightness-adjustment)
+        )
+      )};
+    --#{$color-name}-dark: #{hsl(
+        adjust-color(
+          hsl-var-to-list($base-var-name),
+          var(--hue-adjustment),
+          var(--saturation-adjustment),
+          var(--lightness-adjustment) * -1
+        )
+      )};
+
+    @media (prefers-color-scheme: dark) {
+      --#{$color-name}: #{hsl(dark-mode-color(hsl-var-to-list($base-var-name)))};
+      --#{$color-name}-light: #{hsl(
+          adjust-color(
+            dark-mode-color(hsl-var-to-list($base-var-name)),
+            var(--hue-adjustment) * -1,
+            var(--saturation-adjustment) * -1,
+            var(--lightness-adjustment)
+          )
+        )};
+      --#{$color-name}-dark: #{hsl(
+          adjust-color(
+            dark-mode-color(hsl-var-to-list($base-var-name)),
+            var(--hue-adjustment),
+            var(--saturation-adjustment),
+            var(--lightness-adjustment) * -1
+          )
+        )};
+    }
+  } */
+
+  /* Generate color variants */
+  /* @include generate-color-variants("color-bg", "--base-bg");
+  @include generate-color-variants("color-text", "--base-text");
+  @include generate-color-variants("color-primary", "--base-primary");
+  @include generate-color-variants("color-secondary", "--base-secondary");
+  @include generate-color-variants("color-tertiary", "--base-tertiary");
+  @include generate-color-variants("color-error", "--base-error");
+  @include generate-color-variants("color-warning", "--base-warning");
+  @include generate-color-variants("color-success", "--base-success");
+  @include generate-color-variants("color-info", "--base-info"); */
+
+  /* Dark mode overrides for background and foreground */
+  /* @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #{hsl(invert-lightness(hsl-var-to-list("--base-bg")))};
+      --color-text: #{hsl(invert-lightness(hsl-var-to-list("--base-text")))};
+    }
+  } */
+}
+
+@layer theme {
+  /* @each $size in xs, sm, md, lg, xl {
+    .font-body-#{$size} {
+      font: var(--font-body-#{$size});
+    }
+    .font-title-#{$size} {
+      font: var(--font-title-#{$size});
+    }
+    .font-display-#{$size} {
+      font: var(--font-display-#{$size});
+    }
+  } */
 }
 
 @layer components {
