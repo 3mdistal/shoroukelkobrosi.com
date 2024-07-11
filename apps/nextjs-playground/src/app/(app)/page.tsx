@@ -1,9 +1,11 @@
 export default function Home(): React.ReactElement {
   return (
     <div>
-      <p className="font-display-xl">Display.</p>
-      <p className="font-display-lg">Display.</p>
-      <p className="font-display-md">Display.</p>
+      <p className="sm:font-display font-display text-8xl md:font-sans">
+        Display.
+      </p>
+      <p className="font-display text-7xl">Display.</p>
+      <p className="font-display text-6xl">Display.</p>
       <p className="font-display-sm">Display.</p>
       <p className="font-display-xs">Display.</p>
       <p className="font-title-xl">Title.</p>
@@ -15,7 +17,7 @@ export default function Home(): React.ReactElement {
       <p className="font-body-lg">Body.</p>
       <p className="font-body-md">Body.</p>
       <p className="font-body-sm">Body.</p>
-      <p className="font-body-xs">Body.</p>
+      <p className="font-sans">Body.</p>
     </div>
   );
 }

@@ -7,6 +7,9 @@
     "lint": "turbo run lint"
   },
   "devDependencies": {
+    "prettier": "^3.3.2",
+    "prettier-plugin-css-order": "^2.1.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "turbo": "latest"
   },
   "packageManager": "pnpm@9.5.0"

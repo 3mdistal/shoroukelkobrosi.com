@@ -1,7 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-lora); /* Font Family */
+  --font-display: var(--font-lora), serif; /* todo */
+  --font-title: var(--font-lora), serif; /* todo */
+  --font-body: var(--font-lora), serif; /* todo */
+  --font-family-display: var(--font-lora), serif; /* todo */
+}
+
 :root {
   /* Sizes */
-  --base-unit: 0.25rem; // The grid. All values, after final calculation, are rounded to a multiple of this.
-  --base-scaler: 1.67; // Tweak to adjust the spread between small and large sizing.
+  --base-unit: 0.25rem; /* The grid. All values, after final calculation, are rounded to a multiple of this. */
+  --base-scaler: 1.67; /* Tweak to adjust the spread between small and large sizing. */
 
   --body-xs: var(--base-unit);
   --body-sm: calc(var(--body-xs) * var(--base-scaler));
@@ -23,13 +33,8 @@
   --display-lg: calc(var(--display-md) * var(--base-scaler));
   --display-xl: calc(var(--display-lg) * var(--base-scaler));
 
-  /* Font Family */
-  --font-display: var(--font-lora), serif; // todo
-  --font-title: var(--font-lora), serif; // todo
-  --font-body: var(--font-lora), serif; // todo
-
   /* Line Heights */
-  --line-height-scaler: 1.1; // Tweak to adjust the spread between small and large line heights.
+  --line-height-scaler: 1.1; /* Tweak to adjust the spread between small and large line heights. */
 
   --xs-line-height: calc(var(--sm-line-height) * var(--line-height-scaler));
   --sm-line-height: calc(var(--md-line-height) * var(--line-height-scaler));
@@ -38,8 +43,8 @@
   --xl-line-height: 1.1;
 
   /* Font Sizes */
-  --font-multiplier-base: 4; // Tweak to adjust smallest font size.
-  --font-multiplier-scaler: 0.75; // Tweak to adjust the spread between small and large fonts.
+  --font-multiplier-base: 4; /* Tweak to adjust smallest font size. */
+  --font-multiplier-scaler: 0.75; /* Tweak to adjust the spread between small and large fonts. */
 
   --font-multiplier-xs: var(--font-multiplier-base);
   --font-multiplier-sm: calc(
@@ -174,7 +179,7 @@
 }
 
 @layer theme {
-  @each $size in xs, sm, md, lg, xl {
+  /* @each $size in xs, sm, md, lg, xl {
     .font-body-#{$size} {
       font: var(--font-body-#{$size});
     }
@@ -184,9 +189,9 @@
     .font-display-#{$size} {
       font: var(--font-display-#{$size});
     }
-  }
+  } */
 
-  // Note to self: Controls I want are: min-size, max-size, spread, ratio from body to title and body to display)
+  /* Note to self: Controls I want are: min-size, max-size, spread, ratio from body to title and body to display) */
 }
 
 @layer components {
