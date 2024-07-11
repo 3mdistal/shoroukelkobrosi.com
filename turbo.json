@@ -3,7 +3,7 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "cache": true,
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
@@ -30,6 +30,16 @@
       "cache": false,
       "interactive": true,
       "outputs": [".env.local"]
+    },
+    "start": {
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "persistent": true,
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "cache": false
     }
   }
 }
