@@ -10,8 +10,7 @@
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "playwright test"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.0.0-beta.53",
@@ -27,6 +26,7 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.45.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.14.10",
