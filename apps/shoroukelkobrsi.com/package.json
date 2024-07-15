@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next dev --turbo",
     "env-pull": "vc env pull",
-    "build": "next build",
+    "build": "next build && payload migrate",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
-    "test": "playwright test"
+    "test": "playwright test",
+    "vercel": "vercel"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.0.0-beta.53",
