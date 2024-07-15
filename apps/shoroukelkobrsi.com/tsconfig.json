@@ -1,7 +1,7 @@
 {
   "plugins": [
     {
-      "name": "next"
+      "name": ["next", "typescript-plugin-css-modules"]
     }
   ],
   "extends": "@repo/typescript-config/base.json",

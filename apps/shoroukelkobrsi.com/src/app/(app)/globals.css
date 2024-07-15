@@ -256,6 +256,9 @@
 }
 
 @layer components {
+  :root {
+    --menu-height: 2.5rem;
+  }
 }
 
 @layer utilities {
