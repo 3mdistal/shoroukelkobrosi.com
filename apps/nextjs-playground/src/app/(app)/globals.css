@@ -1,9 +1,3 @@
-@import "tailwindcss";
-
-@theme {
-  --font-family-serif: var(--font-lora);
-}
-
 @layer base {
   :root {
     /* Core Variables - These are the ones you'd expose in your UI */
