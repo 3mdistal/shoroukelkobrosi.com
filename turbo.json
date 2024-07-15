@@ -3,8 +3,9 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "cache": true,
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "interactive": true,
+      "cache": false
     },
     "dev": {
       "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
@@ -38,6 +39,10 @@
       "dependsOn": ["build"]
     },
     "test": {
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "cache": false
+    },
+    "vercel": {
       "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
       "cache": false
     }
