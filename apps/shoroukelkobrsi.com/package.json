@@ -40,7 +40,8 @@
     "eslint-config-next": "14.2.4",
     "postcss": "^8.4.39",
     "turbo": "^2.0.6",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "typescript-plugin-css-modules": "^5.1.0"
   },
   "packageManager": "pnpm@9.5.0"
 }
