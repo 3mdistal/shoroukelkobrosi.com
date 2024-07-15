@@ -50,6 +50,9 @@ importers:
       payload:
         specifier: 3.0.0-beta.53
         version: 3.0.0-beta.53(@swc/core@1.6.13(@swc/helpers@0.5.11))(@swc/types@0.1.9)(graphql@16.9.0)(typescript@5.5.3)
+      postcss-jit-props:
+        specifier: ^1.0.14
+        version: 1.0.14(postcss@8.4.39)
       react:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522
@@ -129,6 +132,9 @@ importers:
       payload:
         specifier: 3.0.0-beta.53
         version: 3.0.0-beta.53(@swc/core@1.6.13(@swc/helpers@0.5.11))(@swc/types@0.1.9)(graphql@16.9.0)(typescript@5.5.3)
+      postcss-jit-props:
+        specifier: ^1.0.14
+        version: 1.0.14(postcss@8.4.39)
       react:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522
@@ -2993,6 +2999,9 @@ packages:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
 
+  globalyzer@0.1.0:
+    resolution: {integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==}
+
   globby@11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
     engines: {node: '>=10'}
@@ -3000,6 +3009,9 @@ packages:
   globby@13.2.2:
     resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  globrex@0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -3906,6 +3918,12 @@ packages:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
     engines: {node: '>= 0.4'}
 
+  postcss-jit-props@1.0.14:
+    resolution: {integrity: sha512-GimU4wen29Qr0DbDaAuWrj4NcErYR5x1rxcEFuPVAwF2HEZALydA8tpTMWEyThK7T2bwFTMFMA4G70pL55xUbw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      postcss: ^8.2.8
+
   postcss-less@6.0.0:
     resolution: {integrity: sha512-FPX16mQLyEjLzEuuJtxA8X3ejDLNGGEG503d2YGZR5Ask1SpDN8KmZUMpzCvyalWRywAn1n1VOA5dcqfCLo5rg==}
     engines: {node: '>=12'}
@@ -4576,6 +4594,9 @@ packages:
   timers-ext@0.1.8:
     resolution: {integrity: sha512-wFH7+SEAcKfJpfLPkrgMPvvwnEtj8W4IurvEyrKsDleXnKLCDw71w8jltvfLa8Rm4qQxxT4jmDBYbJG/z7qoww==}
     engines: {node: '>=0.12'}
+
+  tiny-glob@0.2.9:
+    resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
 
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -8667,6 +8688,8 @@ snapshots:
       define-properties: 1.2.1
       gopd: 1.0.1
 
+  globalyzer@0.1.0: {}
+
   globby@11.1.0:
     dependencies:
       array-union: 2.1.0
@@ -8683,6 +8706,8 @@ snapshots:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 4.0.0
+
+  globrex@0.1.2: {}
 
   gopd@1.0.1:
     dependencies:
@@ -9609,6 +9634,11 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
+  postcss-jit-props@1.0.14(postcss@8.4.39):
+    dependencies:
+      postcss: 8.4.39
+      tiny-glob: 0.2.9
+
   postcss-less@6.0.0(postcss@8.4.39):
     dependencies:
       postcss: 8.4.39
@@ -10285,6 +10315,11 @@ snapshots:
     dependencies:
       es5-ext: 0.10.64
       next-tick: 1.1.0
+
+  tiny-glob@0.2.9:
+    dependencies:
+      globalyzer: 0.1.0
+      globrex: 0.1.2
 
   to-fast-properties@2.0.0: {}
 

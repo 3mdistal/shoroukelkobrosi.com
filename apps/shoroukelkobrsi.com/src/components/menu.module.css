@@ -1,5 +1,5 @@
 .menu {
-  --menu-height: 4rem;
+  --menu-height: var(--size-9);
 
   display: flex;
   justify-content: space-between;
@@ -9,7 +9,7 @@
   height: var(--menu-height);
 
   @media screen and (max-width: 768px) {
-    --menu-height: 3rem;
+    --menu-height: var(--size-8);
     padding: 0 calc(var(--menu-height) * 0.25);
   }
 }
