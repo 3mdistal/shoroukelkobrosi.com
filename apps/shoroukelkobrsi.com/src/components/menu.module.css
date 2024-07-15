@@ -1,5 +1,27 @@
-.testing {
-  background-color: red;
-  width: 10px;
-  height: 10px;
+.menu {
+  --menu-height: 4rem;
+
+  display: flex;
+  justify-content: space-between;
+  background-color: #ccc;
+  padding: 0 var(--menu-height);
+  width: 100lvw;
+  height: var(--menu-height);
+
+  @media screen and (max-width: 768px) {
+    --menu-height: 3rem;
+    padding: 0 calc(var(--menu-height) * 0.25);
+  }
+}
+
+.menu-children {
+  font-size: var(--font-size-xl);
+  line-height: var(--menu-height);
+  font-family: var(--font-lora);
+}
+
+.menu-title {
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
