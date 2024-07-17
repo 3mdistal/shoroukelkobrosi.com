@@ -1,10 +1,5 @@
-:global(:root) {
-  --menu-height: var(--size-9);
-}
-
 .menu {
   display: flex;
-
   position: sticky;
   top: 0px;
   justify-content: space-between;
