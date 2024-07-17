@@ -22,8 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={lora.variable}>
       <body className="w-lvw">
-        <Menu />
         <main className={styles.main}>{children}</main>
+        <Menu />
       </body>
     </html>
   );

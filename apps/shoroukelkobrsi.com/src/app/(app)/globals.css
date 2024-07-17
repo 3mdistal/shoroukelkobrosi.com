@@ -9,7 +9,7 @@
 
 @layer components {
   :root {
-    --menu-height: var(--size-9);
+    --menu-height: var(--size-10);
   }
 }
 

@@ -1,5 +1,7 @@
 .reelContainer {
   display: flex;
+  position: absolute;
+  top: 0;
   justify-content: center;
   align-items: center;
   background: var(--gray-12);
@@ -8,8 +10,22 @@
 }
 
 .reel {
-  background: var(--gray-6);
+  animation: gradientAnimation 10s ease infinite;
+  background: linear-gradient(to bottom, var(--gray-10), var(--gray-2));
+  background-size: 100% 200%;
   aspect-ratio: var(--ratio-widescreen);
   max-width: 100%;
-  height: calc(100lvh - var(--menu-height));
+  height: 100%;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
