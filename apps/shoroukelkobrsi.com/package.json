@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "env-pull": "vc env pull",
-    "build": "next build && payload migrate",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
