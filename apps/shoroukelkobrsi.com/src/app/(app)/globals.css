@@ -1,4 +1,5 @@
 @import "open-props/normalize";
+@import "open-props/style";
 
 @layer base {
 }
@@ -10,4 +11,10 @@
 }
 
 @layer utilities {
+}
+
+@layer styles {
+  body {
+    height: 200lvh;
+  }
 }
