@@ -6,4 +6,4 @@
   - React 19 (RC)
   - React Compiler (Experimental)
   - Turbopack (Experimental)
-  - Tailwind 4 (Alpha)
+  - Open Props

@@ -12,4 +12,4 @@ _A record of the goings-on in my unhinged development brain._
   - React 19 (RC)
   - React Compiler (Experimental)
   - Turbopack (Experimental)
-  - Tailwind 4 (Alpha)
+  - Open Props

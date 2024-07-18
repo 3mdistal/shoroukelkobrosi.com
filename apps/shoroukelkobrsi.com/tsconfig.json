@@ -1,7 +1,7 @@
 {
   "plugins": [
     {
-      "name": "next"
+      "name": ["next", "typescript-plugin-css-modules"]
     }
   ],
   "extends": "@repo/typescript-config/base.json",
@@ -11,6 +11,14 @@
       "@payload-config": ["./src/payload.config.ts"]
     },
     "plugins": [
+      // Provides IDE-only errors and autocompletion.
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "noUncheckedIndexedAccess": true,
+          "goToDefinition": true
+        }
+      },
       {
         "name": "next"
       }
