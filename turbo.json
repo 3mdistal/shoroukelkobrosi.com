@@ -3,9 +3,7 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "outputs": [".next/**", "!.next/cache/**"],
-      "interactive": true,
-      "cache": false
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
       "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
