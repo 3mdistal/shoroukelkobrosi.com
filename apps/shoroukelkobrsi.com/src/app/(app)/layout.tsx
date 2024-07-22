@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   description: "The cinema of Shorouk Elkobrsi.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>): React.ReactElement {
+}>): Promise<React.ReactElement> {
   return (
     <html lang="en" className={lora.variable}>
       <body>

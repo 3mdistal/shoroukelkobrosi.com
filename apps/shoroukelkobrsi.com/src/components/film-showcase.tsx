@@ -1,4 +1,4 @@
-import { getPayload } from "payload";
+import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
 import Link from "next/link";
 import configPromise from "@payload-config";
@@ -6,7 +6,7 @@ import { type Film } from "../payload-types";
 import styles from "./film-showcase.module.css";
 
 async function getFilms(): Promise<Film[]> {
-  const payload = await getPayload({ config: configPromise });
+  const payload = await getPayloadHMR({ config: configPromise });
   const response = await payload.find({
     collection: "films",
     where: {
@@ -17,19 +17,7 @@ async function getFilms(): Promise<Film[]> {
     sort: "-date",
   });
 
-  const films = response.docs.map((doc) => {
-    if (
-      typeof doc.title === "string" &&
-      typeof doc.date === "string" &&
-      typeof doc.updatedAt === "string" &&
-      typeof doc.createdAt === "string"
-    ) {
-      return doc as Film;
-    }
-    throw new Error(`Invalid film: data: ${JSON.stringify(doc)}`);
-  });
-
-  return films;
+  return response.docs;
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
