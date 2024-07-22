@@ -6,6 +6,8 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
+import { Films } from "./collections/films";
+import { Stills } from "./collections/stills";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -18,7 +20,7 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Films, Stills],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {
