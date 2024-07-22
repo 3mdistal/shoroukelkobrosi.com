@@ -10,6 +10,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    films: Film;
+    stills: Still;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -54,6 +56,50 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "films".
+ */
+export interface Film {
+  id: number;
+  title: string;
+  date: string;
+  trailer?: string | null;
+  director?: string | null;
+  producer?: string | null;
+  format?: string | null;
+  prizes?:
+    | {
+        prize?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  imdbLink?: string | null;
+  aspectRatio?: ('4:3' | '5:4' | '16:9' | '2.35:1' | '9:16') | null;
+  stills?:
+    | {
+        image: number | Media;
+        featured?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  displayOnHomepage?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stills".
+ */
+export interface Still {
+  id: number;
+  date: string;
+  location: string;
+  format?: string | null;
+  image: number | Media;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

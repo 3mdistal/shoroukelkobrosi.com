@@ -1,24 +1,13 @@
-// src/components/film-showcase.tsx
+import { getPayload } from "payload";
 import Image from "next/image";
 import Link from "next/link";
-import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { type Film } from "../payload-types";
 import styles from "./film-showcase.module.css";
-
-interface Film {
-  id: string;
-  title: string;
-  date: string;
-  stills: {
-    image: { url: string };
-    featured: boolean;
-  }[];
-  aspectRatio: string;
-}
 
 async function getFilms(): Promise<Film[]> {
   const payload = await getPayload({ config: configPromise });
-  const films = await payload.find({
+  const response = await payload.find({
     collection: "films",
     where: {
       displayOnHomepage: {
@@ -28,7 +17,19 @@ async function getFilms(): Promise<Film[]> {
     sort: "-date",
   });
 
-  return films.docs;
+  const films = response.docs.map((doc) => {
+    if (
+      typeof doc.title === "string" &&
+      typeof doc.date === "string" &&
+      typeof doc.updatedAt === "string" &&
+      typeof doc.createdAt === "string"
+    ) {
+      return doc as Film;
+    }
+    throw new Error(`Invalid film: data: ${JSON.stringify(doc)}`);
+  });
+
+  return films;
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
@@ -44,10 +45,10 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
             <p>{new Date(film.date).getFullYear()}</p>
           </div>
           <div
-            className={`${styles.stillsGrid} ${styles[`aspect-${film.aspectRatio.replace(":", "-")}`]}`}
+            className={`${styles.stillsGrid} ${styles[`aspect-${film.aspectRatio?.replace(":", "-")}`]}`}
           >
             {film.stills
-              .filter((still) => still.featured)
+              ?.filter((still) => still.featured)
               .map((still, index) => (
                 <Image
                   key={index}

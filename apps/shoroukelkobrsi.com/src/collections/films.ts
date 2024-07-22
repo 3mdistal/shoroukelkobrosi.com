@@ -4,6 +4,9 @@ export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     useAsTitle: "title",
+    livePreview: {
+      url: "http://localhost:3000",
+    },
   },
   fields: [
     {
