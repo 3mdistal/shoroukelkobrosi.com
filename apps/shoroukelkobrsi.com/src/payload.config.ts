@@ -1,14 +1,11 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
-
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
+import { Films } from "./collections/films";
+import { Stills } from "./collections/stills";
 
 export default buildConfig({
   admin: {
@@ -18,12 +15,14 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Films, Stills],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {
-    outputFile: path.resolve(dirname, "payload-types.ts"),
-    declare: false,
+    outputFile: "src/payload-types.ts",
+    declare: {
+      ignoreTSError: true,
+    },
   },
   db: postgresAdapter({
     pool: {
