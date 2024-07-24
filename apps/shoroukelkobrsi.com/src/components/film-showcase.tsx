@@ -21,6 +21,7 @@ async function getFilms(): Promise<Film[]> {
     sort: "-date",
   });
 
+  // @ts-expect-error Payload types are still wonky in this beta.
   return response.docs;
 }
 

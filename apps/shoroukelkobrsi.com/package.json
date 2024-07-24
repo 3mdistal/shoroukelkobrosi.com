@@ -28,10 +28,10 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "@playwright/test": "^1.45.2",
+    "@playwright/test": "^1.45.3",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.14.11",
+    "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "cross-env": "^7.0.3",
@@ -41,7 +41,7 @@
     "postcss": "^8.4.39",
     "postcss-jit-props": "^1.0.14",
     "turbo": "^2.0.9",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "typescript-plugin-css-modules": "^5.1.0"
   },
   "packageManager": "pnpm@9.5.0"
