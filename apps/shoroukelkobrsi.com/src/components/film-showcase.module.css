@@ -19,15 +19,3 @@
   height: 0;
   overflow: hidden;
 }
-
-.aspect-16-9 {
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-}
-
-.aspect-4-3 {
-  padding-bottom: 75%; /* 4:3 aspect ratio */
-}
-
-.aspect-2-35-1 {
-  padding-bottom: 42.55%; /* 2.35:1 aspect ratio */
-}

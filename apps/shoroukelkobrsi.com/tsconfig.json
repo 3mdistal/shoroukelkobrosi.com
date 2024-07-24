@@ -11,7 +11,6 @@
       "@payload-config": ["./src/payload.config.ts"]
     },
     "plugins": [
-      // Provides IDE-only errors and autocompletion.
       {
         "name": "typescript-plugin-css-modules",
         "options": {
