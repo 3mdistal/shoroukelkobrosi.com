@@ -24,6 +24,33 @@ async function getFilms(): Promise<Film[]> {
   return response.docs;
 }
 
+function getSeason(date: Date): string {
+  const month = date.getMonth();
+  switch (month) {
+    case 2:
+    case 3:
+    case 4:
+      return "Spring";
+    case 5:
+    case 6:
+    case 7:
+      return "Summer";
+    case 8:
+    case 9:
+    case 10:
+      return "Autumn";
+    default:
+      return "Winter";
+  }
+}
+
+function formatSeasonYear(dateString: string): string {
+  const date = new Date(dateString);
+  const season = getSeason(date);
+  const year = date.getFullYear().toString();
+  return `${season} ${year}`;
+}
+
 export default async function FilmShowcase(): Promise<React.ReactElement> {
   const films = await getFilms();
 
@@ -38,7 +65,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
         >
           <div className={styles.filmInfo}>
             <h3>{film.title}</h3>
-            <p>{new Date(film.date).getFullYear()}</p>
+            <p>{formatSeasonYear(film.date)}</p>
           </div>
           <div className={styles.stillsGrid}>
             {film.stills
@@ -52,8 +79,8 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
                       : "https://unplash.it/1600/900"
                   }
                   alt={`Still from ${film.title}`}
-                  fill
                   style={{ objectFit: "cover" }}
+                  fill
                 />
               ))}
           </div>

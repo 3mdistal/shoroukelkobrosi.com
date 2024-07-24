@@ -1,6 +1,5 @@
-/* src/components/film-showcase.module.css */
 .showcase {
-  padding: var(--size-8) 0;
+  padding: var(--size-12);
 }
 
 .film {
@@ -15,7 +14,7 @@
 
 .stillsGrid {
   position: relative;
+  aspect-ratio: 16/9;
   width: 100%;
-  height: 0;
   overflow: hidden;
 }
