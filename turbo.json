@@ -6,7 +6,7 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL", "RESEND_KEY"],
       "persistent": true,
       "cache": false
     },
@@ -31,17 +31,17 @@
       "outputs": [".env.local"]
     },
     "start": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
       "persistent": true,
       "cache": false,
       "dependsOn": ["build"]
     },
     "test": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
       "cache": false
     },
     "vercel": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
       "cache": false
     }
   }

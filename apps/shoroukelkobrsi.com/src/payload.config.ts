@@ -1,6 +1,7 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { buildConfig } from "payload";
+import { resendAdapter } from "@payloadcms/email-resend";
+import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
@@ -30,4 +31,9 @@ export default buildConfig({
     },
   }),
   sharp,
+  email: resendAdapter({
+    apiKey: process.env.RESEND_KEY ?? "",
+    defaultFromAddress: "admin@mail.shoroukelkobrsi.com",
+    defaultFromName: "Shorouk Elkobrsi",
+  }) as EmailAdapter,
 });
