@@ -10,10 +10,10 @@ import { Stills } from "./collections/stills";
 
 export default buildConfig({
   admin: {
-    autoLogin: {
-      email: "dev@dev.com",
-      password: "dev",
-    },
+    // autoLogin: {
+    //   email: "dev@dev.com",
+    //   password: "dev",
+    // },
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
@@ -33,7 +33,7 @@ export default buildConfig({
   sharp,
   email: resendAdapter({
     apiKey: process.env.RESEND_KEY ?? "",
-    defaultFromAddress: "admin@mail.shoroukelkobrsi.com",
+    defaultFromAddress: "admin@teenylilapps.com",
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
 });
