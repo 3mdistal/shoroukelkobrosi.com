@@ -8,6 +8,15 @@ import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
 
+function getURL(): string {
+  if (process.env.VERCEL_ENV === "production") {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
+  } else if (process.env.VERCEL_ENV === "preview") {
+    return `https://${process.env.VERCEL_URL ?? "error"}`;
+  }
+  return "http://localhost:3000";
+}
+
 export default buildConfig({
   admin: {
     autoLogin: {
@@ -15,7 +24,7 @@ export default buildConfig({
       password: "dev",
     },
     livePreview: {
-      url: "http://localhost:3000",
+      url: () => getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,

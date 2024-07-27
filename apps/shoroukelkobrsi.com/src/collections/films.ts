@@ -5,8 +5,8 @@ import { slugify } from "@/utilities/slugify";
 export const Films: CollectionConfig = {
   slug: "films",
   admin: {
-    useAsTitle: "title",
     description: "Films to display both on the homepage and on project pages.",
+    useAsTitle: "title",
   },
   hooks: {
     beforeChange: [
