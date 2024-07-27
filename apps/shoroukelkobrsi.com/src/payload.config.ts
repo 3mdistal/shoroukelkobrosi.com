@@ -14,26 +14,30 @@ export default buildConfig({
       email: "dev@dev.com",
       password: "dev",
     },
+    livePreview: {
+      url: "http://localhost:3000",
+      collections: ["films", "stills"],
+    },
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URL ?? "",
+    },
+  }),
   editor: lexicalEditor(),
+  email: resendAdapter({
+    apiKey: process.env.RESEND_KEY ?? "",
+    defaultFromAddress: "admin@teenylilapps.com",
+    defaultFromName: "Shorouk Elkobrsi",
+  }) as EmailAdapter,
   secret: process.env.PAYLOAD_SECRET ?? "",
+  sharp,
   typescript: {
     outputFile: "src/payload-types.ts",
     declare: {
       ignoreTSError: true,
     },
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL ?? "",
-    },
-  }),
-  sharp,
-  email: resendAdapter({
-    apiKey: process.env.RESEND_KEY ?? "",
-    defaultFromAddress: "admin@teenylilapps.com",
-    defaultFromName: "Shorouk Elkobrsi",
-  }) as EmailAdapter,
 });

@@ -4,9 +4,6 @@ export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     useAsTitle: "title",
-    livePreview: {
-      url: "http://localhost:3000",
-    },
   },
   fields: [
     {
@@ -87,6 +84,11 @@ export const Films: CollectionConfig = {
       defaultValue: false,
     },
   ],
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
 };
 
 /* Fields to Add
