@@ -122,7 +122,215 @@ export default defineConfig({
 
 ```
 
-# payload-types.ts
+# package.json
+
+```json
+{
+  "name": "shoroukelkobrsi.com",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbo",
+    "env-pull": "vc env pull",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
+    "test": "playwright test",
+    "vercel": "vercel"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "3.0.0-beta.70",
+    "@payloadcms/email-resend": "3.0.0-beta.70",
+    "@payloadcms/graphql": "3.0.0-beta.70",
+    "@payloadcms/live-preview-react": "3.0.0-beta.70",
+    "@payloadcms/next": "3.0.0-beta.70",
+    "@payloadcms/plugin-cloud": "3.0.0-beta.70",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.70",
+    "@payloadcms/translations": "3.0.0-beta.70",
+    "@payloadcms/ui": "3.0.0-beta.70",
+    "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
+    "graphql": "^16.9.0",
+    "next": "15.0.0-rc.0",
+    "payload": "3.0.0-beta.70",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "sharp": "^0.33.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.3",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.4",
+    "open-props": "^1.7.5",
+    "postcss": "^8.4.40",
+    "postcss-jit-props": "^1.0.14",
+    "turbo": "^2.0.9",
+    "typescript": "^5.5.4",
+    "typescript-plugin-css-modules": "^5.1.0"
+  },
+  "packageManager": "pnpm@9.5.0"
+}
+
+```
+
+# next.config.mjs
+
+```mjs
+import { withPayload } from "@payloadcms/next/withPayload";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    ppr: true,
+    reactCompiler: true,
+    // typedRoutes: true, // Not yet available in Turbopack.
+  },
+};
+
+export default withPayload(nextConfig);
+
+```
+
+# next-env.d.ts
+
+```ts
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.
+
+```
+
+# README.md
+
+```md
+Welcome to the portfolio of Shorouk Elkobrsi, cinematographer.
+```
+
+# CHANGELOG.md
+
+```md
+## 0.0.1
+
+- Site is deploying as part of a larger monorepo.
+- Payload config locked and loaded.
+```
+
+# .gitignore
+
+```
+.vercel
+.env*.local
+
+```
+
+# .eslintrc.json
+
+```json
+{
+  "extends": ["@repo/eslint-config/next.js"],
+  "rules": {
+    "strict": ["error", "global"]
+  }
+}
+
+```
+
+# .eslintignore
+
+```
+# Payload
+src/payload-types.ts
+src/migrations/*
+src/app/(payload)/layout.tsx
+src/app/(payload)/admin/*
+src/app/(payload)/api/*
+```
+
+# .aidigestignore
+
+```
+**/playwright-report/**
+**/.turbo/**
+**/migrations/**
+```
+
+# types/modules.d.ts
+
+```ts
+declare module "*.module.css" {
+  const classes: Record<string, string>;
+  export default classes;
+}
+
+```
+
+# test-results/.last-run.json
+
+```json
+{
+  "status": "failed"
+}
+```
+
+# src/payload.config.ts
+
+```ts
+import { postgresAdapter } from "@payloadcms/db-postgres";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { resendAdapter } from "@payloadcms/email-resend";
+import { buildConfig, type EmailAdapter } from "payload";
+import sharp from "sharp";
+import { Users } from "./collections/users";
+import { Media } from "./collections/media";
+import { Films } from "./collections/films";
+import { Stills } from "./collections/stills";
+
+export default buildConfig({
+  admin: {
+    autoLogin: {
+      email: "dev@dev.com",
+      password: "dev",
+    },
+    livePreview: {
+      url: "http://localhost:3000",
+      collections: ["films", "stills"],
+    },
+    user: Users.slug,
+  },
+  collections: [Users, Media, Films, Stills],
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URL ?? "",
+    },
+  }),
+  editor: lexicalEditor(),
+  email: resendAdapter({
+    apiKey: process.env.RESEND_KEY ?? "",
+    defaultFromAddress: "admin@teenylilapps.com",
+    defaultFromName: "Shorouk Elkobrsi",
+  }) as EmailAdapter,
+  secret: process.env.PAYLOAD_SECRET ?? "",
+  sharp,
+  typescript: {
+    outputFile: "src/payload-types.ts",
+    declare: {
+      ignoreTSError: true,
+    },
+  },
+});
+
+```
+
+# src/payload-types.ts
 
 ```ts
 /* tslint:disable */
@@ -265,347 +473,9 @@ export interface PayloadMigration {
 
 
 declare module 'payload' {
+  // @ts-ignore 
   export interface GeneratedTypes extends Config {}
 }
-```
-
-# package.json
-
-```json
-{
-  "name": "shoroukelkobrsi.com",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "next dev --turbo",
-    "env-pull": "vc env pull",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
-    "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
-    "test": "playwright test",
-    "vercel": "vercel"
-  },
-  "dependencies": {
-    "@payloadcms/db-postgres": "3.0.0-beta.53",
-    "@payloadcms/next": "3.0.0-beta.53",
-    "@payloadcms/plugin-cloud": "3.0.0-beta.53",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.53",
-    "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
-    "graphql": "^16.9.0",
-    "next": "15.0.0-rc.0",
-    "payload": "3.0.0-beta.53",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522",
-    "sharp": "^0.33.4"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.45.3",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.14.12",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.4",
-    "open-props": "^1.7.5",
-    "postcss": "^8.4.39",
-    "postcss-jit-props": "^1.0.14",
-    "turbo": "^2.0.9",
-    "typescript": "^5.5.4",
-    "typescript-plugin-css-modules": "^5.1.0"
-  },
-  "packageManager": "pnpm@9.5.0"
-}
-
-```
-
-# next.config.mjs
-
-```mjs
-import { withPayload } from "@payloadcms/next/withPayload";
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    ppr: true,
-    reactCompiler: true,
-    // typedRoutes: true, // Not yet available in Turbopack.
-  },
-};
-
-export default withPayload(nextConfig);
-
-```
-
-# next-env.d.ts
-
-```ts
-/// <reference types="next" />
-/// <reference types="next/image-types/global" />
-
-// NOTE: This file should not be edited
-// see https://nextjs.org/docs/basic-features/typescript for more information.
-
-```
-
-# README.md
-
-```md
-Welcome to the portfolio of Shorouk Elkobrsi, cinematographer.
-```
-
-# CHANGELOG.md
-
-```md
-## 0.0.1
-
-- Site is deploying as part of a larger monorepo.
-- Payload config locked and loaded.
-```
-
-# .gitignore
-
-```
-.vercel
-.env*.local
-
-```
-
-# .eslintrc.json
-
-```json
-{
-  "extends": ["@repo/eslint-config/next.js"],
-  "rules": {
-    "strict": ["error", "global"]
-  }
-}
-
-```
-
-# .eslintignore
-
-```
-# Payload
-src/payload-types.ts
-src/migrations/*
-src/app/(payload)/layout.tsx
-src/app/(payload)/admin/*
-src/app/(payload)/api/*
-```
-
-# .aidigestignore
-
-```
-**/playwright-report/**
-**/.turbo/**
-**/migrations/**
-```
-
-# types/modules.d.ts
-
-```ts
-declare module "*.module.css" {
-  const classes: Record<string, string>;
-  export default classes;
-}
-
-```
-
-# test-results/.last-run.json
-
-```json
-{
-  "status": "failed"
-}
-```
-
-# src/payload.config.ts
-
-```ts
-// import path from "node:path";
-// import { fileURLToPath } from "node:url";
-import { postgresAdapter } from "@payloadcms/db-postgres";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { buildConfig } from "payload";
-import sharp from "sharp";
-import { Users } from "./collections/users";
-import { Media } from "./collections/media";
-import { Films } from "./collections/films";
-import { Stills } from "./collections/stills";
-
-// const filename = fileURLToPath(import.meta.url);
-// const dirname = path.dirname(filename);
-
-export default buildConfig({
-  admin: {
-    autoLogin: {
-      email: "dev@dev.com",
-      password: "dev",
-    },
-    user: Users.slug,
-  },
-  collections: [Users, Media, Films, Stills],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET ?? "",
-  // typescript: {
-  //   outputFile: path.resolve(dirname, "payload-types.ts"),
-  //   declare: false,
-  // },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL ?? "",
-    },
-  }),
-  sharp,
-});
-
-```
-
-# src/payload-types.ts
-
-```ts
-/* tslint:disable */
-/* eslint-disable */
-/**
- * This file was automatically generated by Payload.
- * DO NOT MODIFY IT BY HAND. Instead, modify your source Payload config,
- * and re-run `payload generate:types` to regenerate this file.
- */
-
-export interface Config {
-  collections: {
-    users: User;
-    media: Media;
-    films: Film;
-    stills: Still;
-    "payload-preferences": PayloadPreference;
-    "payload-migrations": PayloadMigration;
-  };
-  globals: {};
-  locale: null;
-  user: User & {
-    collection: "users";
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "films".
- */
-export interface Film {
-  id: number;
-  title: string;
-  date: string;
-  trailer?: string | null;
-  director?: string | null;
-  producer?: string | null;
-  format?: string | null;
-  prizes?:
-    | {
-        prize?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  imdbLink?: string | null;
-  aspectRatio?: ("4:3" | "5:4" | "16:9" | "2.35:1" | "9:16") | null;
-  stills?:
-    | {
-        image: number | Media;
-        featured?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  displayOnHomepage?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stills".
- */
-export interface Still {
-  id: number;
-  date: string;
-  location: string;
-  format?: string | null;
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-preferences".
- */
-export interface PayloadPreference {
-  id: number;
-  user: {
-    relationTo: "users";
-    value: number | User;
-  };
-  key?: string | null;
-  value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-migrations".
- */
-export interface PayloadMigration {
-  id: number;
-  name?: string | null;
-  batch?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-
 ```
 
 # public/vercel.svg
@@ -729,9 +599,7 @@ export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     useAsTitle: "title",
-    livePreview: {
-      url: "http://localhost:3000",
-    },
+    description: "Films to display both on the homepage and on project pages.",
   },
   fields: [
     {
@@ -812,6 +680,11 @@ export const Films: CollectionConfig = {
       defaultValue: false,
     },
   ],
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
 };
 
 /* Fields to Add
@@ -837,6 +710,29 @@ Photos/Stills (not on homepage)
 
 
 */
+
+```
+
+# src/components/refresh-route-on-save.tsx
+
+```tsx
+"use client";
+import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
+import { useRouter } from "next/navigation.js";
+import React from "react";
+
+export function RefreshRouteOnSave(): React.ReactElement {
+  const router = useRouter();
+
+  return (
+    <PayloadLivePreview
+      refresh={() => {
+        router.refresh();
+      }}
+      serverURL="http://localhost:3000" // todo: Should eventually be dynamic to current route.
+    />
+  );
+}
 
 ```
 
@@ -1023,7 +919,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
       <h2>Films</h2>
       {films.map((film) => (
         <Link
-          href={`/films/${film.id.toString()}`}
+          href={`/films/${film.title.toString().replace(/\s+/g, "-").toLowerCase()}`}
           key={film.id}
           className={styles.film}
         >
@@ -1034,18 +930,19 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
           <div className={styles.stillsGrid}>
             {film.stills
               ?.filter((still) => still.featured)
-              .map((still, index) => (
-                <Image
-                  key={index}
-                  src={
-                    typeof still.image === "object" && still.image.url
-                      ? still.image.url
-                      : "https://unplash.it/1600/900"
-                  }
-                  alt={`Still from ${film.title}`}
-                  style={{ objectFit: "cover" }}
-                  fill
-                />
+              .map((still) => (
+                <div className={styles.gridCell} key={still.id}>
+                  <Image
+                    src={
+                      typeof still.image === "object" && still.image.url
+                        ? still.image.url
+                        : "https://unplash.it/1600/900"
+                    }
+                    alt={`Still from ${film.title}`}
+                    style={{ objectFit: "cover" }}
+                    fill
+                  />
+                </div>
               ))}
           </div>
         </Link>
@@ -1060,24 +957,29 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```css
 .showcase {
+  display: flex;
+  row-gap: var(--size-12);
+  flex-direction: column;
   padding: var(--size-12);
+  width: 100%;
+  min-height: 100dvw;
 }
 
 .film {
-  margin-bottom: var(--size-8);
-  color: inherit;
-  text-decoration: none;
-}
-
-.filmInfo {
-  margin-bottom: var(--size-4);
+  display: block;
+  height: 100dvw;
 }
 
 .stillsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--size-6);
+  width: 100%;
+}
+
+.gridCell {
   position: relative;
   aspect-ratio: 16/9;
-  width: 100%;
-  overflow: hidden;
 }
 
 ```
@@ -1086,16 +988,38 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 This is a binary file of the type: Binary
 
+# src/app/my-route/route.ts
+
+```ts
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+
+export const GET = async (): Promise<Response> => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const data = await payload.find({
+    collection: "users",
+  });
+
+  return Response.json(data);
+};
+
+```
+
 # src/app/(app)/page.tsx
 
 ```tsx
 import { Suspense } from "react";
 import FilmShowcase from "@/components/film-showcase";
 import Reel from "@/components/reel";
+import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
 
 export default function Home(): React.ReactElement {
   return (
     <>
+      <RefreshRouteOnSave />
       <Reel />
       <Suspense fallback="<p>Loading...</p>">
         <FilmShowcase />
@@ -1167,26 +1091,6 @@ export default function RootLayout({
     height: 200lvh;
   }
 }
-
-```
-
-# src/app/my-route/route.ts
-
-```ts
-import { getPayload } from "payload";
-import configPromise from "@payload-config";
-
-export const GET = async (): Promise<Response> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const data = await payload.find({
-    collection: "users",
-  });
-
-  return Response.json(data);
-};
 
 ```
 

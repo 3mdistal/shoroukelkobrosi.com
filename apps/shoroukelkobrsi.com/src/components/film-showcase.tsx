@@ -59,7 +59,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
       <h2>Films</h2>
       {films.map((film) => (
         <Link
-          href={`/films/${film.id.toString()}`}
+          href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
@@ -70,18 +70,19 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
           <div className={styles.stillsGrid}>
             {film.stills
               ?.filter((still) => still.featured)
-              .map((still, index) => (
-                <Image
-                  key={index}
-                  src={
-                    typeof still.image === "object" && still.image.url
-                      ? still.image.url
-                      : "https://unplash.it/1600/900"
-                  }
-                  alt={`Still from ${film.title}`}
-                  style={{ objectFit: "cover" }}
-                  fill
-                />
+              .map((still) => (
+                <div className={styles.gridCell} key={still.id}>
+                  <Image
+                    src={
+                      typeof still.image === "object" && still.image.url
+                        ? still.image.url
+                        : "https://unplash.it/1600/900"
+                    }
+                    alt={`Still from ${film.title}`}
+                    style={{ objectFit: "cover" }}
+                    fill
+                  />
+                </div>
               ))}
           </div>
         </Link>
