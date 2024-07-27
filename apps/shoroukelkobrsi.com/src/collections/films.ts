@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { slugify } from "@/utilities/slugify";
 
 export const Films: CollectionConfig = {
   slug: "films",
@@ -11,6 +12,22 @@ export const Films: CollectionConfig = {
       name: "title",
       type: "text",
       required: true,
+    },
+    {
+      name: "slug",
+      admin: {
+        hidden: true,
+      },
+      type: "text",
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            if (data && data.title) {
+              return slugify(data.title);
+            }
+          },
+        ],
+      },
     },
     {
       name: "date",

@@ -59,7 +59,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
       <h2>Films</h2>
       {films.map((film) => (
         <Link
-          href={`/films/${film.title.toString().replace(/\s+/g, "-").toLowerCase()}`}
+          href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >

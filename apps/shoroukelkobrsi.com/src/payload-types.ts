@@ -7,6 +7,9 @@
  */
 
 export interface Config {
+  auth: {
+    users: UserAuthOperations;
+  };
   collections: {
     users: User;
     media: Media;
@@ -15,10 +18,29 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  db: {
+    defaultIDType: number;
+  };
   globals: {};
   locale: null;
   user: User & {
     collection: 'users';
+  };
+}
+export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
   };
 }
 /**
@@ -64,6 +86,7 @@ export interface Media {
 export interface Film {
   id: number;
   title: string;
+  slug?: string | null;
   date: string;
   trailer?: string | null;
   director?: string | null;
@@ -87,6 +110,7 @@ export interface Film {
   displayOnHomepage?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -134,6 +158,13 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auth".
+ */
+export interface Auth {
+  [k: string]: unknown;
 }
 
 
