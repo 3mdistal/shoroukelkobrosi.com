@@ -70,9 +70,9 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
           <div className={styles.stillsGrid}>
             {film.stills
               ?.filter((still) => still.featured)
-              .map((still, index) => (
+              .map((still) => (
                 <Image
-                  key={index}
+                  key={still.id}
                   src={
                     typeof still.image === "object" && still.image.url
                       ? still.image.url
