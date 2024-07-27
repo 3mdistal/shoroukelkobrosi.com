@@ -2,29 +2,34 @@ import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
 import Link from "next/link";
 import type { Payload } from "payload";
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "../payload-types";
 import styles from "./film-showcase.module.css";
 
-async function getFilms(): Promise<Film[]> {
-  noStore();
-  const payload: Payload = await getPayloadHMR({
-    config: configPromise,
-  });
+const getCachedFilms = cache(
+  async (): Promise<Film[]> => {
+    const payload: Payload = await getPayloadHMR({
+      config: configPromise,
+    });
 
-  const response = await payload.find({
-    collection: "films",
-    where: {
-      displayOnHomepage: {
-        equals: true,
+    const response = await payload.find({
+      collection: "films",
+      where: {
+        displayOnHomepage: {
+          equals: true,
+        },
       },
-    },
-    sort: "-date",
-  });
+      sort: "-date",
+    });
 
-  return response.docs;
-}
+    return response.docs;
+  },
+  ["data-cache"],
+  {
+    tags: ["films"],
+  },
+);
 
 function getSeason(date: Date): string {
   const month = date.getMonth();
@@ -54,7 +59,7 @@ function formatSeasonYear(dateString: string): string {
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
-  const films = await getFilms();
+  const films = await getCachedFilms();
 
   return (
     <section className={styles.showcase}>

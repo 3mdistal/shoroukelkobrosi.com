@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { revalidateTag } from "next/cache";
 import { slugify } from "@/utilities/slugify";
 
 export const Films: CollectionConfig = {
@@ -6,6 +7,18 @@ export const Films: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     description: "Films to display both on the homepage and on project pages.",
+  },
+  hooks: {
+    beforeChange: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
   },
   fields: [
     {
