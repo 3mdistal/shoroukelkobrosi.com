@@ -2,11 +2,13 @@ import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
 import Link from "next/link";
 import type { Payload } from "payload";
+import { unstable_noStore as noStore } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "../payload-types";
 import styles from "./film-showcase.module.css";
 
 async function getFilms(): Promise<Film[]> {
+  noStore();
   const payload: Payload = await getPayloadHMR({
     config: configPromise,
   });

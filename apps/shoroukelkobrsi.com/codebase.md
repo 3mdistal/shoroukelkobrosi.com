@@ -263,6 +263,14 @@ src/app/(payload)/api/*
 **/migrations/**
 ```
 
+# test-results/.last-run.json
+
+```json
+{
+  "status": "failed"
+}
+```
+
 # types/modules.d.ts
 
 ```ts
@@ -273,13 +281,13 @@ declare module "*.module.css" {
 
 ```
 
-# test-results/.last-run.json
+# public/vercel.svg
 
-```json
-{
-  "status": "failed"
-}
-```
+This is a file of the type: SVG Image
+
+# public/next.svg
+
+This is a file of the type: SVG Image
 
 # src/payload.config.ts
 
@@ -342,6 +350,9 @@ export default buildConfig({
  */
 
 export interface Config {
+  auth: {
+    users: UserAuthOperations;
+  };
   collections: {
     users: User;
     media: Media;
@@ -350,10 +361,29 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  db: {
+    defaultIDType: number;
+  };
   globals: {};
   locale: null;
   user: User & {
     collection: 'users';
+  };
+}
+export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
   };
 }
 /**
@@ -399,6 +429,7 @@ export interface Media {
 export interface Film {
   id: number;
   title: string;
+  slug: string;
   date: string;
   trailer?: string | null;
   director?: string | null;
@@ -422,6 +453,7 @@ export interface Film {
   displayOnHomepage?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -470,6 +502,13 @@ export interface PayloadMigration {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auth".
+ */
+export interface Auth {
+  [k: string]: unknown;
+}
 
 
 declare module 'payload' {
@@ -477,14 +516,6 @@ declare module 'payload' {
   export interface GeneratedTypes extends Config {}
 }
 ```
-
-# public/vercel.svg
-
-This is a file of the type: SVG Image
-
-# public/next.svg
-
-This is a file of the type: SVG Image
 
 # media/testing-1.avif
 
@@ -510,206 +541,6 @@ The "project.json" file contains:
 > Should I commit the ".vercel" folder?
 No, you should not share the ".vercel" folder with anyone.
 Upon creation, it will be automatically added to your ".gitignore" file.
-
-```
-
-# src/collections/users.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Users: CollectionConfig = {
-  slug: "users",
-  admin: {
-    useAsTitle: "email",
-  },
-  auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-  ],
-};
-
-```
-
-# src/collections/stills.ts
-
-```ts
-import { type CollectionConfig } from "payload";
-
-export const Stills: CollectionConfig = {
-  slug: "stills",
-  admin: {
-    useAsTitle: "location",
-  },
-  fields: [
-    {
-      name: "date",
-      type: "date",
-      required: true,
-    },
-    {
-      name: "location",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: true,
-    },
-  ],
-};
-
-```
-
-# src/collections/media.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Media: CollectionConfig = {
-  slug: "media",
-  access: {
-    read: () => true,
-  },
-  fields: [
-    {
-      name: "alt",
-      type: "text",
-      required: true,
-    },
-  ],
-  upload: true,
-};
-
-```
-
-# src/collections/films.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Films: CollectionConfig = {
-  slug: "films",
-  admin: {
-    useAsTitle: "title",
-    description: "Films to display both on the homepage and on project pages.",
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "date",
-      type: "date",
-      required: true,
-      label: "Date Completed",
-    },
-    {
-      name: "trailer",
-      type: "text",
-      label: "Trailer embed URL (Vimeo or YouTube).",
-    },
-    {
-      name: "director",
-      type: "text",
-    },
-    {
-      name: "producer",
-      type: "text",
-      label: "Producer or production house.",
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "prizes",
-      type: "array",
-      fields: [
-        {
-          name: "prize",
-          type: "text",
-        },
-      ],
-    },
-    {
-      name: "imdbLink",
-      type: "text",
-      label: "IMDb Link",
-    },
-    {
-      name: "aspectRatio",
-      type: "select",
-      options: [
-        { label: "4:3", value: "4:3" },
-        { label: "5:4", value: "5:4" },
-        { label: "16:9", value: "16:9" },
-        { label: "2.35:1", value: "2.35:1" },
-        { label: "9:16", value: "9:16" },
-      ],
-    },
-    {
-      name: "stills",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-        {
-          name: "featured",
-          type: "checkbox",
-          label: "Feature on homepage.",
-        },
-      ],
-    },
-    {
-      name: "displayOnHomepage",
-      type: "checkbox",
-      defaultValue: false,
-    },
-  ],
-  versions: {
-    drafts: {
-      autosave: true,
-    },
-  },
-};
-
-/* Fields to Add
-
-- newest goes first
-- trailer (embedded from YT or Vimeo)
-- more stills (which means we need "featured")
-- title
-- director
-- producer
-- format
-- prizes
-- imdb
-- aspect ratio
-- next and previous
-
-
-Photos/Stills (not on homepage)
-- date
-- location
-- format
-- organized into masonry
-
-
-*/
 
 ```
 
@@ -919,7 +750,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
       <h2>Films</h2>
       {films.map((film) => (
         <Link
-          href={`/films/${film.title.toString().replace(/\s+/g, "-").toLowerCase()}`}
+          href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
@@ -981,6 +812,236 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
   position: relative;
   aspect-ratio: 16/9;
 }
+
+```
+
+# src/utilities/slugify.ts
+
+```ts
+export const slugify = (str: string): string => {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
+```
+
+# src/collections/users.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Users: CollectionConfig = {
+  slug: "users",
+  admin: {
+    useAsTitle: "email",
+  },
+  auth: true,
+  fields: [
+    // Email added by default
+    // Add more fields as needed
+  ],
+};
+
+```
+
+# src/collections/stills.ts
+
+```ts
+import { type CollectionConfig } from "payload";
+
+export const Stills: CollectionConfig = {
+  slug: "stills",
+  admin: {
+    useAsTitle: "location",
+  },
+  fields: [
+    {
+      name: "date",
+      type: "date",
+      required: true,
+    },
+    {
+      name: "location",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+  ],
+};
+
+```
+
+# src/collections/media.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Media: CollectionConfig = {
+  slug: "media",
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: "alt",
+      type: "text",
+      required: true,
+    },
+  ],
+  upload: true,
+};
+
+```
+
+# src/collections/films.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+import { slugify } from "@/utilities/slugify";
+
+export const Films: CollectionConfig = {
+  slug: "films",
+  admin: {
+    useAsTitle: "title",
+    description: "Films to display both on the homepage and on project pages.",
+  },
+  fields: [
+    {
+      name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "slug",
+      admin: {
+        hidden: true,
+      },
+      required: true,
+      type: "text",
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            return data?.title ? slugify(data.title as string) : undefined;
+          },
+        ],
+      },
+    },
+    {
+      name: "date",
+      type: "date",
+      required: true,
+      label: "Date Completed",
+    },
+    {
+      name: "trailer",
+      type: "text",
+      label: "Trailer embed URL (Vimeo or YouTube).",
+    },
+    {
+      name: "director",
+      type: "text",
+    },
+    {
+      name: "producer",
+      type: "text",
+      label: "Producer or production house.",
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "prizes",
+      type: "array",
+      fields: [
+        {
+          name: "prize",
+          type: "text",
+        },
+      ],
+    },
+    {
+      name: "imdbLink",
+      type: "text",
+      label: "IMDb Link",
+    },
+    {
+      name: "aspectRatio",
+      type: "select",
+      options: [
+        { label: "4:3", value: "4:3" },
+        { label: "5:4", value: "5:4" },
+        { label: "16:9", value: "16:9" },
+        { label: "2.35:1", value: "2.35:1" },
+        { label: "9:16", value: "9:16" },
+      ],
+    },
+    {
+      name: "stills",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "featured",
+          type: "checkbox",
+          label: "Feature on homepage.",
+        },
+      ],
+    },
+    {
+      name: "displayOnHomepage",
+      type: "checkbox",
+      defaultValue: false,
+    },
+  ],
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
+};
+
+/* Fields to Add
+
+- newest goes first
+- trailer (embedded from YT or Vimeo)
+- more stills (which means we need "featured")
+- title
+- director
+- producer
+- format
+- prizes
+- imdb
+- aspect ratio
+- next and previous
+
+
+Photos/Stills (not on homepage)
+- date
+- location
+- format
+- organized into masonry
+
+
+*/
 
 ```
 
@@ -1124,30 +1185,6 @@ export default Layout;
 
 ```
 
-# src/app/(payload)/api/graphql-playground/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
-
-export const GET = GRAPHQL_PLAYGROUND_GET(config);
-
-```
-
-# src/app/(payload)/api/graphql/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
-
-```
-
 # src/app/(payload)/api/[...slug]/route.ts
 
 ```ts
@@ -1167,6 +1204,18 @@ export const POST = REST_POST(config);
 export const DELETE = REST_DELETE(config);
 export const PATCH = REST_PATCH(config);
 export const OPTIONS = REST_OPTIONS(config);
+
+```
+
+# src/app/(payload)/api/graphql/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
+
+export const POST = GRAPHQL_POST(config);
 
 ```
 
@@ -1231,6 +1280,18 @@ const NotFound = ({ params, searchParams }: Args) =>
   NotFoundPage({ config, params, searchParams });
 
 export default NotFound;
+
+```
+
+# src/app/(payload)/api/graphql-playground/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
+
+export const GET = GRAPHQL_PLAYGROUND_GET(config);
 
 ```
 
