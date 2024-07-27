@@ -18,13 +18,12 @@ export const Films: CollectionConfig = {
       admin: {
         hidden: true,
       },
+      required: true,
       type: "text",
       hooks: {
         beforeValidate: [
           ({ data }) => {
-            if (data && data.title) {
-              return slugify(data.title);
-            }
+            return data?.title ? slugify(data.title as string) : undefined;
           },
         ],
       },

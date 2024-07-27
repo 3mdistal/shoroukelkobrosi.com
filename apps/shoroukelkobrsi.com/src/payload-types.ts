@@ -86,7 +86,7 @@ export interface Media {
 export interface Film {
   id: number;
   title: string;
-  slug?: string | null;
+  slug: string;
   date: string;
   trailer?: string | null;
   director?: string | null;
