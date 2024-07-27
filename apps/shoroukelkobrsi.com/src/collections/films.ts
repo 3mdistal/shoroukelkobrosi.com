@@ -4,6 +4,7 @@ export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     useAsTitle: "title",
+    description: "Films to display both on the homepage and on project pages.",
   },
   fields: [
     {
