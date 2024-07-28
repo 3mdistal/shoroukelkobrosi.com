@@ -192,6 +192,7 @@ const nextConfig = {
     reactCompiler: true,
     // typedRoutes: true, // Not yet available in Turbopack.
   },
+  productionBrowserSourceMaps: true,
 };
 
 export default withPayload(nextConfig);
@@ -263,6 +264,14 @@ src/app/(payload)/api/*
 **/migrations/**
 ```
 
+# test-results/.last-run.json
+
+```json
+{
+  "status": "failed"
+}
+```
+
 # types/modules.d.ts
 
 ```ts
@@ -285,15 +294,7 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
-
-function getURL(): string {
-  if (process.env.VERCEL_ENV === "production") {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
-  } else if (process.env.VERCEL_ENV === "preview") {
-    return `https://${process.env.VERCEL_URL ?? "error"}`;
-  }
-  return "http://localhost:3000";
-}
+import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
@@ -522,14 +523,6 @@ This is a file of the type: SVG Image
 
 This is a binary file of the type: Binary
 
-# test-results/.last-run.json
-
-```json
-{
-  "status": "failed"
-}
-```
-
 # .vercel/project.json
 
 ```json
@@ -567,9 +560,19 @@ export const slugify = (str: string): string => {
 
 ```
 
-# src/app/favicon.ico
+# src/utilities/get-url.ts
 
-This is a binary file of the type: Binary
+```ts
+export const getURL = (): string => {
+  if (process.env.VERCEL_ENV === "production") {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
+  } else if (process.env.VERCEL_ENV === "preview") {
+    return `https://${process.env.VERCEL_URL ?? "error"}`;
+  }
+  return "http://localhost:3000";
+};
+
+```
 
 # src/collections/users.ts
 
@@ -807,6 +810,7 @@ Photos/Stills (not on homepage)
 import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
 import { useRouter } from "next/navigation.js";
 import React from "react";
+import { getURL } from "@/utilities/get-url";
 
 export function RefreshRouteOnSave(): React.ReactElement {
   const router = useRouter();
@@ -816,7 +820,7 @@ export function RefreshRouteOnSave(): React.ReactElement {
       refresh={() => {
         router.refresh();
       }}
-      serverURL="http://localhost:3000" // todo: Should eventually be dynamic to current route.
+      serverURL={getURL()}
     />
   );
 }
@@ -1078,6 +1082,10 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```
 
+# src/app/favicon.ico
+
+This is a binary file of the type: Binary
+
 # src/app/my-route/route.ts
 
 ```ts
@@ -1141,7 +1149,7 @@ export default function Home(): React.ReactElement {
     <>
       <RefreshRouteOnSave />
       <Reel />
-      <Suspense fallback="<p>Loading...</p>">
+      <Suspense fallback={<p>Loading...</p>}>
         <FilmShowcase />
       </Suspense>
     </>
@@ -1214,15 +1222,12 @@ export default function RootLayout({
 
 ```
 
-# src/app/(payload)/api/graphql-playground/route.ts
+# src/app/(app)/films/[slug].tsx
 
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
-
-export const GET = GRAPHQL_PLAYGROUND_GET(config);
+```tsx
+export default function FilmPage() {
+  return <p>Film Page</p>;
+}
 
 ```
 
@@ -1245,18 +1250,6 @@ export const POST = REST_POST(config);
 export const DELETE = REST_DELETE(config);
 export const PATCH = REST_PATCH(config);
 export const OPTIONS = REST_OPTIONS(config);
-
-```
-
-# src/app/(payload)/api/graphql/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
 
 ```
 
@@ -1321,6 +1314,30 @@ const NotFound = ({ params, searchParams }: Args) =>
   NotFoundPage({ config, params, searchParams });
 
 export default NotFound;
+
+```
+
+# src/app/(payload)/api/graphql/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
+
+export const POST = GRAPHQL_POST(config);
+
+```
+
+# src/app/(payload)/api/graphql-playground/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
+
+export const GET = GRAPHQL_PLAYGROUND_GET(config);
 
 ```
 
