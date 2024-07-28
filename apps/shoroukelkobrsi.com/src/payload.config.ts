@@ -7,6 +7,7 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
+import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
@@ -15,12 +16,13 @@ export default buildConfig({
       password: "dev",
     },
     livePreview: {
-      url: "http://localhost:3000",
+      url: () => getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
+  cors: "*",
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",

@@ -6,6 +6,7 @@ const nextConfig = {
     reactCompiler: true,
     // typedRoutes: true, // Not yet available in Turbopack.
   },
+  productionBrowserSourceMaps: true,
 };
 
 export default withPayload(nextConfig);

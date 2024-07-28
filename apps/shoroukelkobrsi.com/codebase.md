@@ -192,6 +192,7 @@ const nextConfig = {
     reactCompiler: true,
     // typedRoutes: true, // Not yet available in Turbopack.
   },
+  productionBrowserSourceMaps: true,
 };
 
 export default withPayload(nextConfig);
@@ -281,14 +282,6 @@ declare module "*.module.css" {
 
 ```
 
-# public/vercel.svg
-
-This is a file of the type: SVG Image
-
-# public/next.svg
-
-This is a file of the type: SVG Image
-
 # src/payload.config.ts
 
 ```ts
@@ -301,6 +294,7 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
+import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
@@ -309,7 +303,7 @@ export default buildConfig({
       password: "dev",
     },
     livePreview: {
-      url: "http://localhost:3000",
+      url: () => getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,
@@ -517,6 +511,14 @@ declare module 'payload' {
 }
 ```
 
+# public/vercel.svg
+
+This is a file of the type: SVG Image
+
+# public/next.svg
+
+This is a file of the type: SVG Image
+
 # media/testing-1.avif
 
 This is a binary file of the type: Binary
@@ -544,6 +546,263 @@ Upon creation, it will be automatically added to your ".gitignore" file.
 
 ```
 
+# src/utilities/slugify.ts
+
+```ts
+export const slugify = (str: string): string => {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
+```
+
+# src/utilities/get-url.ts
+
+```ts
+export const getURL = (): string => {
+  if (process.env.VERCEL_ENV === "production") {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
+  } else if (process.env.VERCEL_ENV === "preview") {
+    return `https://${process.env.VERCEL_URL ?? "error"}`;
+  }
+  return "http://localhost:3000";
+};
+
+```
+
+# src/collections/users.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Users: CollectionConfig = {
+  slug: "users",
+  admin: {
+    useAsTitle: "email",
+  },
+  auth: true,
+  fields: [
+    // Email added by default
+    // Add more fields as needed
+  ],
+};
+
+```
+
+# src/collections/stills.ts
+
+```ts
+import { type CollectionConfig } from "payload";
+
+export const Stills: CollectionConfig = {
+  slug: "stills",
+  admin: {
+    useAsTitle: "location",
+  },
+  fields: [
+    {
+      name: "date",
+      type: "date",
+      required: true,
+    },
+    {
+      name: "location",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+  ],
+};
+
+```
+
+# src/collections/media.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Media: CollectionConfig = {
+  slug: "media",
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: "alt",
+      type: "text",
+      required: true,
+    },
+  ],
+  upload: true,
+};
+
+```
+
+# src/collections/films.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+import { revalidateTag } from "next/cache";
+import { slugify } from "@/utilities/slugify";
+
+export const Films: CollectionConfig = {
+  slug: "films",
+  admin: {
+    description: "Films to display both on the homepage and on project pages.",
+    useAsTitle: "title",
+  },
+  hooks: {
+    beforeChange: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
+  },
+  fields: [
+    {
+      name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "slug",
+      admin: {
+        hidden: true,
+      },
+      required: true,
+      type: "text",
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            return data?.title ? slugify(data.title as string) : undefined;
+          },
+        ],
+      },
+    },
+    {
+      name: "date",
+      type: "date",
+      required: true,
+      label: "Date Completed",
+    },
+    {
+      name: "trailer",
+      type: "text",
+      label: "Trailer embed URL (Vimeo or YouTube).",
+    },
+    {
+      name: "director",
+      type: "text",
+    },
+    {
+      name: "producer",
+      type: "text",
+      label: "Producer or production house.",
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "prizes",
+      type: "array",
+      fields: [
+        {
+          name: "prize",
+          type: "text",
+        },
+      ],
+    },
+    {
+      name: "imdbLink",
+      type: "text",
+      label: "IMDb Link",
+    },
+    {
+      name: "aspectRatio",
+      type: "select",
+      options: [
+        { label: "4:3", value: "4:3" },
+        { label: "5:4", value: "5:4" },
+        { label: "16:9", value: "16:9" },
+        { label: "2.35:1", value: "2.35:1" },
+        { label: "9:16", value: "9:16" },
+      ],
+    },
+    {
+      name: "stills",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "featured",
+          type: "checkbox",
+          label: "Feature on homepage.",
+        },
+      ],
+    },
+    {
+      name: "displayOnHomepage",
+      type: "checkbox",
+      defaultValue: false,
+    },
+  ],
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
+};
+
+/* Fields to Add
+
+- newest goes first
+- trailer (embedded from YT or Vimeo)
+- more stills (which means we need "featured")
+- title
+- director
+- producer
+- format
+- prizes
+- imdb
+- aspect ratio
+- next and previous
+
+
+Photos/Stills (not on homepage)
+- date
+- location
+- format
+- organized into masonry
+
+
+*/
+
+```
+
 # src/components/refresh-route-on-save.tsx
 
 ```tsx
@@ -551,6 +810,7 @@ Upon creation, it will be automatically added to your ".gitignore" file.
 import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
 import { useRouter } from "next/navigation.js";
 import React from "react";
+import { getURL } from "@/utilities/get-url";
 
 export function RefreshRouteOnSave(): React.ReactElement {
   const router = useRouter();
@@ -560,7 +820,7 @@ export function RefreshRouteOnSave(): React.ReactElement {
       refresh={() => {
         router.refresh();
       }}
-      serverURL="http://localhost:3000" // todo: Should eventually be dynamic to current route.
+      serverURL={getURL()}
     />
   );
 }
@@ -693,27 +953,34 @@ import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
 import Link from "next/link";
 import type { Payload } from "payload";
+import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "../payload-types";
 import styles from "./film-showcase.module.css";
 
-async function getFilms(): Promise<Film[]> {
-  const payload: Payload = await getPayloadHMR({
-    config: configPromise,
-  });
+const getCachedFilms = cache(
+  async (): Promise<Film[]> => {
+    const payload: Payload = await getPayloadHMR({
+      config: configPromise,
+    });
 
-  const response = await payload.find({
-    collection: "films",
-    where: {
-      displayOnHomepage: {
-        equals: true,
+    const response = await payload.find({
+      collection: "films",
+      where: {
+        displayOnHomepage: {
+          equals: true,
+        },
       },
-    },
-    sort: "-date",
-  });
+      sort: "-date",
+    });
 
-  return response.docs;
-}
+    return response.docs;
+  },
+  ["data-cache"],
+  {
+    tags: ["films"],
+  },
+);
 
 function getSeason(date: Date): string {
   const month = date.getMonth();
@@ -743,7 +1010,7 @@ function formatSeasonYear(dateString: string): string {
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
-  const films = await getFilms();
+  const films = await getCachedFilms();
 
   return (
     <section className={styles.showcase}>
@@ -815,236 +1082,6 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```
 
-# src/utilities/slugify.ts
-
-```ts
-export const slugify = (str: string): string => {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-};
-
-```
-
-# src/collections/users.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Users: CollectionConfig = {
-  slug: "users",
-  admin: {
-    useAsTitle: "email",
-  },
-  auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-  ],
-};
-
-```
-
-# src/collections/stills.ts
-
-```ts
-import { type CollectionConfig } from "payload";
-
-export const Stills: CollectionConfig = {
-  slug: "stills",
-  admin: {
-    useAsTitle: "location",
-  },
-  fields: [
-    {
-      name: "date",
-      type: "date",
-      required: true,
-    },
-    {
-      name: "location",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: true,
-    },
-  ],
-};
-
-```
-
-# src/collections/media.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Media: CollectionConfig = {
-  slug: "media",
-  access: {
-    read: () => true,
-  },
-  fields: [
-    {
-      name: "alt",
-      type: "text",
-      required: true,
-    },
-  ],
-  upload: true,
-};
-
-```
-
-# src/collections/films.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-import { slugify } from "@/utilities/slugify";
-
-export const Films: CollectionConfig = {
-  slug: "films",
-  admin: {
-    useAsTitle: "title",
-    description: "Films to display both on the homepage and on project pages.",
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "slug",
-      admin: {
-        hidden: true,
-      },
-      required: true,
-      type: "text",
-      hooks: {
-        beforeValidate: [
-          ({ data }) => {
-            return data?.title ? slugify(data.title as string) : undefined;
-          },
-        ],
-      },
-    },
-    {
-      name: "date",
-      type: "date",
-      required: true,
-      label: "Date Completed",
-    },
-    {
-      name: "trailer",
-      type: "text",
-      label: "Trailer embed URL (Vimeo or YouTube).",
-    },
-    {
-      name: "director",
-      type: "text",
-    },
-    {
-      name: "producer",
-      type: "text",
-      label: "Producer or production house.",
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "prizes",
-      type: "array",
-      fields: [
-        {
-          name: "prize",
-          type: "text",
-        },
-      ],
-    },
-    {
-      name: "imdbLink",
-      type: "text",
-      label: "IMDb Link",
-    },
-    {
-      name: "aspectRatio",
-      type: "select",
-      options: [
-        { label: "4:3", value: "4:3" },
-        { label: "5:4", value: "5:4" },
-        { label: "16:9", value: "16:9" },
-        { label: "2.35:1", value: "2.35:1" },
-        { label: "9:16", value: "9:16" },
-      ],
-    },
-    {
-      name: "stills",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-        {
-          name: "featured",
-          type: "checkbox",
-          label: "Feature on homepage.",
-        },
-      ],
-    },
-    {
-      name: "displayOnHomepage",
-      type: "checkbox",
-      defaultValue: false,
-    },
-  ],
-  versions: {
-    drafts: {
-      autosave: true,
-    },
-  },
-};
-
-/* Fields to Add
-
-- newest goes first
-- trailer (embedded from YT or Vimeo)
-- more stills (which means we need "featured")
-- title
-- director
-- producer
-- format
-- prizes
-- imdb
-- aspect ratio
-- next and previous
-
-
-Photos/Stills (not on homepage)
-- date
-- location
-- format
-- organized into masonry
-
-
-*/
-
-```
-
 # src/app/favicon.ico
 
 This is a binary file of the type: Binary
@@ -1069,6 +1106,36 @@ export const GET = async (): Promise<Response> => {
 
 ```
 
+# src/app/(payload)/layout.tsx
+
+```tsx
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+import configPromise from "@payload-config";
+import "@payloadcms/next/css";
+import { RootLayout } from "@payloadcms/next/layouts";
+/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
+import React from "react";
+
+import "./custom.scss";
+
+type Args = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: Args) => (
+  <RootLayout config={configPromise}>{children}</RootLayout>
+);
+
+export default Layout;
+
+```
+
+# src/app/(payload)/custom.scss
+
+```scss
+
+```
+
 # src/app/(app)/page.tsx
 
 ```tsx
@@ -1082,7 +1149,7 @@ export default function Home(): React.ReactElement {
     <>
       <RefreshRouteOnSave />
       <Reel />
-      <Suspense fallback="<p>Loading...</p>">
+      <Suspense fallback={<p>Loading...</p>}>
         <FilmShowcase />
       </Suspense>
     </>
@@ -1155,33 +1222,12 @@ export default function RootLayout({
 
 ```
 
-# src/app/(payload)/layout.tsx
+# src/app/(app)/films/[slug].tsx
 
 ```tsx
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-import configPromise from "@payload-config";
-import "@payloadcms/next/css";
-import { RootLayout } from "@payloadcms/next/layouts";
-/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
-import React from "react";
-
-import "./custom.scss";
-
-type Args = {
-  children: React.ReactNode;
-};
-
-const Layout = ({ children }: Args) => (
-  <RootLayout config={configPromise}>{children}</RootLayout>
-);
-
-export default Layout;
-
-```
-
-# src/app/(payload)/custom.scss
-
-```scss
+export default function FilmPage() {
+  return <p>Film Page</p>;
+}
 
 ```
 
@@ -1204,18 +1250,6 @@ export const POST = REST_POST(config);
 export const DELETE = REST_DELETE(config);
 export const PATCH = REST_PATCH(config);
 export const OPTIONS = REST_OPTIONS(config);
-
-```
-
-# src/app/(payload)/api/graphql/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
 
 ```
 
@@ -1280,6 +1314,18 @@ const NotFound = ({ params, searchParams }: Args) =>
   NotFoundPage({ config, params, searchParams });
 
 export default NotFound;
+
+```
+
+# src/app/(payload)/api/graphql/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
+
+export const POST = GRAPHQL_POST(config);
 
 ```
 
