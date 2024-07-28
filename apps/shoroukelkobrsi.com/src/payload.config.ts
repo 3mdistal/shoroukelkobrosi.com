@@ -7,15 +7,7 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
-
-function getURL(): string {
-  if (process.env.VERCEL_ENV === "production") {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
-  } else if (process.env.VERCEL_ENV === "preview") {
-    return `https://${process.env.VERCEL_URL ?? "error"}`;
-  }
-  return "http://localhost:3000";
-}
+import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {

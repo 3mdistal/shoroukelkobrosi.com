@@ -2,6 +2,7 @@
 import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
 import { useRouter } from "next/navigation.js";
 import React from "react";
+import { getURL } from "@/utilities/get-url";
 
 export function RefreshRouteOnSave(): React.ReactElement {
   const router = useRouter();
@@ -11,7 +12,7 @@ export function RefreshRouteOnSave(): React.ReactElement {
       refresh={() => {
         router.refresh();
       }}
-      serverURL="http://localhost:3000" // todo: Should eventually be dynamic to current route.
+      serverURL={getURL()}
     />
   );
 }

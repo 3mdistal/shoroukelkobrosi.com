@@ -8,7 +8,7 @@ export default function Home(): React.ReactElement {
     <>
       <RefreshRouteOnSave />
       <Reel />
-      <Suspense fallback="<p>Loading...</p>">
+      <Suspense fallback={<p>Loading...</p>}>
         <FilmShowcase />
       </Suspense>
     </>
