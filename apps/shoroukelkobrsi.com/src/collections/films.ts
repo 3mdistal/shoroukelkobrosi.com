@@ -116,31 +116,9 @@ export const Films: CollectionConfig = {
   ],
   versions: {
     drafts: {
-      autosave: true,
+      autosave: {
+        interval: 375,
+      },
     },
   },
 };
-
-/* Fields to Add
-
-- newest goes first
-- trailer (embedded from YT or Vimeo)
-- more stills (which means we need "featured")
-- title
-- director
-- producer
-- format
-- prizes
-- imdb
-- aspect ratio
-- next and previous
-
-
-Photos/Stills (not on homepage)
-- date
-- location
-- format
-- organized into masonry
-
-
-*/

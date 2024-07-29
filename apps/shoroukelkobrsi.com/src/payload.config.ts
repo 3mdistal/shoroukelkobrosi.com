@@ -37,6 +37,7 @@ export default buildConfig({
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
   secret: process.env.PAYLOAD_SECRET ?? "",
+  serverURL: getURL(),
   sharp,
   typescript: {
     outputFile: "src/payload-types.ts",
