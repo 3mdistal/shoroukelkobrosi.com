@@ -12,9 +12,11 @@ import { getURL } from "./utilities/get-url";
 export default buildConfig({
   admin: {
     autoLogin: {
-      email: "dev@dev.com",
+      email: "admin_dev@dev.com",
       password: "dev",
+      prefillOnly: true,
     },
+    avatar: "gravatar",
     livePreview: {
       url: () => getURL(),
       collections: ["films", "stills"],
