@@ -3,11 +3,11 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
+import { getURL } from "./utilities/get-url";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
-import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
@@ -18,7 +18,7 @@ export default buildConfig({
     },
     avatar: "gravatar",
     livePreview: {
-      url: () => getURL(),
+      url: getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,
@@ -37,6 +37,7 @@ export default buildConfig({
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
   secret: process.env.PAYLOAD_SECRET ?? "",
+  serverURL: getURL(),
   sharp,
   typescript: {
     outputFile: "src/payload-types.ts",
