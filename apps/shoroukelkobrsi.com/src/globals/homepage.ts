@@ -4,10 +4,6 @@ import { revalidateTag } from "next/cache";
 // todo: Needs to be able to be updated in prod, and something is breaking it.
 export const Homepage: GlobalConfig = {
   slug: "homepage",
-  access: {
-    read: () => true,
-    update: () => true,
-  },
   fields: [
     {
       name: "featuredFilms",
@@ -26,12 +22,5 @@ export const Homepage: GlobalConfig = {
         revalidateTag("homepage");
       },
     ],
-  },
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 375,
-      },
-    },
   },
 };
