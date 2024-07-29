@@ -1,22 +1,31 @@
 import type { CollectionConfig } from "payload";
 import { revalidateTag } from "next/cache";
 import { slugify } from "@/utilities/slugify";
+import { getURL } from "@/utilities/get-url";
 
 export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     description: "Films to display both on the homepage and on project pages.",
+    livePreview: {
+      url: ({ data }) => {
+        if (typeof data.slug === "string") {
+          return `${getURL()}/films/${data.slug}`;
+        }
+        return getURL();
+      },
+    },
     useAsTitle: "title",
   },
   hooks: {
     afterChange: [
       () => {
-        revalidateTag("films");
+        revalidateTag("homepage");
       },
     ],
     afterDelete: [
       () => {
-        revalidateTag("films");
+        revalidateTag("homepage");
       },
     ],
   },
@@ -108,17 +117,5 @@ export const Films: CollectionConfig = {
         },
       ],
     },
-    {
-      name: "displayOnHomepage",
-      type: "checkbox",
-      defaultValue: false,
-    },
   ],
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 375,
-      },
-    },
-  },
 };

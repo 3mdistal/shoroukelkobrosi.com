@@ -4,30 +4,24 @@ import Link from "next/link";
 import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
-import type { Film } from "../payload-types";
+import type { Film, Homepage } from "../payload-types";
 import styles from "./film-showcase.module.css";
 
-const getCachedFilms = cache(
-  async (): Promise<Film[]> => {
+const getCachedHomepage = cache(
+  async (): Promise<Homepage> => {
     const payload: Payload = await getPayloadHMR({
       config: configPromise,
     });
 
-    const response = await payload.find({
-      collection: "films",
-      where: {
-        displayOnHomepage: {
-          equals: true,
-        },
-      },
-      sort: "-date",
+    const homepage = await payload.findGlobal({
+      slug: "homepage",
     });
 
-    return response.docs;
+    return homepage;
   },
-  ["data-cache"],
+  ["homepage-cache"],
   {
-    tags: ["films"],
+    tags: ["homepage"],
   },
 );
 
@@ -59,18 +53,24 @@ function formatSeasonYear(dateString: string): string {
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
-  const films = await getCachedFilms();
+  const homepage = await getCachedHomepage();
+
+  if (!homepage.featuredFilms) {
+    return <div />;
+  }
+
+  const featuredFilms = homepage.featuredFilms as Film[];
 
   return (
     <section className={styles.showcase}>
       <h2>Films</h2>
-      {films.map((film) => (
+      {featuredFilms.map((film) => (
         <Link
           href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
-          <div className={styles.filmInfo}>
+          <div>
             <h3>{film.title}</h3>
             <p>{formatSeasonYear(film.date)}</p>
           </div>
