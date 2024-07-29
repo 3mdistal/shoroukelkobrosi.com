@@ -24,7 +24,6 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
-  cors: "*",
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",
