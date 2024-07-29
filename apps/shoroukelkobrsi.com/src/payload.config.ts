@@ -7,7 +7,6 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
-import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
@@ -18,7 +17,7 @@ export default buildConfig({
     },
     avatar: "gravatar",
     livePreview: {
-      url: () => getURL(),
+      url: "/",
       collections: ["films", "stills"],
     },
     user: Users.slug,

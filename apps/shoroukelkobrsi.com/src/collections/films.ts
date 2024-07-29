@@ -9,7 +9,7 @@ export const Films: CollectionConfig = {
     useAsTitle: "title",
   },
   hooks: {
-    beforeChange: [
+    afterChange: [
       () => {
         revalidateTag("films");
       },
