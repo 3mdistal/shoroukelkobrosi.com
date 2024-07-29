@@ -290,26 +290,27 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
+import { getURL } from "./utilities/get-url";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
 import { Stills } from "./collections/stills";
-import { getURL } from "./utilities/get-url";
 
 export default buildConfig({
   admin: {
     autoLogin: {
-      email: "dev@dev.com",
+      email: "admin_dev@dev.com",
       password: "dev",
+      prefillOnly: true,
     },
+    avatar: "gravatar",
     livePreview: {
-      url: () => getURL(),
+      url: getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
-  cors: "*",
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",
@@ -322,6 +323,7 @@ export default buildConfig({
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
   secret: process.env.PAYLOAD_SECRET ?? "",
+  serverURL: getURL(),
   sharp,
   typescript: {
     outputFile: "src/payload-types.ts",
@@ -387,6 +389,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  role?: ('admin' | 'editor') | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -572,239 +575,6 @@ export const getURL = (): string => {
   }
   return "http://localhost:3000";
 };
-
-```
-
-# src/app/favicon.ico
-
-This is a binary file of the type: Binary
-
-# src/collections/users.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Users: CollectionConfig = {
-  slug: "users",
-  admin: {
-    useAsTitle: "email",
-  },
-  auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-  ],
-};
-
-```
-
-# src/collections/stills.ts
-
-```ts
-import { type CollectionConfig } from "payload";
-
-export const Stills: CollectionConfig = {
-  slug: "stills",
-  admin: {
-    useAsTitle: "location",
-  },
-  fields: [
-    {
-      name: "date",
-      type: "date",
-      required: true,
-    },
-    {
-      name: "location",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: true,
-    },
-  ],
-};
-
-```
-
-# src/collections/media.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Media: CollectionConfig = {
-  slug: "media",
-  access: {
-    read: () => true,
-  },
-  fields: [
-    {
-      name: "alt",
-      type: "text",
-      required: true,
-    },
-  ],
-  upload: true,
-};
-
-```
-
-# src/collections/films.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-import { revalidateTag } from "next/cache";
-import { slugify } from "@/utilities/slugify";
-
-export const Films: CollectionConfig = {
-  slug: "films",
-  admin: {
-    description: "Films to display both on the homepage and on project pages.",
-    useAsTitle: "title",
-  },
-  hooks: {
-    beforeChange: [
-      () => {
-        revalidateTag("films");
-      },
-    ],
-    afterDelete: [
-      () => {
-        revalidateTag("films");
-      },
-    ],
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "slug",
-      admin: {
-        hidden: true,
-      },
-      required: true,
-      type: "text",
-      hooks: {
-        beforeValidate: [
-          ({ data }) => {
-            return data?.title ? slugify(data.title as string) : undefined;
-          },
-        ],
-      },
-    },
-    {
-      name: "date",
-      type: "date",
-      required: true,
-      label: "Date Completed",
-    },
-    {
-      name: "trailer",
-      type: "text",
-      label: "Trailer embed URL (Vimeo or YouTube).",
-    },
-    {
-      name: "director",
-      type: "text",
-    },
-    {
-      name: "producer",
-      type: "text",
-      label: "Producer or production house.",
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "prizes",
-      type: "array",
-      fields: [
-        {
-          name: "prize",
-          type: "text",
-        },
-      ],
-    },
-    {
-      name: "imdbLink",
-      type: "text",
-      label: "IMDb Link",
-    },
-    {
-      name: "aspectRatio",
-      type: "select",
-      options: [
-        { label: "4:3", value: "4:3" },
-        { label: "5:4", value: "5:4" },
-        { label: "16:9", value: "16:9" },
-        { label: "2.35:1", value: "2.35:1" },
-        { label: "9:16", value: "9:16" },
-      ],
-    },
-    {
-      name: "stills",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-        {
-          name: "featured",
-          type: "checkbox",
-          label: "Feature on homepage.",
-        },
-      ],
-    },
-    {
-      name: "displayOnHomepage",
-      type: "checkbox",
-      defaultValue: false,
-    },
-  ],
-  versions: {
-    drafts: {
-      autosave: true,
-    },
-  },
-};
-
-/* Fields to Add
-
-- newest goes first
-- trailer (embedded from YT or Vimeo)
-- more stills (which means we need "featured")
-- title
-- director
-- producer
-- format
-- prizes
-- imdb
-- aspect ratio
-- next and previous
-
-
-Photos/Stills (not on homepage)
-- date
-- location
-- format
-- organized into masonry
-
-
-*/
 
 ```
 
@@ -1087,6 +857,244 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```
 
+# src/collections/users.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Users: CollectionConfig = {
+  slug: "users",
+  admin: {
+    useAsTitle: "email",
+  },
+  auth: true,
+  fields: [
+    // Email added by default
+    // Add more fields as needed
+    {
+      name: "role",
+      type: "select",
+      options: [
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Editor",
+          value: "editor",
+        },
+      ],
+    },
+  ],
+  access: {
+    read: ({ req: { user } }) => {
+      if (user?.role === "admin") return true;
+      return {
+        id: {
+          equals: user?.id,
+        },
+      };
+    },
+    create: ({ req: { user } }) => user?.role === "admin",
+    update: ({ req: { user } }) => user?.role === "admin",
+    delete: ({ req: { user } }) => user?.role === "admin",
+  },
+};
+
+```
+
+# src/collections/stills.ts
+
+```ts
+import { type CollectionConfig } from "payload";
+
+export const Stills: CollectionConfig = {
+  slug: "stills",
+  admin: {
+    useAsTitle: "location",
+  },
+  fields: [
+    {
+      name: "date",
+      type: "date",
+      required: true,
+    },
+    {
+      name: "location",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+  ],
+};
+
+```
+
+# src/collections/media.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Media: CollectionConfig = {
+  slug: "media",
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: "alt",
+      type: "text",
+      required: true,
+    },
+  ],
+  upload: true,
+};
+
+```
+
+# src/collections/films.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+import { revalidateTag } from "next/cache";
+import { slugify } from "@/utilities/slugify";
+
+export const Films: CollectionConfig = {
+  slug: "films",
+  admin: {
+    description: "Films to display both on the homepage and on project pages.",
+    useAsTitle: "title",
+  },
+  hooks: {
+    afterChange: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidateTag("films");
+      },
+    ],
+  },
+  fields: [
+    {
+      name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "slug",
+      admin: {
+        hidden: true,
+      },
+      required: true,
+      type: "text",
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            return data?.title ? slugify(data.title as string) : undefined;
+          },
+        ],
+      },
+    },
+    {
+      name: "date",
+      type: "date",
+      required: true,
+      label: "Date Completed",
+    },
+    {
+      name: "trailer",
+      type: "text",
+      label: "Trailer embed URL (Vimeo or YouTube).",
+    },
+    {
+      name: "director",
+      type: "text",
+    },
+    {
+      name: "producer",
+      type: "text",
+      label: "Producer or production house.",
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "prizes",
+      type: "array",
+      fields: [
+        {
+          name: "prize",
+          type: "text",
+        },
+      ],
+    },
+    {
+      name: "imdbLink",
+      type: "text",
+      label: "IMDb Link",
+    },
+    {
+      name: "aspectRatio",
+      type: "select",
+      options: [
+        { label: "4:3", value: "4:3" },
+        { label: "5:4", value: "5:4" },
+        { label: "16:9", value: "16:9" },
+        { label: "2.35:1", value: "2.35:1" },
+        { label: "9:16", value: "9:16" },
+      ],
+    },
+    {
+      name: "stills",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "featured",
+          type: "checkbox",
+          label: "Feature on homepage.",
+        },
+      ],
+    },
+    {
+      name: "displayOnHomepage",
+      type: "checkbox",
+      defaultValue: false,
+    },
+  ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 375,
+      },
+    },
+  },
+};
+
+```
+
+# src/app/favicon.ico
+
+This is a binary file of the type: Binary
+
 # src/app/my-route/route.ts
 
 ```ts
@@ -1220,52 +1228,6 @@ export default function RootLayout({
 
 ```
 
-# src/app/(payload)/api/graphql-playground/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
-
-export const GET = GRAPHQL_PLAYGROUND_GET(config);
-
-```
-
-# src/app/(payload)/api/[...slug]/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import {
-  REST_DELETE,
-  REST_GET,
-  REST_OPTIONS,
-  REST_PATCH,
-  REST_POST,
-} from "@payloadcms/next/routes";
-
-export const GET = REST_GET(config);
-export const POST = REST_POST(config);
-export const DELETE = REST_DELETE(config);
-export const PATCH = REST_PATCH(config);
-export const OPTIONS = REST_OPTIONS(config);
-
-```
-
-# src/app/(payload)/api/graphql/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
-
-```
-
 # src/app/(payload)/admin/[[...segments]]/page.tsx
 
 ```tsx
@@ -1327,6 +1289,52 @@ const NotFound = ({ params, searchParams }: Args) =>
   NotFoundPage({ config, params, searchParams });
 
 export default NotFound;
+
+```
+
+# src/app/(payload)/api/graphql/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
+
+export const POST = GRAPHQL_POST(config);
+
+```
+
+# src/app/(payload)/api/graphql-playground/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
+
+export const GET = GRAPHQL_PLAYGROUND_GET(config);
+
+```
+
+# src/app/(payload)/api/[...slug]/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import {
+  REST_DELETE,
+  REST_GET,
+  REST_OPTIONS,
+  REST_PATCH,
+  REST_POST,
+} from "@payloadcms/next/routes";
+
+export const GET = REST_GET(config);
+export const POST = REST_POST(config);
+export const DELETE = REST_DELETE(config);
+export const PATCH = REST_PATCH(config);
+export const OPTIONS = REST_OPTIONS(config);
 
 ```
 

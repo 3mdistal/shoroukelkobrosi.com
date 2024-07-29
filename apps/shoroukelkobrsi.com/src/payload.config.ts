@@ -4,10 +4,8 @@ import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
 import { getURL } from "./utilities/get-url";
-import { Users } from "./collections/users";
-import { Media } from "./collections/media";
-import { Films } from "./collections/films";
-import { Stills } from "./collections/stills";
+import { Homepage } from "./globals/homepage";
+import { Users, Media, Films, Stills } from "./collections";
 
 export default buildConfig({
   admin: {
@@ -19,11 +17,12 @@ export default buildConfig({
     avatar: "gravatar",
     livePreview: {
       url: getURL(),
-      collections: ["films", "stills"],
+      globals: ["homepage"],
     },
     user: Users.slug,
   },
-  collections: [Users, Media, Films, Stills],
+  globals: [Homepage],
+  collections: [Users, Films, Stills, Media],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",
