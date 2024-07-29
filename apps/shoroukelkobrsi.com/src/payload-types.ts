@@ -167,7 +167,6 @@ export interface PayloadMigration {
 export interface Homepage {
   id: number;
   featuredFilms?: (number | Film)[] | null;
-  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
