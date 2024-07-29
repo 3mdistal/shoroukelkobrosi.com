@@ -1,10 +1,12 @@
 import type { GlobalConfig } from "payload";
 import { revalidateTag } from "next/cache";
 
+// todo: Needs to be able to be updated in prod, and something is breaking it.
 export const Homepage: GlobalConfig = {
   slug: "homepage",
   access: {
     read: () => true,
+    update: () => true,
   },
   fields: [
     {

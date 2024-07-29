@@ -54,6 +54,11 @@ function formatSeasonYear(dateString: string): string {
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
   const homepage = await getCachedHomepage();
+
+  if (!homepage.featuredFilms) {
+    return <div />;
+  }
+
   const featuredFilms = homepage.featuredFilms as Film[];
 
   return (
