@@ -114,11 +114,11 @@ export const Films: CollectionConfig = {
       defaultValue: false,
     },
   ],
-  // versions: {
-  //   drafts: {
-  //     autosave: true,
-  //   },
-  // },
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
 };
 
 /* Fields to Add

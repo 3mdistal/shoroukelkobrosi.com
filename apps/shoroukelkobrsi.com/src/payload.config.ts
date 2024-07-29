@@ -3,6 +3,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
+import { getURL } from "./utilities/get-url";
 import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Films } from "./collections/films";
@@ -17,7 +18,7 @@ export default buildConfig({
     },
     avatar: "gravatar",
     livePreview: {
-      url: "/",
+      url: getURL(),
       collections: ["films", "stills"],
     },
     user: Users.slug,
