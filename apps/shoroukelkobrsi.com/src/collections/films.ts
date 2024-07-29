@@ -21,11 +21,13 @@ export const Films: CollectionConfig = {
     afterChange: [
       () => {
         revalidateTag("homepage");
+        revalidateTag("films");
       },
     ],
     afterDelete: [
       () => {
         revalidateTag("homepage");
+        revalidateTag("films");
       },
     ],
   },

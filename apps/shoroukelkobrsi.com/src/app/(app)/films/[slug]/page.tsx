@@ -4,28 +4,29 @@ import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
 
-const getCachedFilm = cache(
-  async (slug: string): Promise<Film> => {
-    const payload: Payload = await getPayloadHMR({
-      config: configPromise,
-    });
+const getCachedFilm = (slug: string) =>
+  cache(
+    async (): Promise<Film> => {
+      const payload: Payload = await getPayloadHMR({
+        config: configPromise,
+      });
 
-    const response = await payload.find({
-      collection: "films",
-      where: {
-        slug: {
-          equals: slug,
+      const response = await payload.find({
+        collection: "films",
+        where: {
+          slug: {
+            equals: slug,
+          },
         },
-      },
-    });
+      });
 
-    return response.docs[0];
-  },
-  ["film-cache"],
-  {
-    tags: [`film`],
-  },
-);
+      return response.docs[0];
+    },
+    ["film-cache", slug],
+    {
+      tags: [`film-${slug}`],
+    },
+  )();
 
 export default async function FilmPage({
   params,
