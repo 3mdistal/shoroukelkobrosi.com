@@ -264,14 +264,6 @@ src/app/(payload)/api/*
 **/migrations/**
 ```
 
-# test-results/.last-run.json
-
-```json
-{
-  "status": "failed"
-}
-```
-
 # types/modules.d.ts
 
 ```ts
@@ -280,6 +272,14 @@ declare module "*.module.css" {
   export default classes;
 }
 
+```
+
+# test-results/.last-run.json
+
+```json
+{
+  "status": "failed"
+}
 ```
 
 # src/payload.config.ts
@@ -309,6 +309,7 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Media, Films, Stills],
+  cors: "*",
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",
@@ -564,15 +565,19 @@ export const slugify = (str: string): string => {
 
 ```ts
 export const getURL = (): string => {
-  if (process.env.VERCEL_ENV === "production") {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
-  } else if (process.env.VERCEL_ENV === "preview") {
-    return `https://${process.env.VERCEL_URL ?? "error"}`;
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ?? "error"}`;
+  } else if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview") {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? "error"}`;
   }
   return "http://localhost:3000";
 };
 
 ```
+
+# src/app/favicon.ico
+
+This is a binary file of the type: Binary
 
 # src/collections/users.ts
 
@@ -809,18 +814,18 @@ Photos/Stills (not on homepage)
 "use client";
 import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
 import { useRouter } from "next/navigation.js";
-import React from "react";
 import { getURL } from "@/utilities/get-url";
 
 export function RefreshRouteOnSave(): React.ReactElement {
   const router = useRouter();
+  const serverURL = getURL();
 
   return (
     <PayloadLivePreview
       refresh={() => {
         router.refresh();
       }}
-      serverURL={getURL()}
+      serverURL={serverURL}
     />
   );
 }
@@ -1082,10 +1087,6 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```
 
-# src/app/favicon.ico
-
-This is a binary file of the type: Binary
-
 # src/app/my-route/route.ts
 
 ```ts
@@ -1139,7 +1140,6 @@ export default Layout;
 # src/app/(app)/page.tsx
 
 ```tsx
-import { Suspense } from "react";
 import FilmShowcase from "@/components/film-showcase";
 import Reel from "@/components/reel";
 import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
@@ -1149,9 +1149,7 @@ export default function Home(): React.ReactElement {
     <>
       <RefreshRouteOnSave />
       <Reel />
-      <Suspense fallback={<p>Loading...</p>}>
-        <FilmShowcase />
-      </Suspense>
+      <FilmShowcase />
     </>
   );
 }
@@ -1222,12 +1220,15 @@ export default function RootLayout({
 
 ```
 
-# src/app/(app)/films/[slug].tsx
+# src/app/(payload)/api/graphql-playground/route.ts
 
-```tsx
-export default function FilmPage() {
-  return <p>Film Page</p>;
-}
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
+
+export const GET = GRAPHQL_PLAYGROUND_GET(config);
 
 ```
 
@@ -1250,6 +1251,18 @@ export const POST = REST_POST(config);
 export const DELETE = REST_DELETE(config);
 export const PATCH = REST_PATCH(config);
 export const OPTIONS = REST_OPTIONS(config);
+
+```
+
+# src/app/(payload)/api/graphql/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
+
+export const POST = GRAPHQL_POST(config);
 
 ```
 
@@ -1317,27 +1330,12 @@ export default NotFound;
 
 ```
 
-# src/app/(payload)/api/graphql/route.ts
+# src/app/(app)/films/[slug]/page.tsx
 
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
-
-```
-
-# src/app/(payload)/api/graphql-playground/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_PLAYGROUND_GET } from "@payloadcms/next/routes";
-
-export const GET = GRAPHQL_PLAYGROUND_GET(config);
+```tsx
+export default function FilmPage(): React.ReactElement {
+  return <p>Film Page</p>;
+}
 
 ```
 
