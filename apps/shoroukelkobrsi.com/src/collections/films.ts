@@ -29,6 +29,7 @@ export const Films: CollectionConfig = {
   slug: "films",
   admin: {
     description: "Films to display both on the homepage and on project pages.",
+    hidden: true,
     livePreview: {
       url: ({ data }) => {
         const film: Film = data as Film;
