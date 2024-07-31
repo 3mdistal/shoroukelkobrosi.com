@@ -32,7 +32,8 @@ export default buildConfig({
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
   plugins:
-    process.env.VERCEL_ENV === ("production" || "preview")
+    process.env.VERCEL_ENV === "production" ||
+    process.env.VERCEL_ENV === "preview"
       ? [
           vercelBlobStorage({
             addRandomSuffix: true,
