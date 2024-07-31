@@ -27,4 +27,5 @@ export const Stills: CollectionConfig = {
       required: true,
     },
   ],
+  versions: true,
 };

@@ -9,15 +9,11 @@ import { Users, Media, Films, Stills } from "./collections";
 
 export default buildConfig({
   admin: {
-    autoLogin: {
-      email: "admin_dev@dev.com",
-      password: "dev",
-      prefillOnly: true,
-    },
     avatar: "gravatar",
     livePreview: {
       url: getURL(),
       globals: ["homepage"],
+      collections: ["films"],
     },
     user: Users.slug,
   },

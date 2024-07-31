@@ -130,4 +130,5 @@ export const Films: CollectionConfig = {
       ],
     },
   ],
+  versions: true,
 };
