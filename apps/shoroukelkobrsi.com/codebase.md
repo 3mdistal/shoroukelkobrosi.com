@@ -274,14 +274,6 @@ declare module "*.module.css" {
 
 ```
 
-# test-results/.last-run.json
-
-```json
-{
-  "status": "failed"
-}
-```
-
 # src/payload.config.ts
 
 ```ts
@@ -291,10 +283,8 @@ import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
 import { getURL } from "./utilities/get-url";
-import { Users } from "./collections/users";
-import { Media } from "./collections/media";
-import { Films } from "./collections/films";
-import { Stills } from "./collections/stills";
+import { Homepage } from "./globals/homepage";
+import { Users, Media, Films, Stills } from "./collections";
 
 export default buildConfig({
   admin: {
@@ -306,11 +296,12 @@ export default buildConfig({
     avatar: "gravatar",
     livePreview: {
       url: getURL(),
-      collections: ["films", "stills"],
+      globals: ["homepage"],
     },
     user: Users.slug,
   },
-  collections: [Users, Media, Films, Stills],
+  globals: [Homepage],
+  collections: [Users, Films, Stills, Media],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL ?? "",
@@ -352,16 +343,18 @@ export interface Config {
   };
   collections: {
     users: User;
-    media: Media;
     films: Film;
     stills: Still;
+    media: Media;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   db: {
     defaultIDType: number;
   };
-  globals: {};
+  globals: {
+    homepage: Homepage;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -403,25 +396,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "films".
  */
 export interface Film {
@@ -448,10 +422,27 @@ export interface Film {
         id?: string | null;
       }[]
     | null;
-  displayOnHomepage?: boolean | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -502,6 +493,16 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  featuredFilms?: (number | Film)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
@@ -522,6 +523,14 @@ This is a file of the type: SVG Image
 # public/next.svg
 
 This is a file of the type: SVG Image
+
+# test-results/.last-run.json
+
+```json
+{
+  "status": "failed"
+}
+```
 
 # media/testing-1.avif
 
@@ -578,6 +587,288 @@ export const getURL = (): string => {
 
 ```
 
+# src/globals/homepage.ts
+
+```ts
+import type { GlobalConfig } from "payload";
+import { revalidateTag } from "next/cache";
+
+// todo: Needs to be able to be updated in prod, and something is breaking it.
+export const Homepage: GlobalConfig = {
+  slug: "homepage",
+  fields: [
+    {
+      name: "featuredFilms",
+      type: "relationship",
+      relationTo: "films",
+      hasMany: true,
+      index: true,
+      admin: {
+        isSortable: true,
+      },
+    },
+  ],
+  hooks: {
+    afterChange: [
+      () => {
+        revalidateTag("homepage");
+      },
+    ],
+  },
+};
+
+```
+
+# src/collections/users.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Users: CollectionConfig = {
+  slug: "users",
+  admin: {
+    useAsTitle: "email",
+  },
+  auth: true,
+  fields: [
+    // Email added by default
+    // Add more fields as needed
+    {
+      name: "role",
+      type: "select",
+      options: [
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Editor",
+          value: "editor",
+        },
+      ],
+    },
+  ],
+  access: {
+    read: ({ req: { user } }) => {
+      if (user?.role === "admin") return true;
+      return {
+        id: {
+          equals: user?.id,
+        },
+      };
+    },
+    create: ({ req: { user } }) => user?.role === "admin",
+    update: ({ req: { user } }) => user?.role === "admin",
+    delete: ({ req: { user } }) => user?.role === "admin",
+  },
+};
+
+```
+
+# src/collections/stills.ts
+
+```ts
+import { type CollectionConfig } from "payload";
+
+export const Stills: CollectionConfig = {
+  slug: "stills",
+  admin: {
+    useAsTitle: "location",
+  },
+  fields: [
+    {
+      name: "date",
+      type: "date",
+      required: true,
+    },
+    {
+      name: "location",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+  ],
+};
+
+```
+
+# src/collections/media.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+
+export const Media: CollectionConfig = {
+  slug: "media",
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: "alt",
+      type: "text",
+      required: true,
+    },
+  ],
+  upload: true,
+};
+
+```
+
+# src/collections/index.ts
+
+```ts
+export * from "./films";
+export * from "./stills";
+export * from "./users";
+export * from "./media";
+
+```
+
+# src/collections/films.ts
+
+```ts
+import type { CollectionConfig } from "payload";
+import { revalidateTag } from "next/cache";
+import { slugify } from "@/utilities/slugify";
+import { getURL } from "@/utilities/get-url";
+import { type Film } from "@/payload-types";
+
+export const Films: CollectionConfig = {
+  slug: "films",
+  admin: {
+    description: "Films to display both on the homepage and on project pages.",
+    livePreview: {
+      url: ({ data }) => {
+        if (typeof data.slug === "string") {
+          return `${getURL()}/films/${data.slug}`;
+        }
+        return getURL();
+      },
+    },
+    useAsTitle: "title",
+  },
+  hooks: {
+    afterChange: [
+      ({ previousDoc }: { previousDoc: Film }) => {
+        revalidateTag("homepage");
+        if (typeof previousDoc.slug === "string") {
+          revalidateTag(`film-${previousDoc.slug}`);
+        }
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidateTag("homepage");
+        revalidateTag("films");
+      },
+    ],
+  },
+  fields: [
+    {
+      name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "slug",
+      admin: {
+        hidden: true,
+      },
+      required: true,
+      type: "text",
+      hooks: {
+        beforeValidate: [
+          ({ data }) => {
+            return data?.title ? slugify(data.title as string) : undefined;
+          },
+        ],
+      },
+    },
+    {
+      name: "date",
+      type: "date",
+      required: true,
+      label: "Date Completed",
+    },
+    {
+      name: "trailer",
+      type: "text",
+      label: "Trailer embed URL (Vimeo or YouTube).",
+    },
+    {
+      name: "director",
+      type: "text",
+    },
+    {
+      name: "producer",
+      type: "text",
+      label: "Producer or production house.",
+    },
+    {
+      name: "format",
+      type: "text",
+    },
+    {
+      name: "prizes",
+      type: "array",
+      fields: [
+        {
+          name: "prize",
+          type: "text",
+        },
+      ],
+    },
+    {
+      name: "imdbLink",
+      type: "text",
+      label: "IMDb Link",
+    },
+    {
+      name: "aspectRatio",
+      type: "select",
+      options: [
+        { label: "4:3", value: "4:3" },
+        { label: "5:4", value: "5:4" },
+        { label: "16:9", value: "16:9" },
+        { label: "2.35:1", value: "2.35:1" },
+        { label: "9:16", value: "9:16" },
+      ],
+    },
+    {
+      name: "stills",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "featured",
+          type: "checkbox",
+          label: "Feature on homepage.",
+        },
+      ],
+    },
+  ],
+};
+
+```
+
+# src/app/favicon.ico
+
+This is a binary file of the type: Binary
+
 # src/components/refresh-route-on-save.tsx
 
 ```tsx
@@ -593,6 +884,7 @@ export function RefreshRouteOnSave(): React.ReactElement {
   return (
     <PayloadLivePreview
       refresh={() => {
+        console.log("Refreshing: ", serverURL);
         router.refresh();
       }}
       serverURL={serverURL}
@@ -730,30 +1022,24 @@ import Link from "next/link";
 import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
-import type { Film } from "../payload-types";
+import type { Film, Homepage } from "@/payload-types";
 import styles from "./film-showcase.module.css";
 
-const getCachedFilms = cache(
-  async (): Promise<Film[]> => {
+const getCachedHomepage = cache(
+  async (): Promise<Homepage> => {
     const payload: Payload = await getPayloadHMR({
       config: configPromise,
     });
 
-    const response = await payload.find({
-      collection: "films",
-      where: {
-        displayOnHomepage: {
-          equals: true,
-        },
-      },
-      sort: "-date",
+    const homepage = await payload.findGlobal({
+      slug: "homepage",
     });
 
-    return response.docs;
+    return homepage;
   },
-  ["data-cache"],
+  ["homepage-cache"],
   {
-    tags: ["films"],
+    tags: ["homepage"],
   },
 );
 
@@ -785,18 +1071,24 @@ function formatSeasonYear(dateString: string): string {
 }
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
-  const films = await getCachedFilms();
+  const homepage = await getCachedHomepage();
+
+  if (!homepage.featuredFilms) {
+    return <div />;
+  }
+
+  const featuredFilms = homepage.featuredFilms as Film[];
 
   return (
     <section className={styles.showcase}>
       <h2>Films</h2>
-      {films.map((film) => (
+      {featuredFilms.map((film) => (
         <Link
           href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
-          <div className={styles.filmInfo}>
+          <div>
             <h3>{film.title}</h3>
             <p>{formatSeasonYear(film.date)}</p>
           </div>
@@ -857,243 +1149,58 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
 ```
 
-# src/collections/users.ts
+# src/components/film-page.tsx
 
-```ts
-import type { CollectionConfig } from "payload";
+```tsx
+import { getPayloadHMR } from "@payloadcms/next/utilities";
+import type { Payload } from "payload";
+import { unstable_cache as cache } from "next/cache";
+import configPromise from "@payload-config";
+import type { Film } from "@/payload-types";
 
-export const Users: CollectionConfig = {
-  slug: "users",
-  admin: {
-    useAsTitle: "email",
-  },
-  auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-    {
-      name: "role",
-      type: "select",
-      options: [
-        {
-          label: "Admin",
-          value: "admin",
-        },
-        {
-          label: "Editor",
-          value: "editor",
-        },
-      ],
-    },
-  ],
-  access: {
-    read: ({ req: { user } }) => {
-      if (user?.role === "admin") return true;
-      return {
-        id: {
-          equals: user?.id,
-        },
-      };
-    },
-    create: ({ req: { user } }) => user?.role === "admin",
-    update: ({ req: { user } }) => user?.role === "admin",
-    delete: ({ req: { user } }) => user?.role === "admin",
-  },
-};
+const getCachedFilm = (slug: string): Promise<Film> =>
+  cache(
+    async () => {
+      const payload: Payload = await getPayloadHMR({
+        config: configPromise,
+      });
 
-```
-
-# src/collections/stills.ts
-
-```ts
-import { type CollectionConfig } from "payload";
-
-export const Stills: CollectionConfig = {
-  slug: "stills",
-  admin: {
-    useAsTitle: "location",
-  },
-  fields: [
-    {
-      name: "date",
-      type: "date",
-      required: true,
-    },
-    {
-      name: "location",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: true,
-    },
-  ],
-};
-
-```
-
-# src/collections/media.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-
-export const Media: CollectionConfig = {
-  slug: "media",
-  access: {
-    read: () => true,
-  },
-  fields: [
-    {
-      name: "alt",
-      type: "text",
-      required: true,
-    },
-  ],
-  upload: true,
-};
-
-```
-
-# src/collections/films.ts
-
-```ts
-import type { CollectionConfig } from "payload";
-import { revalidateTag } from "next/cache";
-import { slugify } from "@/utilities/slugify";
-
-export const Films: CollectionConfig = {
-  slug: "films",
-  admin: {
-    description: "Films to display both on the homepage and on project pages.",
-    useAsTitle: "title",
-  },
-  hooks: {
-    afterChange: [
-      () => {
-        revalidateTag("films");
-      },
-    ],
-    afterDelete: [
-      () => {
-        revalidateTag("films");
-      },
-    ],
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "slug",
-      admin: {
-        hidden: true,
-      },
-      required: true,
-      type: "text",
-      hooks: {
-        beforeValidate: [
-          ({ data }) => {
-            return data?.title ? slugify(data.title as string) : undefined;
+      const response = await payload.find({
+        collection: "films",
+        where: {
+          slug: {
+            equals: slug,
           },
-        ],
-      },
-    },
-    {
-      name: "date",
-      type: "date",
-      required: true,
-      label: "Date Completed",
-    },
-    {
-      name: "trailer",
-      type: "text",
-      label: "Trailer embed URL (Vimeo or YouTube).",
-    },
-    {
-      name: "director",
-      type: "text",
-    },
-    {
-      name: "producer",
-      type: "text",
-      label: "Producer or production house.",
-    },
-    {
-      name: "format",
-      type: "text",
-    },
-    {
-      name: "prizes",
-      type: "array",
-      fields: [
-        {
-          name: "prize",
-          type: "text",
         },
-      ],
+      });
+
+      return response.docs[0];
     },
+    ["film-cache", slug],
     {
-      name: "imdbLink",
-      type: "text",
-      label: "IMDb Link",
+      tags: [`film-${slug}`],
     },
-    {
-      name: "aspectRatio",
-      type: "select",
-      options: [
-        { label: "4:3", value: "4:3" },
-        { label: "5:4", value: "5:4" },
-        { label: "16:9", value: "16:9" },
-        { label: "2.35:1", value: "2.35:1" },
-        { label: "9:16", value: "9:16" },
-      ],
-    },
-    {
-      name: "stills",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-        {
-          name: "featured",
-          type: "checkbox",
-          label: "Feature on homepage.",
-        },
-      ],
-    },
-    {
-      name: "displayOnHomepage",
-      type: "checkbox",
-      defaultValue: false,
-    },
-  ],
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 375,
-      },
-    },
-  },
-};
+  )();
+
+export default async function FilmPage({
+  slug,
+}: {
+  slug: string;
+}): Promise<React.ReactElement> {
+  const film = await getCachedFilm(slug);
+
+  console.log(film);
+
+  return (
+    <>
+      <h1>Film Page: {film.title}</h1>
+      <p>Director: {film.director}</p>
+      <p>Producer: {film.producer}</p>
+    </>
+  );
+}
 
 ```
-
-# src/app/favicon.ico
-
-This is a binary file of the type: Binary
 
 # src/app/my-route/route.ts
 
@@ -1228,6 +1335,28 @@ export default function RootLayout({
 
 ```
 
+# src/app/(payload)/api/[...slug]/route.ts
+
+```ts
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY it because it could be re-written at any time. */
+import config from "@payload-config";
+import {
+  REST_DELETE,
+  REST_GET,
+  REST_OPTIONS,
+  REST_PATCH,
+  REST_POST,
+} from "@payloadcms/next/routes";
+
+export const GET = REST_GET(config);
+export const POST = REST_POST(config);
+export const DELETE = REST_DELETE(config);
+export const PATCH = REST_PATCH(config);
+export const OPTIONS = REST_OPTIONS(config);
+
+```
+
 # src/app/(payload)/admin/[[...segments]]/page.tsx
 
 ```tsx
@@ -1292,18 +1421,6 @@ export default NotFound;
 
 ```
 
-# src/app/(payload)/api/graphql/route.ts
-
-```ts
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY it because it could be re-written at any time. */
-import config from "@payload-config";
-import { GRAPHQL_POST } from "@payloadcms/next/routes";
-
-export const POST = GRAPHQL_POST(config);
-
-```
-
 # src/app/(payload)/api/graphql-playground/route.ts
 
 ```ts
@@ -1316,33 +1433,35 @@ export const GET = GRAPHQL_PLAYGROUND_GET(config);
 
 ```
 
-# src/app/(payload)/api/[...slug]/route.ts
+# src/app/(payload)/api/graphql/route.ts
 
 ```ts
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 /* DO NOT MODIFY it because it could be re-written at any time. */
 import config from "@payload-config";
-import {
-  REST_DELETE,
-  REST_GET,
-  REST_OPTIONS,
-  REST_PATCH,
-  REST_POST,
-} from "@payloadcms/next/routes";
+import { GRAPHQL_POST } from "@payloadcms/next/routes";
 
-export const GET = REST_GET(config);
-export const POST = REST_POST(config);
-export const DELETE = REST_DELETE(config);
-export const PATCH = REST_PATCH(config);
-export const OPTIONS = REST_OPTIONS(config);
+export const POST = GRAPHQL_POST(config);
 
 ```
 
 # src/app/(app)/films/[slug]/page.tsx
 
 ```tsx
-export default function FilmPage(): React.ReactElement {
-  return <p>Film Page</p>;
+import FilmPage from "@/components/film-page";
+import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
+
+export default function Page({
+  params,
+}: {
+  params: { slug: string };
+}): React.ReactElement {
+  return (
+    <>
+      <RefreshRouteOnSave />
+      <FilmPage slug={params.slug} />
+    </>
+  );
 }
 
 ```

@@ -1,8 +1,21 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionBeforeChangeHook, CollectionConfig } from "payload";
 import { revalidateTag } from "next/cache";
 import { slugify } from "@/utilities/slugify";
 import { getURL } from "@/utilities/get-url";
 import { type Film } from "@/payload-types";
+
+const beforeChangeHook: CollectionBeforeChangeHook = ({
+  originalDoc,
+  data,
+}) => {
+  revalidateTag("homepage");
+
+  const oldDoc: Film = originalDoc as Film;
+  const newDoc: Film = data as Film;
+
+  revalidateTag(`film-${oldDoc.slug}`);
+  revalidateTag(`film-${newDoc.slug}`);
+};
 
 export const Films: CollectionConfig = {
   slug: "films",
@@ -10,27 +23,21 @@ export const Films: CollectionConfig = {
     description: "Films to display both on the homepage and on project pages.",
     livePreview: {
       url: ({ data }) => {
-        if (typeof data.slug === "string") {
-          return `${getURL()}/films/${data.slug}`;
-        }
-        return getURL();
+        const film: Film = data as Film;
+
+        return `${getURL()}/films/${film.slug}`;
       },
     },
     useAsTitle: "title",
   },
   hooks: {
-    afterChange: [
-      ({ previousDoc }: { previousDoc: Film }) => {
-        revalidateTag("homepage");
-        if (typeof previousDoc.slug === "string") {
-          revalidateTag(`films-${previousDoc.slug}`);
-        }
-      },
-    ],
+    beforeChange: [beforeChangeHook],
     afterDelete: [
-      () => {
+      ({ doc }: { doc: Film }) => {
         revalidateTag("homepage");
-        revalidateTag("films");
+        if (typeof doc.slug === "string") {
+          revalidateTag(`film-${doc.slug}`);
+        }
       },
     ],
   },
@@ -42,14 +49,15 @@ export const Films: CollectionConfig = {
     },
     {
       name: "slug",
-      admin: {
-        hidden: true,
-      },
+      // admin: {
+      //   hidden: true,
+      // },
       required: true,
       type: "text",
       hooks: {
         beforeValidate: [
           ({ data }) => {
+            console.log("setting new slug");
             return data?.title ? slugify(data.title as string) : undefined;
           },
         ],
