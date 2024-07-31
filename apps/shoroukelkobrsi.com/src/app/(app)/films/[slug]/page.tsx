@@ -3,10 +3,11 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
+import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
 
-const getCachedFilm = (slug: string) =>
+const getCachedFilm = (slug: string): Promise<Film> =>
   cache(
-    async (): Promise<Film> => {
+    async () => {
       const payload: Payload = await getPayloadHMR({
         config: configPromise,
       });
@@ -36,5 +37,10 @@ export default async function FilmPage({
   const filmSlug = params.slug;
   const film = await getCachedFilm(filmSlug);
 
-  return <h1>Film Page: {film.title}</h1>;
+  return (
+    <>
+      <RefreshRouteOnSave />
+      <h1>Film Page: {film.title}</h1>
+    </>
+  );
 }

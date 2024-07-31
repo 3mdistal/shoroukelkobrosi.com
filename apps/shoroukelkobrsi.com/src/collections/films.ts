@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { revalidateTag } from "next/cache";
 import { slugify } from "@/utilities/slugify";
 import { getURL } from "@/utilities/get-url";
+import { type Film } from "@/payload-types";
 
 export const Films: CollectionConfig = {
   slug: "films",
@@ -19,9 +20,11 @@ export const Films: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      () => {
+      ({ previousDoc }: { previousDoc: Film }) => {
         revalidateTag("homepage");
-        revalidateTag("films");
+        if (typeof previousDoc.slug === "string") {
+          revalidateTag(`films-${previousDoc.slug}`);
+        }
       },
     ],
     afterDelete: [
