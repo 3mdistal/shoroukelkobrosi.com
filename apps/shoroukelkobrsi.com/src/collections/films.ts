@@ -1,20 +1,28 @@
-import type { CollectionBeforeChangeHook, CollectionConfig } from "payload";
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  CollectionConfig,
+} from "payload";
 import { revalidateTag } from "next/cache";
 import { slugify } from "@/utilities/slugify";
 import { getURL } from "@/utilities/get-url";
 import { type Film } from "@/payload-types";
 
-const beforeChangeHook: CollectionBeforeChangeHook = ({
-  originalDoc,
-  data,
-}) => {
+const afterChangeHook: CollectionAfterChangeHook = ({ previousDoc, doc }) => {
   revalidateTag("homepage");
 
-  const oldDoc: Film = originalDoc as Film;
-  const newDoc: Film = data as Film;
+  const oldDoc: Film = previousDoc as Film;
+  const newDoc: Film = doc as Film;
 
   revalidateTag(`film-${oldDoc.slug}`);
   revalidateTag(`film-${newDoc.slug}`);
+};
+
+const afterDeleteHook: CollectionAfterDeleteHook = ({ doc }) => {
+  const film: Film = doc as Film;
+
+  revalidateTag("homepage");
+  revalidateTag(`film-${film.slug}`);
 };
 
 export const Films: CollectionConfig = {
@@ -24,22 +32,14 @@ export const Films: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const film: Film = data as Film;
-
         return `${getURL()}/films/${film.slug}`;
       },
     },
     useAsTitle: "title",
   },
   hooks: {
-    beforeChange: [beforeChangeHook],
-    afterDelete: [
-      ({ doc }: { doc: Film }) => {
-        revalidateTag("homepage");
-        if (typeof doc.slug === "string") {
-          revalidateTag(`film-${doc.slug}`);
-        }
-      },
-    ],
+    afterChange: [afterChangeHook],
+    afterDelete: [afterDeleteHook],
   },
   fields: [
     {
@@ -57,7 +57,6 @@ export const Films: CollectionConfig = {
       hooks: {
         beforeValidate: [
           ({ data }) => {
-            console.log("setting new slug");
             return data?.title ? slugify(data.title as string) : undefined;
           },
         ],
