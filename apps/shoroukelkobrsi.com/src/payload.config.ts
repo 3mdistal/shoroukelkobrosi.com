@@ -31,14 +31,18 @@ export default buildConfig({
     defaultFromAddress: "admin@teenylilapps.com",
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
-  plugins: [
-    vercelBlobStorage({
-      collections: {
-        [Media.slug]: true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
-    }),
-  ],
+  plugins:
+    process.env.VERCEL_ENV === ("production" || "preview")
+      ? [
+          vercelBlobStorage({
+            addRandomSuffix: true,
+            collections: {
+              [Media.slug]: true,
+            },
+            token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
+          }),
+        ]
+      : [],
   secret: process.env.PAYLOAD_SECRET ?? "",
   serverURL: getURL(),
   sharp,
