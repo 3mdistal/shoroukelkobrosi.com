@@ -17,13 +17,6 @@
       "persistent": true,
       "cache": false
     },
-    "storybook": {
-      "persistent": true,
-      "cache": false
-    },
-    "build-storybook": {
-      "outputs": ["storybook-static/**"]
-    },
     "lint": {
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
