@@ -6,7 +6,6 @@ import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film, Homepage } from "@/payload-types";
 import styles from "./film-showcase.module.css";
-import ClientLogger from "./utils/client-logger";
 
 const getCachedHomepage = cache(
   async (): Promise<Homepage> => {
