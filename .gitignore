@@ -16,24 +16,24 @@ teenylilapps.code-workspace
 *.pem
 
 # local env files
-.env*.local
+**/.env*.local
 
 # vercel
-.vercel
+**/.vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
-# storybook
-*storybook.log
-**/storybook-static/**
-
 # turbo
 .turbo
 
-# playrought
+# playwright
 **/test-results/
 **/playwright-report/
 **/blob-report/
 **/playwright/.cache/
+
+# AI
+**/.aidigestignore
+**/.cursorignore
