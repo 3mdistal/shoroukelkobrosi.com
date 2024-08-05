@@ -36,6 +36,7 @@ export default buildConfig({
     process.env.VERCEL_ENV === "preview"
       ? [
           vercelBlobStorage({
+            access: "public",
             addRandomSuffix: true,
             collections: {
               [Media.slug]: true,
