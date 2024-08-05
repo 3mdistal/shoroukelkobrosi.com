@@ -18,14 +18,17 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**.vercel.app",
-        pathname: "/api/media/**",
       },
       {
         protocol: "https",
-        hostname: "teenylilapps.com",
-        pathname: "/api/media/**",
+        hostname: "www.teenylilapps.com",
+      },
+      {
+        protocol: "https",
+        hostname: "shoroukelkobrsi-media.public.blob.teenylilapps.com",
       },
     ],
+    domains: ["**.vercel.app"],
   },
 };
 
