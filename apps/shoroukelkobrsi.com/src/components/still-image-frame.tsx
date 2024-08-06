@@ -23,19 +23,23 @@ export default function StillImageFrame({
 
   // Random factors for direction and intensity
   const parallaxDirection = useRef(Math.random() > 0.5 ? 1 : -1).current; // Random direction (up or down)
-  const parallaxIntensity = useRef(Math.random() * 0.15 + 0.05).current; // Random intensity between 0.05 and 0.2
+  const parallaxIntensity = useRef(Math.random() * 0.2 + 0.8).current; // Random intensity between 0.8 and 1
+  const parallaxFactor = 0.075; // edit the strength of the parallax effect
 
   useEffect(() => {
     const handleScroll = () => {
       if (ref.current) {
-        const { top, height } = ref.current.getBoundingClientRect();
+        const { top, height: elementHeight } =
+          ref.current.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        const percentageInView = (windowHeight - top) / (windowHeight + height);
+        const percentageInView =
+          (windowHeight - top) / (windowHeight + elementHeight);
         const newOffset =
           (percentageInView - 0.5) *
-          height *
+          elementHeight *
           parallaxIntensity *
-          parallaxDirection;
+          parallaxDirection *
+          parallaxFactor;
         setOffset(newOffset);
       }
     };
