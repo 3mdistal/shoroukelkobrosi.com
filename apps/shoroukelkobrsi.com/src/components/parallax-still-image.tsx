@@ -2,21 +2,21 @@
 
 import { useRef, useEffect, useState } from "react";
 import StillImage from "./still-image";
-import styles from "./parallax-still-image.module.css";
+import styles from "./still-image-frame.module.css";
 
-interface ParallaxStillImageProps {
+interface StillImageFrameProps {
   imageUrl: string;
   location: string;
   width: number;
   height: number;
 }
 
-export default function ParallaxStillImage({
+export default function StillImageFrame({
   imageUrl,
   location,
   width,
   height,
-}: ParallaxStillImageProps): React.ReactElement {
+}: StillImageFrameProps): React.ReactElement {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [offset, setOffset] = useState(0);
