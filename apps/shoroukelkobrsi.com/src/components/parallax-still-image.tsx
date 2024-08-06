@@ -18,6 +18,7 @@ export default function ParallaxStillImage({
   height,
 }: ParallaxStillImageProps): React.ReactElement {
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [offset, setOffset] = useState(0);
   const [isOffsetCalculated, setIsOffsetCalculated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -79,6 +80,8 @@ export default function ParallaxStillImage({
       ref={ref}
       className={styles.parallaxContainer}
       style={{ aspectRatio: `${width.toString()} / ${height.toString()}` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div
         className={styles.parallaxInner}
@@ -87,14 +90,14 @@ export default function ParallaxStillImage({
         }}
       >
         {isOffsetCalculated && (
-          <StillImage
-            imageUrl={imageUrl}
-            location={location}
-            width={width}
-            height={height}
-          />
+          <StillImage imageUrl={imageUrl} width={width} height={height} />
         )}
       </div>
+      {isHovered && (
+        <div className={styles.locationOverlay}>
+          <p>{location}</p>
+        </div>
+      )}
     </div>
   );
 }

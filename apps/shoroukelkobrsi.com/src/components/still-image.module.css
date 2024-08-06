@@ -18,18 +18,3 @@
   height: 100%;
   object-fit: cover;
 }
-
-.locationOverlay {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 0.5rem;
-  color: white;
-}
-
-.locationOverlay p {
-  margin: 0;
-  font-size: 0.9rem;
-}
