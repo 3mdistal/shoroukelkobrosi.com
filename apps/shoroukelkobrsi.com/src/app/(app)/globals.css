@@ -20,4 +20,7 @@
   body {
     height: 200lvh;
   }
+  main {
+    padding-top: var(--menu-height, 60px);
+  }
 }

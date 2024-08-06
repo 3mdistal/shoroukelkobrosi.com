@@ -1,0 +1,27 @@
+.stillImage {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  width: 100%;
+}
+
+.stillImage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.locationOverlay {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  color: white;
+}
+
+.locationOverlay p {
+  margin: 0;
+  font-size: 0.9rem;
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import Menu from "@/components/menu";
+import Footer from "@/components/footer";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body>
         <Menu />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

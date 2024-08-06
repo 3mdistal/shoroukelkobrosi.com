@@ -1,44 +1,37 @@
 .menu {
   display: flex;
-  position: sticky;
-  top: 0px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
   justify-content: space-between;
   align-items: center;
-  z-index: var(--layer-1);
-  background: linear-gradient(
-    to bottom,
-    rgba(50, 50, 50, 0.4),
-    rgba(0, 0, 0, 0)
-  );
-  padding: 0 var(--menu-height);
-  width: 100lvw;
-  height: var(--menu-height);
-  color: var(--gray-3);
-
-  &::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    content: "";
-  }
-
-  @media screen and (max-width: 768px) {
-    --menu-height: var(--size-8);
-    padding: 0 calc(var(--menu-height) * 0.25);
-  }
+  z-index: 100;
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 2rem;
 }
 
-.menu-children {
-  z-index: var(--layer-2);
-  font-size: var(--font-size-xl);
-  line-height: var(--menu-height);
-  font-family: var(--font-lora);
+.menuLogo {
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
-.menu-title {
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
+.menuNav {
+  display: flex;
+  gap: 1rem;
+}
+
+.menuNav a,
+.menuButton {
+  color: black;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.menuButton {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
 }

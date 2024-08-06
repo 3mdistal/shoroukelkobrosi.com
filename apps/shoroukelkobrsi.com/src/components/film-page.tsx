@@ -3,6 +3,7 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
+import styles from "./film-page.module.css";
 
 const getCachedFilm = (slug: string): Promise<Film> =>
   cache(
@@ -36,10 +37,23 @@ export default async function FilmPage({
   const film = await getCachedFilm(slug);
 
   return (
-    <>
-      <h1>Film Page: {film.title}</h1>
+    <div className={styles.filmPage}>
+      <h1>{film.title}</h1>
       <p>Director: {film.director}</p>
       <p>Producer: {film.producer}</p>
-    </>
+      <p>Date: {new Date(film.date).toLocaleDateString()}</p>
+      {film.trailer && (
+        <div className={styles.trailerEmbed}>
+          <iframe src={film.trailer} title={`${film.title} trailer`} />
+        </div>
+      )}
+      <div className={styles.stillsGrid}>
+        {film.stills?.map((still) => (
+          <div key={still.id} className={styles.stillItem}>
+            <img src={still.image.url} alt={`Still from ${film.title}`} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

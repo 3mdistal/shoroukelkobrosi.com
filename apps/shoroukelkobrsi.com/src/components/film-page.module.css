@@ -1,0 +1,24 @@
+.filmPage {
+  background-color: #f0f0f0;
+  padding: 2rem;
+}
+
+.trailerEmbed {
+  margin: 2rem 0;
+}
+
+.trailerEmbed iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.stillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stillItem img {
+  width: 100%;
+  height: auto;
+}
