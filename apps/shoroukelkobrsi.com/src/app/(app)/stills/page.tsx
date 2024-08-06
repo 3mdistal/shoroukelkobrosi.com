@@ -44,7 +44,12 @@ export default async function StillsPage(): Promise<React.ReactElement> {
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => (
           <div key={still.id} className={styles.gridItem}>
-            <StillImage imageUrl={still.image.url} location={still.location} />
+            <StillImage
+              imageUrl={still.image.url}
+              location={still.location}
+              width={still.image.width || 300}
+              height={still.image.height || 200}
+            />
           </div>
         ))}
       </div>

@@ -7,11 +7,15 @@ import styles from "./still-image.module.css";
 interface StillImageProps {
   imageUrl: string;
   location: string;
+  width: number;
+  height: number;
 }
 
 export default function StillImage({
   imageUrl,
   location,
+  width,
+  height,
 }: StillImageProps): React.ReactElement {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -24,9 +28,10 @@ export default function StillImage({
       <Image
         src={imageUrl}
         alt={location}
-        fill
+        width={width}
+        height={height}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        style={{ objectFit: "cover" }}
+        style={{ width: "100%", height: "auto" }}
       />
       {isHovered && (
         <div className={styles.locationOverlay}>
