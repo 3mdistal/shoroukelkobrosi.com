@@ -4,6 +4,8 @@ import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
 import styles from "./film-page.module.css";
+import AspectRatio from "@/components/ui/aspect-ratio";
+import Image from "next/image";
 
 const getCachedFilm = (slug: string): Promise<Film> =>
   cache(
@@ -49,8 +51,21 @@ export default async function FilmPage({
       ) : null}
       <div className={styles.stillsGrid}>
         {film.stills?.map((still) => (
-          <div key={still.id} className={styles.stillItem}>
-            <img src={still.image.url} alt={`Still from ${film.title}`} />
+          <div key={still.id} className={styles.gridCell}>
+            <AspectRatio ratio={16 / 9} className={styles.aspectRatioWrapper}>
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={
+                    typeof still.image === "object" && still.image.url
+                      ? still.image.url
+                      : "https://unplash.it/1600/900"
+                  }
+                  alt={`Still from ${film.title}`}
+                  fill
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+            </AspectRatio>
           </div>
         ))}
       </div>
