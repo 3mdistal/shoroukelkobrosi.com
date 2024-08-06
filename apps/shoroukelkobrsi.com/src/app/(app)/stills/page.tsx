@@ -46,20 +46,40 @@ export default async function StillsPage(): Promise<React.ReactElement> {
         {shuffledStills.map((still) => (
           <div key={still.id} className={styles.gridItem}>
             <StillImageFrame
-              imageUrl={still.image.url}
+              imageUrl={
+                typeof still.image !== "number" ? (still.image.url ?? "") : ""
+              }
               location={still.location}
-              width={still.image.width || 300}
-              height={still.image.height || 200}
+              width={
+                typeof still.image !== "number"
+                  ? (still.image.width ?? 300)
+                  : 300
+              }
+              height={
+                typeof still.image !== "number"
+                  ? (still.image.height ?? 200)
+                  : 200
+              }
             />
           </div>
         ))}
         {shuffledStills2.map((still) => (
           <div key={still.id} className={styles.gridItem}>
             <StillImageFrame
-              imageUrl={still.image.url}
+              imageUrl={
+                typeof still.image !== "number" ? (still.image.url ?? "") : ""
+              }
               location={still.location}
-              width={still.image.width || 300}
-              height={still.image.height || 200}
+              width={
+                typeof still.image !== "number"
+                  ? (still.image.width ?? 300)
+                  : 300
+              }
+              height={
+                typeof still.image !== "number"
+                  ? (still.image.height ?? 200)
+                  : 200
+              }
             />
           </div>
         ))}
