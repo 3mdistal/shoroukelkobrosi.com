@@ -72,11 +72,11 @@ export default function StillImageFrame({
       >
         <StillImage imageUrl={imageUrl} width={width} height={height} />
       </div>
-      {isHovered && (
+      {isHovered && location ? (
         <div className={styles.locationOverlay}>
           <p>{location}</p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
