@@ -1,11 +1,13 @@
 .stillImage {
   position: relative;
-  background-color: #f0f0f0; /* Light gray placeholder */
   width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .stillImage img {
   display: block;
+  transition: transform 0.1s ease-out;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -16,7 +18,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  transition: opacity 0.3s ease;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 0.5rem;
   color: white;

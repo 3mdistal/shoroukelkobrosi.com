@@ -3,7 +3,7 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Still } from "@/payload-types";
-import StillImage from "@/components/still-image";
+import ParallaxStillImage from "@/components/parallax-still-image";
 import styles from "./stills.module.css";
 
 const getCachedStills = cache(
@@ -37,6 +37,7 @@ function shuffleArray<T>(array: T[]): T[] {
 export default async function StillsPage(): Promise<React.ReactElement> {
   const stills = await getCachedStills();
   const shuffledStills = shuffleArray(stills);
+  const shuffledStills2 = shuffleArray(stills);
 
   return (
     <div className={styles.stillsPage}>
@@ -44,7 +45,17 @@ export default async function StillsPage(): Promise<React.ReactElement> {
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => (
           <div key={still.id} className={styles.gridItem}>
-            <StillImage
+            <ParallaxStillImage
+              imageUrl={still.image.url}
+              location={still.location}
+              width={still.image.width || 300}
+              height={still.image.height || 200}
+            />
+          </div>
+        ))}
+        {shuffledStills2.map((still) => (
+          <div key={still.id} className={styles.gridItem}>
+            <ParallaxStillImage
               imageUrl={still.image.url}
               location={still.location}
               width={still.image.width || 300}
