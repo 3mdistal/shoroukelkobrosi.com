@@ -4,6 +4,7 @@ import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Still } from "@/payload-types";
 import StillImageFrame from "@/components/still-image-frame";
+import { shuffleArray } from "@/utilities/shuffle";
 import styles from "./stills.module.css";
 
 const getCachedStills = cache(
@@ -23,16 +24,6 @@ const getCachedStills = cache(
     tags: ["stills"],
   },
 );
-
-// Fisher-Yates shuffle algorithm
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
 
 export default async function StillsPage(): Promise<React.ReactElement> {
   const stills = await getCachedStills();
