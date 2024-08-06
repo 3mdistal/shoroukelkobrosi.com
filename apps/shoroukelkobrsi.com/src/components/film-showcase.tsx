@@ -64,16 +64,24 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
   return (
     <section className={styles.showcase}>
-      <h2>Films</h2>
       {featuredFilms.map((film) => (
         <Link
           href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
-          <div>
-            <h3>{film.title}</h3>
-            <p>{formatSeasonYear(film.date)}</p>
+          <div className={styles.filmInfo}>
+            <h2 className={styles.filmTitle}>{film.title}</h2>
+            <div className={styles.filmMeta}>
+              {film.date && (
+                <span className={styles.filmDate}>
+                  {formatSeasonYear(film.date)}
+                </span>
+              )}
+              {film.producer && (
+                <span className={styles.filmProducer}>{film.producer}</span>
+              )}
+            </div>
           </div>
           <div className={styles.stillsGrid}>
             {film.stills
