@@ -42,11 +42,11 @@ export default async function FilmPage({
       <p>Director: {film.director}</p>
       <p>Producer: {film.producer}</p>
       <p>Date: {new Date(film.date).toLocaleDateString()}</p>
-      {film.trailer && (
+      {film.trailer ? (
         <div className={styles.trailerEmbed}>
           <iframe src={film.trailer} title={`${film.title} trailer`} />
         </div>
-      )}
+      ) : null}
       <div className={styles.stillsGrid}>
         {film.stills?.map((still) => (
           <div key={still.id} className={styles.stillItem}>
