@@ -22,12 +22,12 @@ export default function StillImageFrame({
   const ref = useRef<HTMLDivElement>(null);
 
   // Random factors for direction and intensity
-  const parallaxDirection = useRef(Math.random() > 0.5 ? 1 : -1).current; // Random direction (up or down)
-  const parallaxIntensity = useRef(Math.random() * 0.2 + 0.8).current; // Random intensity between 0.8 and 1
+  const parallaxDirection = 1;
+  const parallaxIntensity = useRef(Math.random() * 0.3 + 0.7).current; // Random intensity between 0.7 and 1
   const parallaxFactor = 0.075; // edit the strength of the parallax effect
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       if (ref.current) {
         const { top, height: elementHeight } =
           ref.current.getBoundingClientRect();
@@ -47,21 +47,27 @@ export default function StillImageFrame({
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial calculation
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [parallaxDirection, parallaxIntensity]);
 
   return (
     <div
       ref={ref}
       className={styles.parallaxContainer}
-      style={{ aspectRatio: `${width} / ${height}` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      style={{ aspectRatio: `${width.toString()} / ${height.toString()}` }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
     >
       <div
         className={styles.parallaxInner}
         style={{
-          transform: `translateY(${offset}px)`,
+          transform: `translateY(${offset.toString()}px)`,
         }}
       >
         <StillImage imageUrl={imageUrl} width={width} height={height} />
