@@ -19,24 +19,21 @@ export default function StillImage({
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observedElement = imageRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.1 },
     );
 
-    if (observedElement) {
-      observer.observe(observedElement);
+    const currentRef = imageRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observedElement) {
-        observer.unobserve(observedElement);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -51,8 +48,6 @@ export default function StillImage({
         alt="Still image"
         width={width}
         height={height}
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        style={{ objectFit: "cover", width: "100%", height: "100%" }}
         placeholder="blur"
         blurDataURL={`data:image/svg+xml;base64,${btoa(
           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width.toString()} ${height.toString()}">
