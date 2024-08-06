@@ -24,6 +24,7 @@ export default function StillImage({
       className={styles.stillImage}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ aspectRatio: `${width} / ${height}` }}
     >
       <Image
         src={imageUrl}
@@ -31,7 +32,13 @@ export default function StillImage({
         width={width}
         height={height}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        style={{ width: "100%", height: "auto" }}
+        style={{ objectFit: "cover" }}
+        placeholder="blur"
+        blurDataURL={`data:image/svg+xml;base64,${btoa(
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">
+            <rect width="100%" height="100%" fill="#F0F0F0"/>
+          </svg>`,
+        )}`}
       />
       {isHovered && (
         <div className={styles.locationOverlay}>
