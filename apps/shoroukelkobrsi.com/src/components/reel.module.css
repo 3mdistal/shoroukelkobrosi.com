@@ -9,22 +9,37 @@
 }
 
 .reel {
-  animation: gradientAnimation 10s ease infinite;
-  background: linear-gradient(to bottom, var(--gray-10), var(--gray-2));
-  background-size: 100% 200%;
+  animation: videoGradientAnimation 10s ease infinite;
+  background: linear-gradient(
+    to bottom,
+    var(--gray-12) 0%,
+    var(--gray-10) 20%,
+    var(--gray-8) 40%,
+    var(--gray-6) 60%,
+    var(--gray-4) 80%,
+    var(--gray-2) 100%
+  );
+  background-size: 100% 600%;
   aspect-ratio: var(--ratio-widescreen);
   max-width: 100%;
   height: 100%;
 }
 
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
+@keyframes videoGradientAnimation {
+  0%,
   100% {
     background-position: 0% 0%;
+  }
+  20% {
+    background-position: 0% 20%;
+  }
+  40% {
+    background-position: 0% 40%;
+  }
+  60% {
+    background-position: 0% 60%;
+  }
+  80% {
+    background-position: 0% 80%;
   }
 }

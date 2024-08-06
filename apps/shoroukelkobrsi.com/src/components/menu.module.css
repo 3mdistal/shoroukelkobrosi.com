@@ -3,6 +3,7 @@
   position: sticky;
   top: 0px;
   justify-content: space-between;
+  align-items: center;
   z-index: var(--layer-1);
   background: linear-gradient(
     to bottom,
