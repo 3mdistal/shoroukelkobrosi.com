@@ -5,6 +5,7 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film, Homepage } from "@/payload-types";
+import AspectRatio from "@/components/ui/aspect-ratio";
 import styles from "./film-showcase.module.css";
 
 const getCachedHomepage = cache(
@@ -79,16 +80,23 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
               ?.filter((still) => still.featured)
               .map((still) => (
                 <div className={styles.gridCell} key={still.id}>
-                  <Image
-                    src={
-                      typeof still.image === "object" && still.image.url
-                        ? still.image.url
-                        : "https://unplash.it/1600/900"
-                    }
-                    alt={`Still from ${film.title}`}
-                    style={{ objectFit: "cover" }}
-                    fill
-                  />
+                  <AspectRatio
+                    ratio={16 / 9}
+                    className={styles.aspectRatioWrapper}
+                  >
+                    <div className={styles.imageWrapper}>
+                      <Image
+                        src={
+                          typeof still.image === "object" && still.image.url
+                            ? still.image.url
+                            : "https://unplash.it/1600/900"
+                        }
+                        alt={`Still from ${film.title}`}
+                        fill
+                        style={{ objectFit: "contain" }}
+                      />
+                    </div>
+                  </AspectRatio>
                 </div>
               ))}
           </div>
