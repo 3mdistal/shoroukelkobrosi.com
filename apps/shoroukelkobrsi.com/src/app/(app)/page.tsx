@@ -1,6 +1,6 @@
 import FilmShowcase from "@/components/film-showcase";
 import Reel from "@/components/reel";
-import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
+import { RefreshRouteOnSave } from "@/components/utils/refresh-route-on-save";
 import styles from "./page.module.css";
 
 export default function Home(): React.ReactElement {

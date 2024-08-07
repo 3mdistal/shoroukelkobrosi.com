@@ -1,5 +1,5 @@
 import FilmPage from "@/components/film-page";
-import { RefreshRouteOnSave } from "@/components/refresh-route-on-save";
+import { RefreshRouteOnSave } from "@/components/utils/refresh-route-on-save";
 
 export default function Page({
   params,
