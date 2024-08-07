@@ -25,11 +25,13 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
   };
 
   return (
-    <>
+    <header className={styles.header}>
       <button
         type="button"
         onClick={triggerToggle}
         className={styles.menuButton}
+        aria-expanded={isOpen}
+        aria-controls="main-menu"
       >
         {isOpen ? "Close" : "Menu"}
       </button>
@@ -39,7 +41,7 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
           onClose={triggerToggle}
           className={styles.fullPageMenu}
         >
-          <nav>
+          <nav id="main-menu">
             <ul>
               <li>
                 <Link href="/" onClick={triggerToggle}>
@@ -60,6 +62,6 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
           </nav>
         </Dialog>
       ) : null}
-    </>
+    </header>
   );
 }
