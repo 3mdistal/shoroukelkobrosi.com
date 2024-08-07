@@ -15,9 +15,6 @@
   align-items: center;
   opacity: 0;
   z-index: 1001;
-  transition:
-    opacity 0.3s ease-out,
-    backdrop-filter 0.3s ease-out;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -36,6 +33,7 @@
 
 .fullPageMenu::backdrop {
   backdrop-filter: blur(5px);
+  transition: backdrop-filter 0.3s ease-out;
   background-color: transparent;
 }
 

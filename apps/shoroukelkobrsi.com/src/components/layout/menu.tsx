@@ -23,8 +23,10 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setClickedLink(href);
-    triggerToggle();
-    // router.push(href);
+    setTimeout(() => {
+      triggerToggle();
+      router.push(href);
+    }, 0);
   };
 
   return (
