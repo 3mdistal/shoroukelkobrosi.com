@@ -3,7 +3,7 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Still } from "@/payload-types";
-import StillImageFrame from "@/components/still-image-frame";
+import StillImageFrame from "@/components/still/still-image-frame";
 import { shuffleArray } from "@/utilities/shuffle";
 import styles from "./stills.module.css";
 
