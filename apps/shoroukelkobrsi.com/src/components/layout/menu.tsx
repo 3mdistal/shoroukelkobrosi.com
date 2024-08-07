@@ -13,7 +13,6 @@ interface MenuProps {
 }
 
 export default function Menu({ isOpen }: MenuProps): React.ReactElement {
-  const [isFadingOut, setIsFadingOut] = useState(false);
   const [clickedLink, setClickedLink] = useState<string | null>(null);
   const router = useRouter();
 
@@ -24,64 +23,53 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setClickedLink(href);
-    setIsFadingOut(true);
-    setTimeout(() => {
-      triggerToggle();
-      router.push(href);
-    }, 0);
+    triggerToggle();
+    router.push(href);
   };
 
   return (
     <header className={styles.header}>
-      {isOpen ? (
-        <Dialog
-          isOpen={isOpen}
-          onClose={triggerToggle}
-          className={`${styles.fullPageMenu} ${isFadingOut ? styles.fadeOut : ""}`}
-        >
-          <nav id="main-menu">
-            <button
-              type="button"
-              onClick={triggerToggle}
-              className={styles.closeButton}
-              aria-label="Close menu"
-            >
-              &#x2715;
-            </button>
-            <ul>
-              <li>
-                <Link
-                  href="/"
-                  onClick={handleLinkClick("/")}
-                  className={clickedLink === "/" ? styles.clickedLink : ""}
-                >
-                  Films
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/stills"
-                  onClick={handleLinkClick("/stills")}
-                  className={
-                    clickedLink === "/stills" ? styles.clickedLink : ""
-                  }
-                >
-                  Stills
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  onClick={handleLinkClick("/about")}
-                  className={clickedLink === "/about" ? styles.clickedLink : ""}
-                >
-                  About
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </Dialog>
-      ) : null}
+      <Dialog isOpen={isOpen} className={styles.fullPageMenu}>
+        <nav id="main-menu">
+          <button
+            type="button"
+            onClick={triggerToggle}
+            className={styles.closeButton}
+            aria-label="Close menu"
+          >
+            &#x2715;
+          </button>
+          <ul>
+            <li>
+              <Link
+                href="/"
+                onClick={handleLinkClick("/")}
+                className={clickedLink === "/" ? styles.clickedLink : ""}
+              >
+                Films
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/stills"
+                onClick={handleLinkClick("/stills")}
+                className={clickedLink === "/stills" ? styles.clickedLink : ""}
+              >
+                Stills
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                onClick={handleLinkClick("/about")}
+                className={clickedLink === "/about" ? styles.clickedLink : ""}
+              >
+                About
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </Dialog>
     </header>
   );
 }

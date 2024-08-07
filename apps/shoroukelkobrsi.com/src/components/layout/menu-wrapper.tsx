@@ -19,18 +19,6 @@ export default function MenuWrapper(): React.ReactElement {
     };
   }, []);
 
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
-
   const triggerToggle = (): void => {
     window.dispatchEvent(new Event(TOGGLE_MENU_EVENT));
   };
