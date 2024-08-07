@@ -40,15 +40,12 @@ export default function MenuWrapper(): React.ReactElement {
       <button
         type="button"
         onClick={triggerToggle}
-        className={styles.menuButton}
+        className={`${styles.menuButton} ${isMenuOpen ? styles.open : ""}`}
         aria-expanded={isMenuOpen}
         aria-controls="main-menu"
       >
-        {isMenuOpen ? "Close" : "Menu"}
+        Menu
       </button>
-      <div
-        className={`${styles.overlay} ${isMenuOpen ? styles.visible : ""}`}
-      />
       <Menu isOpen={isMenuOpen} />
     </>
   );
