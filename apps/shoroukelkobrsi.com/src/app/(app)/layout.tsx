@@ -23,8 +23,10 @@ export default function RootLayout({
     <html lang="en" className={lora.variable}>
       <body>
         <MenuWrapper />
-        <main>{children}</main>
-        <Footer />
+        <div id="main-content">
+          <main>{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

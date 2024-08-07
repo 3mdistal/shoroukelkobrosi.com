@@ -24,15 +24,6 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
 
   return (
     <header className={styles.header}>
-      <button
-        type="button"
-        onClick={triggerToggle}
-        className={styles.menuButton}
-        aria-expanded={isOpen}
-        aria-controls="main-menu"
-      >
-        {isOpen ? "Close" : "Menu"}
-      </button>
       {isMounted && isOpen ? (
         <Dialog
           isOpen={isOpen}

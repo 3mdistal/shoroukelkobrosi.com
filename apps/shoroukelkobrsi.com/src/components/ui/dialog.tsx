@@ -16,12 +16,33 @@ function Dialog({
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
     if (isOpen) {
-      dialogRef.current?.showModal();
+      dialog.showModal();
       document.body.style.overflow = "hidden";
+
+      // Add a small delay to ensure the dialog is visible before applying the blur
+      setTimeout(() => {
+        dialog.style.opacity = "0.9";
+        if (dialog.previousElementSibling) {
+          (dialog.previousElementSibling as HTMLElement).style.filter =
+            "blur(5px)";
+        }
+      }, 10);
     } else {
-      dialogRef.current?.close();
-      document.body.style.overflow = "";
+      dialog.style.opacity = "0";
+      if (dialog.previousElementSibling) {
+        (dialog.previousElementSibling as HTMLElement).style.filter =
+          "blur(0px)";
+      }
+
+      // Add a transition delay before closing the dialog
+      setTimeout(() => {
+        dialog.close();
+        document.body.style.overflow = "";
+      }, 300);
     }
   }, [isOpen]);
 
