@@ -24,7 +24,7 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
     e.preventDefault();
     setClickedLink(href);
     triggerToggle();
-    router.push(href);
+    // router.push(href);
   };
 
   return (

@@ -2,14 +2,12 @@ import { useEffect, useRef } from "react";
 
 interface DialogProps {
   isOpen: boolean;
-  onClose: () => void;
   children: React.ReactNode;
   className?: string;
 }
 
 function Dialog({
   isOpen,
-  onClose,
   children,
   className,
 }: DialogProps): React.ReactElement {
@@ -27,7 +25,7 @@ function Dialog({
   }, [isOpen]);
 
   return (
-    <dialog ref={dialogRef} className={className} onClose={onClose}>
+    <dialog ref={dialogRef} className={className}>
       {children}
     </dialog>
   );
