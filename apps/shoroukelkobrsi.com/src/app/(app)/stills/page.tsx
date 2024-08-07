@@ -28,33 +28,12 @@ const getCachedStills = cache(
 export default async function StillsPage(): Promise<React.ReactElement> {
   const stills = await getCachedStills();
   const shuffledStills = shuffleArray(stills);
-  const shuffledStills2 = shuffleArray(stills);
 
   return (
     <div className={styles.stillsPage}>
       <h1>Stills</h1>
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => (
-          <div key={still.id} className={styles.gridItem}>
-            <StillImageFrame
-              imageUrl={
-                typeof still.image !== "number" ? (still.image.url ?? "") : ""
-              }
-              location={still.location}
-              width={
-                typeof still.image !== "number"
-                  ? (still.image.width ?? 300)
-                  : 300
-              }
-              height={
-                typeof still.image !== "number"
-                  ? (still.image.height ?? 200)
-                  : 200
-              }
-            />
-          </div>
-        ))}
-        {shuffledStills2.map((still) => (
           <div key={still.id} className={styles.gridItem}>
             <StillImageFrame
               imageUrl={
