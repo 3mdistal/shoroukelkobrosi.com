@@ -6,43 +6,6 @@
   z-index: 100;
 }
 
-.menuLogo {
-  color: inherit;
-  font-weight: bold;
-  font-size: 1.5rem;
-  text-decoration: none;
-}
-
-.menuLogo a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.menuNav {
-  display: flex;
-  gap: 1rem;
-}
-
-.menuNav a,
-.menuButton {
-  color: black;
-  font-size: 1rem;
-  text-decoration: none;
-}
-
-.menuButton {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1002;
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
-  color: black;
-  font-size: 1rem;
-}
-
 .fullPageMenu {
   display: flex;
   position: fixed;
@@ -62,16 +25,16 @@
   max-width: 100vw;
   height: 100vh;
   max-height: 100vh;
+
+  &.fadeOut {
+    opacity: 0;
+  }
 }
 
 .fullPageMenu::backdrop {
   backdrop-filter: blur(5px);
   transition: backdrop-filter 0.3s ease-out;
   background-color: transparent;
-}
-
-.fullPageMenu[open] {
-  animation: none;
 }
 
 .fullPageMenu nav ul {
@@ -85,9 +48,22 @@
 }
 
 .fullPageMenu nav ul li a {
+  opacity: 0.5;
   color: white;
-  font-size: 24px;
+  font-size: var(--font-size-fluid-2);
   text-decoration: none;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  &.clickedLink {
+    opacity: 0.8;
+  }
 }
 
 .closeButton {
@@ -106,27 +82,4 @@
 .closeButton:hover,
 .closeButton:focus {
   opacity: 0.8;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-  transition: opacity 0.3s ease-out;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.overlay.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.fullPageMenu.fadeOut {
-  opacity: 0;
 }

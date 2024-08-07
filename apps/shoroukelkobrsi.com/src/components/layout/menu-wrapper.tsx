@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Menu from "./menu";
-import styles from "./menu.module.css";
+import styles from "./menu-wrapper.module.css";
 
 const TOGGLE_MENU_EVENT = "toggle-menu";
 

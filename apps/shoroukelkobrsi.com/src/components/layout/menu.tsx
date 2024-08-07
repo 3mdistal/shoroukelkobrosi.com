@@ -2,7 +2,7 @@
 
 import { Link } from "next-view-transitions";
 import { useRouter } from "next/navigation";
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import Dialog from "../ui/dialog";
 import styles from "./menu.module.css";
 
@@ -13,13 +13,9 @@ interface MenuProps {
 }
 
 export default function Menu({ isOpen }: MenuProps): React.ReactElement {
-  const [isMounted, setIsMounted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [clickedLink, setClickedLink] = useState<string | null>(null);
   const router = useRouter();
-
-  useLayoutEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const triggerToggle = (): void => {
     window.dispatchEvent(new Event(TOGGLE_MENU_EVENT));
@@ -27,16 +23,17 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
+    setClickedLink(href);
     setIsFadingOut(true);
     setTimeout(() => {
       triggerToggle();
       router.push(href);
-    }, 0); // Adjust this timeout to match your fade-out animation duration
+    }, 0);
   };
 
   return (
     <header className={styles.header}>
-      {isMounted && isOpen ? (
+      {isOpen ? (
         <Dialog
           isOpen={isOpen}
           onClose={triggerToggle}
@@ -53,17 +50,31 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
             </button>
             <ul>
               <li>
-                <Link href="/" onClick={handleLinkClick("/")}>
+                <Link
+                  href="/"
+                  onClick={handleLinkClick("/")}
+                  className={clickedLink === "/" ? styles.clickedLink : ""}
+                >
                   Films
                 </Link>
               </li>
               <li>
-                <Link href="/stills" onClick={handleLinkClick("/stills")}>
+                <Link
+                  href="/stills"
+                  onClick={handleLinkClick("/stills")}
+                  className={
+                    clickedLink === "/stills" ? styles.clickedLink : ""
+                  }
+                >
                   Stills
                 </Link>
               </li>
               <li>
-                <Link href="/about" onClick={handleLinkClick("/about")}>
+                <Link
+                  href="/about"
+                  onClick={handleLinkClick("/about")}
+                  className={clickedLink === "/about" ? styles.clickedLink : ""}
+                >
                   About
                 </Link>
               </li>
