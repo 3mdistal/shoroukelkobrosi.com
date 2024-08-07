@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "./menu.module.css";
 
@@ -12,19 +12,22 @@ interface MenuProps {
   toggleMenu: () => void;
 }
 
-const Menu = ({ isOpen, toggleMenu }: MenuProps) => {
+export default function Menu({
+  isOpen,
+  toggleMenu,
+}: MenuProps): React.ReactElement {
   const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsMounted(true);
   }, []);
 
   return (
     <>
-      <button onClick={toggleMenu} className={styles.menuButton}>
+      <button type="button" onClick={toggleMenu} className={styles.menuButton}>
         {isOpen ? "Close" : "Menu"}
       </button>
-      {isMounted && isOpen && (
+      {isMounted && isOpen ? (
         <Dialog
           isOpen={isOpen}
           onClose={toggleMenu}
@@ -50,9 +53,7 @@ const Menu = ({ isOpen, toggleMenu }: MenuProps) => {
             </ul>
           </nav>
         </Dialog>
-      )}
+      ) : null}
     </>
   );
-};
-
-export default Menu;
+}
