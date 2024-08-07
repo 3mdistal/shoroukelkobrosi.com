@@ -1,16 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "./menu";
 
-const MenuWrapper: React.FC = () => {
+const TOGGLE_MENU_EVENT = "toggle-menu";
+
+export default function MenuWrapper(): React.ReactElement {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    const handleToggle = (): void => {
+      setIsMenuOpen((prev) => !prev);
+    };
+    window.addEventListener(TOGGLE_MENU_EVENT, handleToggle);
+    return () => {
+      window.removeEventListener(TOGGLE_MENU_EVENT, handleToggle);
+    };
+  }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return <Menu isOpen={isMenuOpen} toggleMenu={toggleMenu} />;
-};
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
-export default MenuWrapper;
+  return <Menu isOpen={isMenuOpen} />;
+}

@@ -7,46 +7,52 @@ import styles from "./menu.module.css";
 
 const Dialog = dynamic(() => import("../ui/dialog"), { ssr: false });
 
+const TOGGLE_MENU_EVENT = "toggle-menu";
+
 interface MenuProps {
   isOpen: boolean;
-  toggleMenu: () => void;
 }
 
-export default function Menu({
-  isOpen,
-  toggleMenu,
-}: MenuProps): React.ReactElement {
+export default function Menu({ isOpen }: MenuProps): React.ReactElement {
   const [isMounted, setIsMounted] = useState(false);
 
   useLayoutEffect(() => {
     setIsMounted(true);
   }, []);
 
+  const triggerToggle = () => {
+    window.dispatchEvent(new Event(TOGGLE_MENU_EVENT));
+  };
+
   return (
     <>
-      <button type="button" onClick={toggleMenu} className={styles.menuButton}>
+      <button
+        type="button"
+        onClick={triggerToggle}
+        className={styles.menuButton}
+      >
         {isOpen ? "Close" : "Menu"}
       </button>
       {isMounted && isOpen ? (
         <Dialog
           isOpen={isOpen}
-          onClose={toggleMenu}
+          onClose={triggerToggle}
           className={styles.fullPageMenu}
         >
           <nav>
             <ul>
               <li>
-                <Link href="/" onClick={toggleMenu}>
+                <Link href="/" onClick={triggerToggle}>
                   Films
                 </Link>
               </li>
               <li>
-                <Link href="/stills" onClick={toggleMenu}>
+                <Link href="/stills" onClick={triggerToggle}>
                   Stills
                 </Link>
               </li>
               <li>
-                <Link href="/about" onClick={toggleMenu}>
+                <Link href="/about" onClick={triggerToggle}>
                   About
                 </Link>
               </li>
