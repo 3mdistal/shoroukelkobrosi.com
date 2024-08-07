@@ -1,40 +1,84 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Menu from "./menu";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Link } from "next-view-transitions";
+import Dialog from "../ui/dialog";
 import styles from "./menu-wrapper.module.css";
-
-const TOGGLE_MENU_EVENT = "toggle-menu";
 
 export default function MenuWrapper(): React.ReactElement {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [clickedLink, setClickedLink] = useState<string | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    const handleToggle = (): void => {
-      setIsMenuOpen((prev) => !prev);
-    };
-    window.addEventListener(TOGGLE_MENU_EVENT, handleToggle);
-    return () => {
-      window.removeEventListener(TOGGLE_MENU_EVENT, handleToggle);
-    };
-  }, []);
+  const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setClickedLink(href);
+    handleToggle();
+    router.push(href);
+  };
 
-  const triggerToggle = (): void => {
-    window.dispatchEvent(new Event(TOGGLE_MENU_EVENT));
+  const handleToggle = (): void => {
+    setIsMenuOpen((prev) => !prev);
+    console.log(isMenuOpen);
   };
 
   return (
     <header>
       <button
         type="button"
-        onClick={triggerToggle}
+        onClick={handleToggle}
         className={`${styles.menuButton} ${isMenuOpen ? styles.open : ""}`}
         aria-expanded={isMenuOpen}
         aria-controls="main-menu"
       >
         Menu
       </button>
-      <Menu isOpen={isMenuOpen} />
+      <Dialog
+        isOpen={isMenuOpen}
+        className={styles.fullPageMenu}
+        onClose={handleToggle}
+      >
+        <nav id="main-menu">
+          <button
+            type="button"
+            onClick={handleToggle}
+            className={styles.closeButton}
+            aria-label="Close menu"
+          >
+            &#x2715;
+          </button>
+          <ul>
+            <li>
+              <Link
+                href="/"
+                onClick={handleLinkClick("/")}
+                className={clickedLink === "/" ? styles.clickedLink : ""}
+              >
+                Films
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/stills"
+                onClick={handleLinkClick("/stills")}
+                className={clickedLink === "/stills" ? styles.clickedLink : ""}
+              >
+                Stills
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                onClick={handleLinkClick("/about")}
+                className={clickedLink === "/about" ? styles.clickedLink : ""}
+              >
+                About
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </Dialog>
     </header>
   );
 }

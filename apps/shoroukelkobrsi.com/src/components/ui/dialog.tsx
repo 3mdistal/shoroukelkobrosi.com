@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react";
 
-// todo: small bug when hitting escape key, the dialog closes, but the menu button doesn't toggle
-
 interface DialogProps {
   isOpen: boolean;
   children: React.ReactNode;
   className?: string;
+  onClose?: () => void;
 }
 
 function Dialog({
   isOpen,
   children,
   className,
+  onClose,
 }: DialogProps): React.ReactElement {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -27,7 +27,7 @@ function Dialog({
   }, [isOpen]);
 
   return (
-    <dialog ref={dialogRef} className={className}>
+    <dialog ref={dialogRef} className={className} onClose={onClose}>
       {children}
     </dialog>
   );
