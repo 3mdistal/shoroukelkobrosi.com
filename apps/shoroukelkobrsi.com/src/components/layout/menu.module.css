@@ -1,13 +1,29 @@
+.menuButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: var(--layer-2);
+  transition: opacity 0.3s ease-out,
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: black;
+  font-size: 1rem;
+  &.open {
+    opacity: 0;
+  }
+}
+
 .fullPageMenu {
-  display: flex;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   justify-content: center;
   align-items: center;
   opacity: 0;
-  z-index: 1001;
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out, display 0.3s ease-out allow-discrete;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -19,8 +35,9 @@
   max-height: 100vh;
 
   &[open] {
+    display: flex;
     opacity: 1;
-    transition: opacity 0.3s ease-out;
+    transition: opacity 0.3s ease-out, display 0.3s ease-out allow-discrete;
   }
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import { ViewTransitions } from "next-view-transitions";
-import MenuWrapper from "@/components/layout/menu-wrapper";
+import Menu from "@/components/layout/menu";
 import Footer from "@/components/layout/footer";
 
 const lora = Lora({
@@ -24,11 +24,11 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" className={lora.variable}>
         <body>
-          <MenuWrapper />
           <div id="main-content">
             <main>{children}</main>
             <Footer />
           </div>
+          <Menu />
         </body>
       </html>
     </ViewTransitions>
