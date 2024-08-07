@@ -8,17 +8,21 @@ import styles from "./menu-wrapper.module.css";
 
 export default function MenuWrapper(): React.ReactElement {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [clickedLink, setClickedLink] = useState<string | null>(null);
   const router = useRouter();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    setClickedLink(href);
     setTimeout(() => {
       setIsMenuOpen(false);
       router.push(href);
     }, 0);
   };
+
+  const menuItems = [
+    { href: "/", label: "Films" },
+    { href: "/stills", label: "Stills" },
+    { href: "/about", label: "About" },
+  ];
 
   return (
     <header>
@@ -52,33 +56,13 @@ export default function MenuWrapper(): React.ReactElement {
             &#x2715;
           </button>
           <ul>
-            <li>
-              <Link
-                href="/"
-                onClick={handleLinkClick("/")}
-                className={clickedLink === "/" ? styles.clickedLink : ""}
-              >
-                Films
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/stills"
-                onClick={handleLinkClick("/stills")}
-                className={clickedLink === "/stills" ? styles.clickedLink : ""}
-              >
-                Stills
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                onClick={handleLinkClick("/about")}
-                className={clickedLink === "/about" ? styles.clickedLink : ""}
-              >
-                About
-              </Link>
-            </li>
+            {menuItems.map(({ href, label }) => (
+              <li key={href}>
+                <Link href={href} onClick={handleLinkClick(href)}>
+                  {label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </Dialog>
