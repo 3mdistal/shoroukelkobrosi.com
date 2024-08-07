@@ -14,20 +14,19 @@ export default function MenuWrapper(): React.ReactElement {
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setClickedLink(href);
-    handleToggle();
-    router.push(href);
-  };
-
-  const handleToggle = (): void => {
-    setIsMenuOpen((prev) => !prev);
-    console.log(isMenuOpen);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      router.push(href);
+    }, 0);
   };
 
   return (
     <header>
       <button
         type="button"
-        onClick={handleToggle}
+        onClick={() => {
+          setIsMenuOpen(true);
+        }}
         className={`${styles.menuButton} ${isMenuOpen ? styles.open : ""}`}
         aria-expanded={isMenuOpen}
         aria-controls="main-menu"
@@ -37,12 +36,16 @@ export default function MenuWrapper(): React.ReactElement {
       <Dialog
         isOpen={isMenuOpen}
         className={styles.fullPageMenu}
-        onClose={handleToggle}
+        onClose={() => {
+          setIsMenuOpen(false);
+        }}
       >
         <nav id="main-menu">
           <button
             type="button"
-            onClick={handleToggle}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
             className={styles.closeButton}
             aria-label="Close menu"
           >
