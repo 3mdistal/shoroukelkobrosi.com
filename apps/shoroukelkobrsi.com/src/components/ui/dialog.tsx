@@ -23,7 +23,6 @@ function Dialog({
       dialog.showModal();
       document.body.style.overflow = "hidden";
 
-      // Add a small delay to ensure the dialog is visible before applying the blur
       setTimeout(() => {
         dialog.style.opacity = "0.9";
         if (dialog.previousElementSibling) {
