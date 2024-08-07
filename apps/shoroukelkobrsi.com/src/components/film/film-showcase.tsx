@@ -1,6 +1,6 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";

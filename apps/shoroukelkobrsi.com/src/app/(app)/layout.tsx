@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
+import { ViewTransitions } from "next-view-transitions";
 import MenuWrapper from "@/components/layout/menu-wrapper";
 import Footer from "@/components/layout/footer";
 
@@ -20,14 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): React.ReactElement {
   return (
-    <html lang="en" className={lora.variable}>
-      <body>
-        <MenuWrapper />
-        <div id="main-content">
-          <main>{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={lora.variable}>
+        <body>
+          <MenuWrapper />
+          <div id="main-content">
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

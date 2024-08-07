@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useLayoutEffect, useState } from "react";
 import Dialog from "../ui/dialog";
 import styles from "./menu.module.css";
