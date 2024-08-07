@@ -7,7 +7,7 @@ const MenuWrapper: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
   return <Menu isOpen={isMenuOpen} toggleMenu={toggleMenu} />;

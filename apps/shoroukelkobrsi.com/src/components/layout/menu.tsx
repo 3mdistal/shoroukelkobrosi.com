@@ -1,5 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import styles from "./menu.module.css";
+
+const Dialog = dynamic(() => import("../ui/dialog"), { ssr: false });
 
 interface MenuProps {
   isOpen: boolean;
@@ -7,30 +13,43 @@ interface MenuProps {
 }
 
 const Menu = ({ isOpen, toggleMenu }: MenuProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <>
       <button onClick={toggleMenu} className={styles.menuButton}>
         {isOpen ? "Close" : "Menu"}
       </button>
-      {isOpen && (
-        <div className={styles.fullPageMenu}>
+      {isMounted && isOpen && (
+        <Dialog
+          isOpen={isOpen}
+          onClose={toggleMenu}
+          className={styles.fullPageMenu}
+        >
           <nav>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" onClick={toggleMenu}>
+                  Films
+                </Link>
               </li>
               <li>
-                <Link href="/films">Films</Link>
+                <Link href="/stills" onClick={toggleMenu}>
+                  Stills
+                </Link>
               </li>
               <li>
-                <Link href="/stills">Stills</Link>
-              </li>
-              <li>
-                <Link href="/about">About</Link>
+                <Link href="/about" onClick={toggleMenu}>
+                  About
+                </Link>
               </li>
             </ul>
           </nav>
-        </div>
+        </Dialog>
       )}
     </>
   );
