@@ -7,7 +7,12 @@ interface DialogProps {
   className?: string;
 }
 
-const Dialog = ({ isOpen, onClose, children, className }: DialogProps) => {
+function Dialog({
+  isOpen,
+  onClose,
+  children,
+  className,
+}: DialogProps): React.ReactElement {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -25,6 +30,6 @@ const Dialog = ({ isOpen, onClose, children, className }: DialogProps) => {
       {children}
     </dialog>
   );
-};
+}
 
 export default Dialog;

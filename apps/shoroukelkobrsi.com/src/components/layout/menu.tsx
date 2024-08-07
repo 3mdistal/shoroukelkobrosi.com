@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { useLayoutEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import Dialog from "../ui/dialog";
 import styles from "./menu.module.css";
-
-const Dialog = dynamic(() => import("../ui/dialog"), { ssr: false });
 
 const TOGGLE_MENU_EVENT = "toggle-menu";
 
@@ -20,7 +18,7 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
     setIsMounted(true);
   }, []);
 
-  const triggerToggle = () => {
+  const triggerToggle = (): void => {
     window.dispatchEvent(new Event(TOGGLE_MENU_EVENT));
   };
 
