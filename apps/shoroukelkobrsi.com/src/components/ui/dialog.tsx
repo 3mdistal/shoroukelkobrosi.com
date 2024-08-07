@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+// todo: small bug when hitting escape key, the dialog closes, but the menu button doesn't toggle
+
 interface DialogProps {
   isOpen: boolean;
   children: React.ReactNode;

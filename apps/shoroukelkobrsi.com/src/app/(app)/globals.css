@@ -5,6 +5,10 @@
 }
 
 @layer theme {
+  :root {
+    --blur-strength: 10px;
+  }
+
   h1 {
     margin-bottom: var(--size-3);
     color: var(--gray-9);
@@ -76,6 +80,6 @@
 
 @keyframes blur {
   to {
-    filter: blur(10px);
+    filter: blur(var(--blur-strength));
   }
 }
