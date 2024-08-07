@@ -40,6 +40,14 @@ export default function Menu({ isOpen }: MenuProps): React.ReactElement {
           className={styles.fullPageMenu}
         >
           <nav id="main-menu">
+            <button
+              type="button"
+              onClick={triggerToggle}
+              className={styles.closeButton}
+              aria-label="Close menu"
+            >
+              &#x2715;
+            </button>
             <ul>
               <li>
                 <Link href="/" onClick={triggerToggle}>

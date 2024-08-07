@@ -89,3 +89,21 @@
   font-size: 24px;
   text-decoration: none;
 }
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.closeButton:hover,
+.closeButton:focus {
+  opacity: 0.8;
+}
