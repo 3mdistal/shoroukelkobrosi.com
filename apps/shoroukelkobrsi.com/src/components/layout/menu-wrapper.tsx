@@ -24,7 +24,7 @@ export default function MenuWrapper(): React.ReactElement {
   };
 
   return (
-    <>
+    <header>
       <button
         type="button"
         onClick={triggerToggle}
@@ -35,6 +35,6 @@ export default function MenuWrapper(): React.ReactElement {
         Menu
       </button>
       <Menu isOpen={isMenuOpen} />
-    </>
+    </header>
   );
 }
