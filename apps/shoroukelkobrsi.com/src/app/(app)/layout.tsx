@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
-import Menu from "@/components/layout/menu";
+import MenuWrapper from "@/components/layout/menu-wrapper";
 import Footer from "@/components/layout/footer";
 
 const lora = Lora({
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={lora.variable}>
       <body>
-        <Menu />
+        <MenuWrapper />
         <main>{children}</main>
         <Footer />
       </body>
