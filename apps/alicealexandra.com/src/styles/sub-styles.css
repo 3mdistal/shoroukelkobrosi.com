@@ -1,0 +1,5 @@
+@layer styles {
+  :root {
+    --dark-background: lch(50% 0 0);
+  }
+}
