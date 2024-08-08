@@ -1,0 +1,154 @@
+{
+  "dependencyTree": {
+    "name": "page.tsx",
+    "fileID": "3fdcb7fabc619acf393a42a70333524f",
+    "children": [
+      {
+        "name": "payload-types.ts",
+        "fileID": "f7eef9740bd82237f8a345b7a4bb031d",
+        "children": []
+      },
+      {
+        "name": "still-image-frame.tsx",
+        "fileID": "91013257a4030bfd35d4a99a9cdae9f5",
+        "children": [
+          {
+            "name": "still-image.tsx",
+            "fileID": "4829e82e03d2b9ce8fb378d84318af85",
+            "children": [
+              {
+                "name": "still-image.module.css",
+                "fileID": "b2589ea748d50696291aea3bad335af6",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "still-image-frame.module.css",
+            "fileID": "3cbece92604d91cc621cf1f248a1977a",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "shuffle.ts",
+        "fileID": "76e2d31d9cef7811ddc8a89baf71bde2",
+        "children": []
+      },
+      {
+        "name": "stills.module.css",
+        "fileID": "22f4ee6fcf000921c16743667c2d498d",
+        "children": []
+      }
+    ]
+  },
+  "dependencyNodes": {
+    "3fdcb7fabc619acf393a42a70333524f": {
+      "fileID": "3fdcb7fabc619acf393a42a70333524f",
+      "name": "page.tsx",
+      "type": "react_ts",
+      "extension": ".tsx",
+      "language": "file",
+      "relativePath": "/src/app/(app)/stills/page.tsx",
+      "fileDescription": {},
+      "children": [
+        "f7eef9740bd82237f8a345b7a4bb031d",
+        "91013257a4030bfd35d4a99a9cdae9f5",
+        "76e2d31d9cef7811ddc8a89baf71bde2",
+        "22f4ee6fcf000921c16743667c2d498d"
+      ]
+    },
+    "f7eef9740bd82237f8a345b7a4bb031d": {
+      "fileID": "f7eef9740bd82237f8a345b7a4bb031d",
+      "name": "payload-types.ts",
+      "type": "typescript",
+      "extension": ".ts",
+      "language": "file",
+      "lines": 185,
+      "analyzed": true,
+      "relativePath": "/src/payload-types.ts",
+      "fileDescription": {},
+      "functions": [],
+      "children": []
+    },
+    "91013257a4030bfd35d4a99a9cdae9f5": {
+      "fileID": "91013257a4030bfd35d4a99a9cdae9f5",
+      "name": "still-image-frame.tsx",
+      "type": "react_ts",
+      "extension": ".tsx",
+      "language": "file",
+      "relativePath": "/src/components/still/still-image-frame.tsx",
+      "fileDescription": {},
+      "children": [
+        "4829e82e03d2b9ce8fb378d84318af85",
+        "3cbece92604d91cc621cf1f248a1977a"
+      ]
+    },
+    "76e2d31d9cef7811ddc8a89baf71bde2": {
+      "fileID": "76e2d31d9cef7811ddc8a89baf71bde2",
+      "name": "shuffle.ts",
+      "type": "typescript",
+      "extension": ".ts",
+      "language": "file",
+      "lines": 9,
+      "analyzed": true,
+      "relativePath": "/src/utilities/shuffle.ts",
+      "fileDescription": {},
+      "functions": [
+        {
+          "arrowFunction": false,
+          "params": [{ "name": "array" }],
+          "name": "shuffleArray",
+          "kind": "function",
+          "loc": {
+            "start": { "line": 1, "column": 0 },
+            "end": { "line": 8, "column": 1 }
+          },
+          "export": true,
+          "code": "export function shuffleArray<T>(array: T[]): T[] {}"
+        }
+      ],
+      "children": []
+    },
+    "22f4ee6fcf000921c16743667c2d498d": {
+      "fileID": "22f4ee6fcf000921c16743667c2d498d",
+      "name": "stills.module.css",
+      "type": "css",
+      "extension": ".css",
+      "language": "css",
+      "relativePath": "/src/app/(app)/stills/stills.module.css",
+      "fileDescription": {},
+      "children": []
+    },
+    "4829e82e03d2b9ce8fb378d84318af85": {
+      "fileID": "4829e82e03d2b9ce8fb378d84318af85",
+      "name": "still-image.tsx",
+      "type": "react_ts",
+      "extension": ".tsx",
+      "language": "file",
+      "relativePath": "/src/components/still/still-image.tsx",
+      "fileDescription": {},
+      "children": ["b2589ea748d50696291aea3bad335af6"]
+    },
+    "3cbece92604d91cc621cf1f248a1977a": {
+      "fileID": "3cbece92604d91cc621cf1f248a1977a",
+      "name": "still-image-frame.module.css",
+      "type": "css",
+      "extension": ".css",
+      "language": "css",
+      "relativePath": "/src/components/still/still-image-frame.module.css",
+      "fileDescription": {},
+      "children": []
+    },
+    "b2589ea748d50696291aea3bad335af6": {
+      "fileID": "b2589ea748d50696291aea3bad335af6",
+      "name": "still-image.module.css",
+      "type": "css",
+      "extension": ".css",
+      "language": "css",
+      "relativePath": "/src/components/still/still-image.module.css",
+      "fileDescription": {},
+      "children": []
+    }
+  }
+}
