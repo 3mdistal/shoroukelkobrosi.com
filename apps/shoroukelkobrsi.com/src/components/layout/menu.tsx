@@ -6,7 +6,7 @@ import { Link } from "next-view-transitions";
 import Dialog from "../ui/dialog";
 import styles from "./menu.module.css";
 
-export default function MenuWrapper(): React.ReactElement {
+export default function Menu(): React.ReactElement {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -18,6 +18,7 @@ export default function MenuWrapper(): React.ReactElement {
     }, 0);
   };
 
+  // todo: menu comes out of display none too quickly
   const handleOpenMenu = (): void => {
     setIsMenuOpen(true);
   };
