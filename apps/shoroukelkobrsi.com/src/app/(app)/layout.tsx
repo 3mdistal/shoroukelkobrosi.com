@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
-import Menu from "@/components/menu";
+import { ViewTransitions } from "next-view-transitions";
+import Menu from "@/components/layout/menu";
+import Footer from "@/components/layout/footer";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -19,11 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): React.ReactElement {
   return (
-    <html lang="en" className={lora.variable}>
-      <body>
-        <Menu />
-        <main>{children}</main>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={lora.variable}>
+        <body>
+          <div id="main-content">
+            <main>{children}</main>
+            <Footer />
+          </div>
+          <Menu />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

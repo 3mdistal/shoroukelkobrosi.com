@@ -1,0 +1,7 @@
+{
+  "entryFilePath": "/src/app/(app)/page.tsx",
+  "alias": {
+    "@": "./src"
+  },
+  "resolveExtensions": [".js", ".jsx", ".ts", ".tsx", ".vue", ".scss", ".less"]
+}

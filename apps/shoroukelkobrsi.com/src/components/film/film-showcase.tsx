@@ -1,10 +1,11 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { Film, Homepage } from "@/payload-types";
+import AspectRatio from "@/components/ui/aspect-ratio";
 import styles from "./film-showcase.module.css";
 
 const getCachedHomepage = cache(
@@ -63,32 +64,47 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
   return (
     <section className={styles.showcase}>
-      <h2>Films</h2>
       {featuredFilms.map((film) => (
         <Link
           href={`/films/${film.slug}`}
           key={film.id}
           className={styles.film}
         >
-          <div>
-            <h3>{film.title}</h3>
-            <p>{formatSeasonYear(film.date)}</p>
+          <div className={styles.filmInfo}>
+            <h2 className={styles.filmTitle}>{film.title}</h2>
+            <div className={styles.filmMeta}>
+              {film.date && (
+                <span className={styles.filmDate}>
+                  {formatSeasonYear(film.date)}
+                </span>
+              )}
+              {film.producer && (
+                <span className={styles.filmProducer}>{film.producer}</span>
+              )}
+            </div>
           </div>
           <div className={styles.stillsGrid}>
             {film.stills
               ?.filter((still) => still.featured)
               .map((still) => (
                 <div className={styles.gridCell} key={still.id}>
-                  <Image
-                    src={
-                      typeof still.image === "object" && still.image.url
-                        ? still.image.url
-                        : "https://unplash.it/1600/900"
-                    }
-                    alt={`Still from ${film.title}`}
-                    style={{ objectFit: "cover" }}
-                    fill
-                  />
+                  <AspectRatio
+                    ratio={16 / 9}
+                    className={styles.aspectRatioWrapper}
+                  >
+                    <div className={styles.imageWrapper}>
+                      <Image
+                        src={
+                          typeof still.image === "object" && still.image.url
+                            ? still.image.url
+                            : "https://unplash.it/1600/900"
+                        }
+                        alt={`Still from ${film.title}`}
+                        fill
+                        style={{ objectFit: "contain" }}
+                      />
+                    </div>
+                  </AspectRatio>
                 </div>
               ))}
           </div>

@@ -11,7 +11,8 @@
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
-    "test": "playwright test",
+    "playwright": "playwright test",
+    "vitest": "vitest",
     "vercel": "vercel"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
     "graphql": "^16.9.0",
     "next": "15.0.0-rc.0",
+    "next-view-transitions": "^0.3.0",
     "payload": "3.0.0-beta.70",
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
@@ -38,18 +40,23 @@
     "@playwright/test": "^1.45.3",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
+    "jsdom": "^24.1.1",
     "open-props": "^1.7.5",
     "postcss": "^8.4.40",
     "postcss-jit-props": "^1.0.14",
     "turbo": "^2.0.9",
     "typescript": "^5.5.4",
-    "typescript-plugin-css-modules": "^5.1.0"
+    "typescript-plugin-css-modules": "^5.1.0",
+    "vitest": "^2.0.5"
   },
   "packageManager": "pnpm@9.5.0"
 }

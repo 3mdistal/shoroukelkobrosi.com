@@ -1,0 +1,20 @@
+.stillImage {
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stillImage.visible {
+  opacity: 1;
+}
+
+.stillImage img {
+  display: block;
+  transition: transform 0.1s ease-out;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
