@@ -1,12 +1,22 @@
 ---
 import MainLayout from "../layouts/main-layout.astro";
-import Hero from "../components/homepage/hero.astro";
-import TestingMarkdown from "../content/primary/testing-markdown.mdx";
 ---
 
 <MainLayout title="Welcome to alicealexandra.com.">
   <main>
-    <Hero />
-    <TestingMarkdown />
+    <section class="hero">
+      <h1>Alice Alexandra</h1>
+    </section>
+    <section class="about">
+      <h2>About</h2>
+      <h3>Hello, I'm Alice</h3>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor odio
+        debitis rem voluptatem, ducimus nostrum quasi numquam nobis praesentium
+        quaerat optio iste consectetur totam corrupti veniam saepe? Ratione,
+        expedita fuga?
+      </p>
+      <a href="/blog">Blog</a>
+    </section>
   </main>
 </MainLayout>
