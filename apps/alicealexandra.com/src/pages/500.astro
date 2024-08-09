@@ -1,3 +1,12 @@
+---
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+---
+
 <h1>pfft that doesn't exist</h1>
 <p>and/or i'm a shitty developer</p>
 <p>either way, you best go back or <a href="/">go home</a></p>
+<pre>{error instanceof Error ? error.message : "Unknown error"}</pre>
