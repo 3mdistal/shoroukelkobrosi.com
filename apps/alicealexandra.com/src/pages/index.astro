@@ -1,5 +1,6 @@
 ---
-import MainLayout from "../layouts/main-layout.astro";
+import MainLayout from "@/layouts/main-layout.astro";
+import TestingSvelte from "@/components/testing-svelte.svelte";
 ---
 
 <MainLayout title="Welcome to alicealexandra.com.">
@@ -16,6 +17,7 @@ import MainLayout from "../layouts/main-layout.astro";
         quaerat optio iste consectetur totam corrupti veniam saepe? Ratione,
         expedita fuga?
       </p>
+      <TestingSvelte client:idle />
       <a href="/blog">Blog</a>
     </section>
   </main>
