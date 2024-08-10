@@ -256,8 +256,19 @@ const initialWeeklyItems: WeeklyItems = {
       mealPlan: MealPlan,
       weeklyItems: WeeklyItems
     ) {
+      const days = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
+
       let html = "";
-      for (const [day, meals] of Object.entries(mealPlan)) {
+      for (const day of days) {
+        const meals = mealPlan[day] || { breakfast: "", dinner: "" };
         html += `
           <div class="day-plan">
             <h3>${day}</h3>
