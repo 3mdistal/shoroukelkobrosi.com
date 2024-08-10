@@ -1,0 +1,154 @@
+---
+import MainLayout from "@/layouts/main-layout.astro";
+
+const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+const initialMealPlan = days.reduce((acc, day) => {
+  acc[day] = { breakfast: "", dinner: "" };
+  return acc;
+}, {});
+
+const initialWeeklyItems = {
+  snacks: "",
+  desserts: "",
+  fruits: "",
+};
+---
+
+<MainLayout>
+  <h1>Meal Planner</h1>
+
+  <form id="mealPlanForm">
+    {
+      days.map((day) => (
+        <fieldset>
+          <legend>{day}</legend>
+          <div>
+            <label for={`${day}-breakfast`}>Breakfast:</label>
+            <input
+              type="text"
+              id={`${day}-breakfast`}
+              name={`${day}-breakfast`}
+            />
+          </div>
+          <div>
+            <label for={`${day}-dinner`}>Dinner:</label>
+            <input type="text" id={`${day}-dinner`} name={`${day}-dinner`} />
+          </div>
+        </fieldset>
+      ))
+    }
+
+    <fieldset>
+      <legend>Weekly Items</legend>
+      <div>
+        <label for="snacks">Snacks:</label>
+        <input type="text" id="snacks" name="snacks" />
+      </div>
+      <div>
+        <label for="desserts">Desserts:</label>
+        <input type="text" id="desserts" name="desserts" />
+      </div>
+      <div>
+        <label for="fruits">Fruits:</label>
+        <input type="text" id="fruits" name="fruits" />
+      </div>
+    </fieldset>
+
+    <button type="submit">Save Meal Plan</button>
+  </form>
+
+  <h2>This Week's Meal Plan</h2>
+  <div id="mealPlanDisplay">
+    {
+      days.map((day) => (
+        <div class="day-plan">
+          <h3>{day}</h3>
+          <p>
+            Breakfast:{" "}
+            <span class="meal breakfast">
+              {initialMealPlan[day].breakfast || "Not planned yet"}
+            </span>
+          </p>
+          <p>
+            Dinner:{" "}
+            <span class="meal dinner">
+              {initialMealPlan[day].dinner || "Not planned yet"}
+            </span>
+          </p>
+        </div>
+      ))
+    }
+    <div class="weekly-items">
+      <h3>Weekly Items</h3>
+      <p>
+        Snacks: <span class="weekly snacks"
+          >{initialWeeklyItems.snacks || "Not planned yet"}</span
+        >
+      </p>
+      <p>
+        Desserts: <span class="weekly desserts"
+          >{initialWeeklyItems.desserts || "Not planned yet"}</span
+        >
+      </p>
+      <p>
+        Fruits: <span class="weekly fruits"
+          >{initialWeeklyItems.fruits || "Not planned yet"}</span
+        >
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("mealPlanForm");
+    const mealPlanDisplay = document.getElementById("mealPlanDisplay");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const mealPlan = {};
+      const weeklyItems = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (key.includes("-")) {
+          const [day, meal] = key.split("-");
+          if (!mealPlan[day]) mealPlan[day] = {};
+          mealPlan[day][meal] = value;
+        } else {
+          weeklyItems[key] = value;
+        }
+      }
+
+      updateMealPlanDisplay(mealPlan, weeklyItems);
+    });
+
+    function updateMealPlanDisplay(mealPlan, weeklyItems) {
+      let html = "";
+      for (const [day, meals] of Object.entries(mealPlan)) {
+        html += `
+          <div class="day-plan">
+            <h3>${day}</h3>
+            <p>Breakfast: <span class="meal breakfast">${meals.breakfast || "Not planned yet"}</span></p>
+            <p>Dinner: <span class="meal dinner">${meals.dinner || "Not planned yet"}</span></p>
+          </div>
+        `;
+      }
+      html += `
+        <div class="weekly-items">
+          <h3>Weekly Items</h3>
+          <p>Snacks: <span class="weekly snacks">${weeklyItems.snacks || "Not planned yet"}</span></p>
+          <p>Desserts: <span class="weekly desserts">${weeklyItems.desserts || "Not planned yet"}</span></p>
+          <p>Fruits: <span class="weekly fruits">${weeklyItems.fruits || "Not planned yet"}</span></p>
+        </div>
+      `;
+      mealPlanDisplay.innerHTML = html;
+    }
+  </script>
+</MainLayout>
