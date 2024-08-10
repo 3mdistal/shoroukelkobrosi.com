@@ -1,32 +1,29 @@
 import { z, defineCollection } from "astro:content";
 
+const blogCategories = [
+  "Devlog",
+  "Humor",
+  "Life",
+  "Lyric",
+  "Tech",
+  "Update",
+] as const;
+
 const blogCollection = defineCollection({
   type: "content",
   schema: z.object({
-    title: z.string(),
-    publicationDate: z.date(),
-    tags: z.array(z.string()),
+    category: z.enum(blogCategories),
+    ogDescription: z.string(),
     ogImage: z.string(),
-  }),
-});
-
-const studio = defineCollection({
-  type: "content",
-  schema: z.object({
+    publicationDate: z.date(),
     published: z.boolean(),
-    sequence: z.number(),
-    title: z.string(),
     subtitle: z.string(),
-    shortenedLogoText: z.string(),
-    image: z.string(),
-    imageAlt: z.string(),
-    description: z.string(),
-    destinationUrl: z.string(),
-    buttonText: z.string(),
+    summary: z.string(),
+    title: z.string(),
   }),
 });
 
-const studioLandingPage = defineCollection({
+const studioLandingPageCollection = defineCollection({
   type: "data",
   schema: z.object({
     items: z.array(
@@ -47,7 +44,6 @@ const studioLandingPage = defineCollection({
 });
 
 export const collections = {
-  blog: blogCollection,
-  studio: studio,
-  studioLandingPage: studioLandingPage,
+  blogs: blogCollection,
+  studioLandingPage: studioLandingPageCollection,
 };

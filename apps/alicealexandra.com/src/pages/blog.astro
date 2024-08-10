@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import { Content } from "../content/blogs/something-like-solace.mdx";
+
+const blogs = await getCollection("blogs", ({ data }) => data.published);
+---
+
+{
+  blogs.map((blog) => (
+    <article>
+      <h2>{blog.data.title}</h2>
+      <p>{blog.data.summary}</p>
+      <p>Category: {blog.data.category}</p>
+      <p>Published: {blog.data.publicationDate.toLocaleDateString()}</p>
+      <a href={`/blog/${blog.slug}`}>Read more</a>
+      <Content />
+    </article>
+  ))
+}

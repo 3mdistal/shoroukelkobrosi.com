@@ -9,16 +9,22 @@ import qwikdev from "@qwikdev/astro";
 // https://astro.build/config
 export default defineConfig({
   site: "https://alicealexandra.com",
-  integrations: [mdx(), sitemap(), svelte({
-    configFile: "/Users/monkey/Downloads/Coding Projects/teenylilapps/apps/alicealexandra.com/svelte.config.js"
-  }), qwikdev()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    svelte({
+      configFile:
+        "/Users/monkey/Downloads/Coding Projects/teenylilapps/apps/alicealexandra.com/svelte.config.js",
+    }),
+    qwikdev(),
+  ],
   output: "hybrid",
   adapter: vercel({
     webAnalytics: {
-      enabled: true
-    }
+      enabled: true,
+    },
   }),
   experimental: {
-    contentCollectionCache: true
-  }
+    contentCollectionCache: true,
+  },
 });
