@@ -1,10 +1,13 @@
-[
-  { "name": "Oatmeal", "type": "breakfast" },
-  { "name": "Scrambled Eggs", "type": "breakfast" },
-  { "name": "Grilled Chicken", "type": "dinner" },
-  { "name": "Pasta Primavera", "type": "dinner" },
-  { "name": "Mixed Nuts", "type": "snack" },
-  { "name": "Chocolate Chip Cookies", "type": "dessert" },
-  { "name": "Apple", "type": "fruit" },
-  { "name": "Banana", "type": "fruit" }
-]
+{
+  "$schema": "/Users/monkey/Downloads/Coding Projects/teenylilapps/apps/mini/meal-planner/.astro/collections/recipes.schema.json",
+  "data": [
+    { "name": "Oatmeal", "type": "breakfast" },
+    { "name": "Scrambled Eggs", "type": "breakfast" },
+    { "name": "Grilled Chicken", "type": "dinner" },
+    { "name": "Pasta Primavera", "type": "dinner" },
+    { "name": "Mixed Nuts", "type": "snack" },
+    { "name": "Chocolate Chip Cookies", "type": "dessert" },
+    { "name": "Apple", "type": "fruit" },
+    { "name": "Banana", "type": "fruit" }
+  ]
+}

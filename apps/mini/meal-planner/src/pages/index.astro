@@ -23,7 +23,11 @@ type Recipe = {
 };
 
 const recipesEntry = await getCollection("recipes");
-const recipes: Recipe[] = recipesEntry[0]?.data ?? [];
+const recipes: Recipe[] = recipesEntry[0]?.data?.data ?? [];
+
+if (!recipes.length) {
+  console.error("No recipes found or invalid data structure");
+}
 
 const breakfastRecipes = recipes.filter(
   (recipe) => recipe.type === "breakfast"
