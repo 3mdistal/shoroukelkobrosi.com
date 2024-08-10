@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 
 // const studio = await getCollection("studio", ({ data }) => data.published);
 const studioLandingPage = await getCollection("studioLandingPage", ({ data }) =>
-  data.items.map((item) => item.Published)
+  data.items.map((item) => item.published)
 );
 
 const studioLandingPageItems = studioLandingPage.flatMap(
@@ -15,11 +15,11 @@ const studioLandingPageItems = studioLandingPage.flatMap(
   {
     studioLandingPageItems.map((item) => (
       <div>
-        <h2>{item.Title}</h2>
-        <h3>{item.Subtitle}</h3>
-        <img src={item.Image} alt={item.ImageAlt} />
-        <p>{item.Description}</p>
-        <a href={item.Destination}>{item.ButtonText}</a>
+        <h2>{item.title}</h2>
+        <h3>{item.subtitle}</h3>
+        <img src={item.image} alt={item.imageAlt} />
+        <p>{item.description}</p>
+        <a href={item.destination}>{item.buttonText}</a>
       </div>
     ))
   }
