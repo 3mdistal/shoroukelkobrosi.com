@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import StudioCard from "../components/studio/studio-card.svelte";
 
-// const studio = await getCollection("studio", ({ data }) => data.published);
 const studioLandingPage = await getCollection("studioLandingPage", ({ data }) =>
   data.items.map((item) => item.published)
 );
@@ -11,16 +11,20 @@ const studioLandingPageItems = studioLandingPage.flatMap(
 );
 ---
 
-<div>
-  {
-    studioLandingPageItems.map((item) => (
-      <div>
-        <h2>{item.title}</h2>
-        <h3>{item.subtitle}</h3>
-        <img src={item.image} alt={item.imageAlt} />
-        <p>{item.description}</p>
-        <a href={item.destination}>{item.buttonText}</a>
-      </div>
-    ))
-  }
-</div>
+{
+  studioLandingPageItems.map((item) => (
+    <StudioCard
+      client:visible
+      title={item.title}
+      published={item.published}
+      subtitle={item.subtitle}
+      shortenedLogoText={item.shortenedLogoText}
+      image={item.image}
+      imageAlt={item.imageAlt}
+      description={item.description}
+      buttonText={item.buttonText}
+      destination={item.destination}
+      order={item.order}
+    />
+  ))
+}

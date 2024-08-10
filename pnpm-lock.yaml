@@ -25,26 +25,26 @@ importers:
         version: 0.9.2(prettier@3.3.3)(typescript@5.5.4)
       '@astrojs/mdx':
         specifier: ^3.1.3
-        version: 3.1.3(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))
+        version: 3.1.3(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))
       '@astrojs/sitemap':
         specifier: ^3.1.6
         version: 3.1.6
       '@astrojs/svelte':
         specifier: 5.7.0
-        version: 5.7.0(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(svelte@5.0.0-next.210)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
+        version: 5.7.0(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(svelte@5.0.0-next.190)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
       '@astrojs/vercel':
         specifier: ^7.7.2
-        version: 7.7.2(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(react@18.2.0)
+        version: 7.7.2(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(react@18.2.0)
       astro:
-        specifier: ^4.13.2
-        version: 4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
+        specifier: ^4.13.3
+        version: 4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
     devDependencies:
       svelte:
-        specifier: 5.0.0-next.210
-        version: 5.0.0-next.210
+        specifier: 5.0.0-next.190
+        version: 5.0.0-next.190
 
   apps/nextjs-playground:
     dependencies:
@@ -2818,8 +2818,8 @@ packages:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
 
-  astro@4.13.2:
-    resolution: {integrity: sha512-bdfUV6zfOWOV/IbROqVx+1cuAFXY0PZpVxr4JO9YxCKa5AfQRR8RKXJ2k8QUjalA6dmxQ9FgAQw3FRrzHVOGEQ==}
+  astro@4.13.3:
+    resolution: {integrity: sha512-MyhmM0v5sphiVwxAm5jjKxWeuPZijWPJ8Ajdign9QzEmLWSH8vUYIJWx/dWRQ6vF1I0jXrksoj3wtw5nzXt9nw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -4736,8 +4736,8 @@ packages:
   lexical@0.16.0:
     resolution: {integrity: sha512-Skn45Qhriazq4fpAtwnAB11U//GKc4vjzx54xsV3TkDLDvWpbL4Z9TNRwRoN3g7w8AkWnqjeOSODKkrjgfRSrg==}
 
-  lib0@0.2.94:
-    resolution: {integrity: sha512-hZ3p54jL4Wpu7IOg26uC7dnEWiMyNlUrb9KoG7+xYs45WkQwpVvKFndVq2+pqLYKe1u8Fp3+zAfZHVvTK34PvQ==}
+  lib0@0.2.96:
+    resolution: {integrity: sha512-xeV9M34+D4HD1sd6xAarnWYgU7pKau64bvmPySibX85G+hx/KonzISpO409K6OS9IVLORWfQZkKBRZV5sQegFQ==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -6338,8 +6338,8 @@ packages:
       svelte: ^3.55 || ^4.0.0-next.0 || ^4.0 || ^5.0.0-next.0
       typescript: ^4.9.4 || ^5.0.0
 
-  svelte@5.0.0-next.210:
-    resolution: {integrity: sha512-6QZpzr31weKDyAKifOdXJHK9oEeBE2Z/z/h1IX4tmJRuWPE/2Wc7Lzpfxl+0irS19GZH6V5YZnZLNTRJKjGzfg==}
+  svelte@5.0.0-next.190:
+    resolution: {integrity: sha512-6cnB92hY2o1Nr8zqrMX/mYJVslXD19C1fbyo3drB3azYBsAtjaBQaxG6JD7dZnicEGJhM/k3H7J5GXgFpijNzA==}
     engines: {node: '>=18'}
 
   symbol-tree@3.2.4:
@@ -7136,12 +7136,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.3(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))':
+  '@astrojs/mdx@3.1.3(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))':
     dependencies:
       '@astrojs/markdown-remark': 5.2.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.12.1
-      astro: 4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
+      astro: 4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
       es-module-lexer: 1.5.4
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -7167,12 +7167,12 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/svelte@5.7.0(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(svelte@5.0.0-next.210)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
+  '@astrojs/svelte@5.7.0(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(svelte@5.0.0-next.190)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
-      astro: 4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
-      svelte: 5.0.0-next.210
-      svelte2tsx: 0.7.15(svelte@5.0.0-next.210)(typescript@5.5.4)
+      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
+      astro: 4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
+      svelte: 5.0.0-next.190
+      svelte2tsx: 0.7.15(svelte@5.0.0-next.190)(typescript@5.5.4)
       typescript: 5.5.4
     transitivePeerDependencies:
       - supports-color
@@ -7190,13 +7190,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@7.7.2(astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(react@18.2.0)':
+  '@astrojs/vercel@7.7.2(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(react@18.2.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.4.1
       '@vercel/analytics': 1.3.1(react@18.2.0)
       '@vercel/edge': 1.1.2
       '@vercel/nft': 0.27.3
-      astro: 4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
+      astro: 4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4)
       esbuild: 0.21.5
       fast-glob: 3.3.2
       set-cookie-parser: 2.7.0
@@ -9805,24 +9805,24 @@ snapshots:
       '@smithy/types': 3.3.0
       tslib: 2.6.3
 
-  '@sveltejs/vite-plugin-svelte-inspector@2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)))(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
+  '@sveltejs/vite-plugin-svelte-inspector@2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)))(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
+      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
       debug: 4.3.6
-      svelte: 5.0.0-next.210
+      svelte: 5.0.0-next.190
       vite: 5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
+  '@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)))(svelte@5.0.0-next.210)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
+      '@sveltejs/vite-plugin-svelte-inspector': 2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)))(svelte@5.0.0-next.190)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
       debug: 4.3.6
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.11
-      svelte: 5.0.0-next.210
-      svelte-hmr: 0.16.0(svelte@5.0.0-next.210)
+      svelte: 5.0.0-next.190
+      svelte-hmr: 0.16.0(svelte@5.0.0-next.190)
       vite: 5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)
       vitefu: 0.2.5(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))
     transitivePeerDependencies:
@@ -10593,7 +10593,7 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro@4.13.2(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4):
+  astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4):
     dependencies:
       '@astrojs/compiler': 2.10.2
       '@astrojs/internal-helpers': 0.4.1
@@ -12950,7 +12950,7 @@ snapshots:
 
   lexical@0.16.0: {}
 
-  lib0@0.2.94:
+  lib0@0.2.96:
     dependencies:
       isomorphic.js: 0.2.5
 
@@ -15050,18 +15050,18 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte-hmr@0.16.0(svelte@5.0.0-next.210):
+  svelte-hmr@0.16.0(svelte@5.0.0-next.190):
     dependencies:
-      svelte: 5.0.0-next.210
+      svelte: 5.0.0-next.190
 
-  svelte2tsx@0.7.15(svelte@5.0.0-next.210)(typescript@5.5.4):
+  svelte2tsx@0.7.15(svelte@5.0.0-next.190)(typescript@5.5.4):
     dependencies:
       dedent-js: 1.0.1
       pascal-case: 3.1.2
-      svelte: 5.0.0-next.210
+      svelte: 5.0.0-next.190
       typescript: 5.5.4
 
-  svelte@5.0.0-next.210:
+  svelte@5.0.0-next.190:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -15782,7 +15782,7 @@ snapshots:
 
   yjs@13.6.18:
     dependencies:
-      lib0: 0.2.94
+      lib0: 0.2.96
 
   yocto-queue@0.1.0: {}
 
