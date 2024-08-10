@@ -1,5 +1,6 @@
 ---
 import MainLayout from "@/layouts/main-layout.astro";
+import { getCollection } from "astro:content";
 
 const days = [
   "Monday",
@@ -9,13 +10,35 @@ const days = [
   "Friday",
   "Saturday",
   "Sunday",
-];
-const initialMealPlan = days.reduce((acc, day) => {
+] as const;
+
+type Day = (typeof days)[number];
+type Meal = { breakfast: string; dinner: string };
+type MealPlan = Record<Day, Meal>;
+type WeeklyItems = { snacks: string; desserts: string; fruits: string };
+
+type Recipe = {
+  name: string;
+  type: "breakfast" | "dinner" | "snack" | "dessert" | "fruit";
+};
+
+const recipesEntry = await getCollection("recipes");
+const recipes: Recipe[] = recipesEntry[0]?.data ?? [];
+
+const breakfastRecipes = recipes.filter(
+  (recipe) => recipe.type === "breakfast"
+);
+const dinnerRecipes = recipes.filter((recipe) => recipe.type === "dinner");
+const snacks = recipes.filter((recipe) => recipe.type === "snack");
+const desserts = recipes.filter((recipe) => recipe.type === "dessert");
+const fruits = recipes.filter((recipe) => recipe.type === "fruit");
+
+const initialMealPlan: MealPlan = days.reduce((acc, day) => {
   acc[day] = { breakfast: "", dinner: "" };
   return acc;
-}, {});
+}, {} as MealPlan);
 
-const initialWeeklyItems = {
+const initialWeeklyItems: WeeklyItems = {
   snacks: "",
   desserts: "",
   fruits: "",
@@ -32,15 +55,21 @@ const initialWeeklyItems = {
           <legend>{day}</legend>
           <div>
             <label for={`${day}-breakfast`}>Breakfast:</label>
-            <input
-              type="text"
-              id={`${day}-breakfast`}
-              name={`${day}-breakfast`}
-            />
+            <select id={`${day}-breakfast`} name={`${day}-breakfast`}>
+              <option value="">Select a breakfast</option>
+              {breakfastRecipes.map((recipe) => (
+                <option value={recipe.name}>{recipe.name}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label for={`${day}-dinner`}>Dinner:</label>
-            <input type="text" id={`${day}-dinner`} name={`${day}-dinner`} />
+            <select id={`${day}-dinner`} name={`${day}-dinner`}>
+              <option value="">Select a dinner</option>
+              {dinnerRecipes.map((recipe) => (
+                <option value={recipe.name}>{recipe.name}</option>
+              ))}
+            </select>
           </div>
         </fieldset>
       ))
@@ -50,15 +79,36 @@ const initialWeeklyItems = {
       <legend>Weekly Items</legend>
       <div>
         <label for="snacks">Snacks:</label>
-        <input type="text" id="snacks" name="snacks" />
+        <select id="snacks" name="snacks">
+          <option value="">Select a snack</option>
+          {
+            snacks.map((recipe) => (
+              <option value={recipe.name}>{recipe.name}</option>
+            ))
+          }
+        </select>
       </div>
       <div>
         <label for="desserts">Desserts:</label>
-        <input type="text" id="desserts" name="desserts" />
+        <select id="desserts" name="desserts">
+          <option value="">Select a dessert</option>
+          {
+            desserts.map((recipe) => (
+              <option value={recipe.name}>{recipe.name}</option>
+            ))
+          }
+        </select>
       </div>
       <div>
         <label for="fruits">Fruits:</label>
-        <input type="text" id="fruits" name="fruits" />
+        <select id="fruits" name="fruits">
+          <option value="">Select a fruit</option>
+          {
+            fruits.map((recipe) => (
+              <option value={recipe.name}>{recipe.name}</option>
+            ))
+          }
+        </select>
       </div>
     </fieldset>
 
@@ -89,47 +139,64 @@ const initialWeeklyItems = {
     <div class="weekly-items">
       <h3>Weekly Items</h3>
       <p>
-        Snacks: <span class="weekly snacks"
-          >{initialWeeklyItems.snacks || "Not planned yet"}</span
-        >
+        Snacks: <span class="weekly snacks">
+          {initialWeeklyItems.snacks || "Not planned yet"}
+        </span>
       </p>
       <p>
-        Desserts: <span class="weekly desserts"
-          >{initialWeeklyItems.desserts || "Not planned yet"}</span
-        >
+        Desserts: <span class="weekly desserts">
+          {initialWeeklyItems.desserts || "Not planned yet"}
+        </span>
       </p>
       <p>
-        Fruits: <span class="weekly fruits"
-          >{initialWeeklyItems.fruits || "Not planned yet"}</span
-        >
+        Fruits: <span class="weekly fruits">
+          {initialWeeklyItems.fruits || "Not planned yet"}
+        </span>
       </p>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById("mealPlanForm");
-    const mealPlanDisplay = document.getElementById("mealPlanDisplay");
+    const form = document.getElementById("mealPlanForm") as HTMLFormElement;
+    const mealPlanDisplay = document.getElementById(
+      "mealPlanDisplay"
+    ) as HTMLDivElement;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const mealPlan = {};
-      const weeklyItems = {};
+    type MealPlan = Record<string, { breakfast: string; dinner: string }>;
+    type WeeklyItems = Record<string, string>;
 
-      for (const [key, value] of formData.entries()) {
-        if (key.includes("-")) {
-          const [day, meal] = key.split("-");
-          if (!mealPlan[day]) mealPlan[day] = {};
-          mealPlan[day][meal] = value;
-        } else {
-          weeklyItems[key] = value;
-        }
+    // Initialize mealPlan and weeklyItems
+    const mealPlan: MealPlan = {};
+    const weeklyItems: WeeklyItems = {};
+
+    // Function to update meal plan when a select element changes
+    function handleSelectChange(event: Event) {
+      const select = event.target as HTMLSelectElement;
+      const [day, meal] = select.id.split("-");
+
+      if (day && meal) {
+        if (!mealPlan[day]) mealPlan[day] = { breakfast: "", dinner: "" };
+        mealPlan[day][meal as "breakfast" | "dinner"] = select.value;
+      } else {
+        weeklyItems[select.id] = select.value;
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);
+    }
+
+    // Add event listeners to all select elements
+    const selects = form.querySelectorAll("select");
+    selects.forEach((select) => {
+      select.addEventListener("change", handleSelectChange);
     });
 
-    function updateMealPlanDisplay(mealPlan, weeklyItems) {
+    // Remove the form submit event listener
+    // form.addEventListener("submit", (e) => { ... });
+
+    function updateMealPlanDisplay(
+      mealPlan: MealPlan,
+      weeklyItems: WeeklyItems
+    ) {
       let html = "";
       for (const [day, meals] of Object.entries(mealPlan)) {
         html += `
