@@ -1,27 +1,35 @@
 ---
 import { getCollection } from "astro:content";
-import StudioCard from "@/components/studio/studio-card";
+import StudioCard from "@/components/studio/studio-card.astro";
 
-const studioLandingPage = await getCollection("studioLandingPage", ({ data }) =>
-  data.items.map((item) => item.published)
-);
+const studioLandingPage = await getCollection("studioLandingPage");
 
-const studioLandingPageItems = studioLandingPage.flatMap(
-  (entry) => entry.data.items
-);
+const studioLandingPageItems = studioLandingPage
+  .flatMap((entry) => entry.data.items)
+  .filter((item) => item.published === true);
 ---
 
-{
-  studioLandingPageItems.map((item) => (
-    <StudioCard
-      title={item.title}
-      subtitle={item.subtitle}
-      shortenedLogoText={item.shortenedLogoText}
-      image={item.image}
-      imageAlt={item.imageAlt}
-      description={item.description}
-      buttonText={item.buttonText}
-      destination={item.destination}
-    />
-  ))
-}
+<div class="grid">
+  {
+    studioLandingPageItems.map((item) => (
+      <StudioCard
+        title={item.title}
+        subtitle={item.subtitle}
+        shortenedLogoText={item.shortenedLogoText}
+        image={item.image}
+        imageAlt={item.imageAlt}
+        description={item.description}
+        buttonText={item.buttonText}
+        destination={item.destination}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+</style>
