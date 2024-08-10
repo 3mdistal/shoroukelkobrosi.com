@@ -48,113 +48,138 @@ const initialWeeklyItems: WeeklyItems = {
 <MainLayout>
   <h1>Meal Planner</h1>
 
-  <form id="mealPlanForm">
-    {
-      days.map((day) => (
+  <div class="meal-planner-container">
+    <div class="form-container">
+      <form id="mealPlanForm">
+        {
+          days.map((day) => (
+            <fieldset>
+              <legend>{day}</legend>
+              <div>
+                <label for={`${day}-breakfast`}>Breakfast:</label>
+                <select id={`${day}-breakfast`} name={`${day}-breakfast`}>
+                  <option value="">Select a breakfast</option>
+                  {breakfastRecipes.map((recipe) => (
+                    <option value={recipe.name}>{recipe.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label for={`${day}-dinner`}>Dinner:</label>
+                <select id={`${day}-dinner`} name={`${day}-dinner`}>
+                  <option value="">Select a dinner</option>
+                  {dinnerRecipes.map((recipe) => (
+                    <option value={recipe.name}>{recipe.name}</option>
+                  ))}
+                </select>
+              </div>
+            </fieldset>
+          ))
+        }
+
         <fieldset>
-          <legend>{day}</legend>
+          <legend>Weekly Items</legend>
           <div>
-            <label for={`${day}-breakfast`}>Breakfast:</label>
-            <select id={`${day}-breakfast`} name={`${day}-breakfast`}>
-              <option value="">Select a breakfast</option>
-              {breakfastRecipes.map((recipe) => (
-                <option value={recipe.name}>{recipe.name}</option>
-              ))}
+            <label for="snacks">Snacks:</label>
+            <select id="snacks" name="snacks">
+              <option value="">Select a snack</option>
+              {
+                snacks.map((recipe) => (
+                  <option value={recipe.name}>{recipe.name}</option>
+                ))
+              }
             </select>
           </div>
           <div>
-            <label for={`${day}-dinner`}>Dinner:</label>
-            <select id={`${day}-dinner`} name={`${day}-dinner`}>
-              <option value="">Select a dinner</option>
-              {dinnerRecipes.map((recipe) => (
-                <option value={recipe.name}>{recipe.name}</option>
-              ))}
+            <label for="desserts">Desserts:</label>
+            <select id="desserts" name="desserts">
+              <option value="">Select a dessert</option>
+              {
+                desserts.map((recipe) => (
+                  <option value={recipe.name}>{recipe.name}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div>
+            <label for="fruits">Fruits:</label>
+            <select id="fruits" name="fruits">
+              <option value="">Select a fruit</option>
+              {
+                fruits.map((recipe) => (
+                  <option value={recipe.name}>{recipe.name}</option>
+                ))
+              }
             </select>
           </div>
         </fieldset>
-      ))
-    }
 
-    <fieldset>
-      <legend>Weekly Items</legend>
-      <div>
-        <label for="snacks">Snacks:</label>
-        <select id="snacks" name="snacks">
-          <option value="">Select a snack</option>
-          {
-            snacks.map((recipe) => (
-              <option value={recipe.name}>{recipe.name}</option>
-            ))
-          }
-        </select>
-      </div>
-      <div>
-        <label for="desserts">Desserts:</label>
-        <select id="desserts" name="desserts">
-          <option value="">Select a dessert</option>
-          {
-            desserts.map((recipe) => (
-              <option value={recipe.name}>{recipe.name}</option>
-            ))
-          }
-        </select>
-      </div>
-      <div>
-        <label for="fruits">Fruits:</label>
-        <select id="fruits" name="fruits">
-          <option value="">Select a fruit</option>
-          {
-            fruits.map((recipe) => (
-              <option value={recipe.name}>{recipe.name}</option>
-            ))
-          }
-        </select>
-      </div>
-    </fieldset>
+        <button type="submit">Save Meal Plan</button>
+      </form>
+    </div>
 
-    <button type="submit">Save Meal Plan</button>
-  </form>
-
-  <h2>This Week's Meal Plan</h2>
-  <div id="mealPlanDisplay">
-    {
-      days.map((day) => (
-        <div class="day-plan">
-          <h3>{day}</h3>
+    <div class="plan-display-container">
+      <h2>This Week's Meal Plan</h2>
+      <div id="mealPlanDisplay">
+        {
+          days.map((day) => (
+            <div class="day-plan">
+              <h3>{day}</h3>
+              <p>
+                Breakfast:{" "}
+                <span class="meal breakfast">
+                  {initialMealPlan[day].breakfast || "Not planned yet"}
+                </span>
+              </p>
+              <p>
+                Dinner:{" "}
+                <span class="meal dinner">
+                  {initialMealPlan[day].dinner || "Not planned yet"}
+                </span>
+              </p>
+            </div>
+          ))
+        }
+        <div class="weekly-items">
+          <h3>Weekly Items</h3>
           <p>
-            Breakfast:{" "}
-            <span class="meal breakfast">
-              {initialMealPlan[day].breakfast || "Not planned yet"}
+            Snacks: <span class="weekly snacks">
+              {initialWeeklyItems.snacks || "Not planned yet"}
             </span>
           </p>
           <p>
-            Dinner:{" "}
-            <span class="meal dinner">
-              {initialMealPlan[day].dinner || "Not planned yet"}
+            Desserts: <span class="weekly desserts">
+              {initialWeeklyItems.desserts || "Not planned yet"}
+            </span>
+          </p>
+          <p>
+            Fruits: <span class="weekly fruits">
+              {initialWeeklyItems.fruits || "Not planned yet"}
             </span>
           </p>
         </div>
-      ))
-    }
-    <div class="weekly-items">
-      <h3>Weekly Items</h3>
-      <p>
-        Snacks: <span class="weekly snacks">
-          {initialWeeklyItems.snacks || "Not planned yet"}
-        </span>
-      </p>
-      <p>
-        Desserts: <span class="weekly desserts">
-          {initialWeeklyItems.desserts || "Not planned yet"}
-        </span>
-      </p>
-      <p>
-        Fruits: <span class="weekly fruits">
-          {initialWeeklyItems.fruits || "Not planned yet"}
-        </span>
-      </p>
+      </div>
     </div>
   </div>
+
+  <style>
+    .meal-planner-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .meal-planner-container {
+        flex-direction: row;
+      }
+
+      .form-container,
+      .plan-display-container {
+        flex: 1;
+      }
+    }
+  </style>
 
   <script>
     const form = document.getElementById("mealPlanForm") as HTMLFormElement;
