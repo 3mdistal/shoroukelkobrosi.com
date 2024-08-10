@@ -178,10 +178,40 @@ const initialWeeklyItems: WeeklyItems = {
         flex-direction: row;
       }
 
-      .form-container,
-      .plan-display-container {
-        flex: 1;
+      .form-container {
+        padding-right: 2rem;
+        width: 50vw;
+        height: 100vh;
+        overflow-y: auto;
       }
+
+      .plan-display-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        padding: 2rem;
+        width: 50vw;
+        height: 100vh;
+        overflow-y: auto;
+      }
+    }
+
+    /* Remove the body padding */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Add some general styles for better readability */
+    h1,
+    h2 {
+      margin-top: 0;
+    }
+
+    fieldset {
+      margin-bottom: 1rem;
     }
   </style>
 
