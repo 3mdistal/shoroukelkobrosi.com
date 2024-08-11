@@ -289,15 +289,15 @@ const initialWeeklyItems: WeeklyItems = {
           };
         }
         if (itemType === 'sides' || multiSelect) {
-          const checkboxes = (multiSelect || input.closest('.multi-select'))?.querySelectorAll('input[type="checkbox"]:checked');
-          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(checkboxes || []).map((cb: HTMLInputElement) => cb.value);
+          const selectedOptions = multiSelect?.querySelectorAll('.selected-option') || [];
+          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(selectedOptions).map((option) => option.textContent?.replace('×', '').trim() || '');
         } else {
           mealPlan[day][mealType as 'breakfast' | 'dinner'].main = input.value;
         }
       } else {
         const weeklyItemKey = (multiSelect?.id || input.closest('.multi-select')?.id) as keyof WeeklyItems;
-        const checkboxes = (multiSelect || input.closest('.multi-select'))?.querySelectorAll('input[type="checkbox"]:checked');
-        weeklyItems[weeklyItemKey] = Array.from(checkboxes || []).map((cb: HTMLInputElement) => cb.value);
+        const selectedOptions = multiSelect?.querySelectorAll('.selected-option') || [];
+        weeklyItems[weeklyItemKey] = Array.from(selectedOptions).map((option) => option.textContent?.replace('×', '').trim() || '');
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);

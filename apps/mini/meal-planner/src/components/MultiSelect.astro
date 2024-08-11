@@ -128,7 +128,7 @@ const { id, label, options, placeholder = "Type to search options" } = Astro.pro
         event.preventDefault();
         const customValue = input.value.trim();
         if (customValue) {
-          addCustomOption(multiSelect, customValue);
+          addSelectedOption(multiSelect, customValue);
           input.value = '';
         }
       }
@@ -137,29 +137,36 @@ const { id, label, options, placeholder = "Type to search options" } = Astro.pro
     checkboxes.forEach((checkbox: HTMLInputElement) => {
       checkbox.addEventListener('change', () => {
         updateSelectedOptions(multiSelect);
-        multiSelect.dispatchEvent(new Event('optionschange', { bubbles: true }));
       });
     });
   }
 
-  function addCustomOption(multiSelect: HTMLElement, value: string) {
-    const options = multiSelect.querySelector('.options') as HTMLDivElement;
-    const label = document.createElement('label');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = value;
-    checkbox.checked = true;
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(value));
-    options.appendChild(label);
-
-    checkbox.addEventListener('change', () => {
-      updateSelectedOptions(multiSelect);
-      multiSelect.dispatchEvent(new Event('optionschange', { bubbles: true }));
-    });
-
-    updateSelectedOptions(multiSelect);
+  function addSelectedOption(multiSelect: HTMLElement, value: string) {
+    const selectedOptionsContainer = multiSelect.querySelector('.selected-options') as HTMLDivElement;
+    const optionElement = createOptionElement(value);
+    selectedOptionsContainer.appendChild(optionElement);
     multiSelect.dispatchEvent(new Event('optionschange', { bubbles: true }));
+  }
+
+  function createOptionElement(value: string) {
+    const optionElement = document.createElement('span');
+    optionElement.className = 'selected-option';
+    optionElement.textContent = value;
+    
+    const removeButton = document.createElement('span');
+    removeButton.className = 'remove-option';
+    removeButton.textContent = '×';
+    removeButton.onclick = (event) => {
+      event.stopPropagation();
+      optionElement.remove();
+      const multiSelect = optionElement.closest('.multi-select');
+      if (multiSelect) {
+        multiSelect.dispatchEvent(new Event('optionschange', { bubbles: true }));
+      }
+    };
+    
+    optionElement.appendChild(removeButton);
+    return optionElement;
   }
 
   function updateSelectedOptions(multiSelect: HTMLElement) {
@@ -168,21 +175,10 @@ const { id, label, options, placeholder = "Type to search options" } = Astro.pro
     
     selectedOptionsContainer.innerHTML = '';
     checkboxes.forEach((checkbox: HTMLInputElement) => {
-      const optionElement = document.createElement('span');
-      optionElement.className = 'selected-option';
-      optionElement.textContent = checkbox.value;
-      
-      const removeButton = document.createElement('span');
-      removeButton.className = 'remove-option';
-      removeButton.textContent = '×';
-      removeButton.onclick = () => {
-        checkbox.checked = false;
-        updateSelectedOptions(multiSelect);
-      };
-      
-      optionElement.appendChild(removeButton);
+      const optionElement = createOptionElement(checkbox.value);
       selectedOptionsContainer.appendChild(optionElement);
     });
+    multiSelect.dispatchEvent(new Event('optionschange', { bubbles: true }));
   }
 
   // Set up multi-select for all relevant elements
