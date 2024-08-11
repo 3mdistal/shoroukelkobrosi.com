@@ -13,6 +13,8 @@
     { "name": "Mango", "type": "fruit" },
     { "name": "Rice", "type": "side" },
     { "name": "Potatoes", "type": "side" },
-    { "name": "Salad", "type": "side" }
+    { "name": "Salad", "type": "side" },
+    { "name": "Olives", "type": "side" },
+    { "name": "Pickles", "type": "side" }
   ]
 }
