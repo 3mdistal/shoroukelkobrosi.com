@@ -103,6 +103,11 @@ const { id, label, options, placeholder = "Type to search options" } = Astro.pro
 
     input.addEventListener('focus', () => {
       options.style.display = 'block';
+      // Reset the display of all options when focusing on the input
+      checkboxes.forEach((checkbox: HTMLInputElement) => {
+        const label = checkbox.parentElement as HTMLLabelElement;
+        label.style.display = 'block';
+      });
     });
 
     document.addEventListener('click', (event) => {
@@ -130,6 +135,8 @@ const { id, label, options, placeholder = "Type to search options" } = Astro.pro
         if (customValue) {
           addSelectedOption(multiSelect, customValue);
           input.value = '';
+          // Hide options after adding a custom value
+          options.style.display = 'none';
         }
       }
     });
