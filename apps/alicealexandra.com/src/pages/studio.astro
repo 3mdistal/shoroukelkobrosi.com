@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import StudioCard from "@/components/studio/studio-card.astro";
+import MainLayout from "@/layouts/main-layout.astro";
 
 const studioLandingPage = await getCollection("studioLandingPage");
 
@@ -9,22 +10,24 @@ const studioLandingPageItems = studioLandingPage
   .filter((item) => item.published === true);
 ---
 
-<div class="grid">
-  {
-    studioLandingPageItems.map((item) => (
-      <StudioCard
-        title={item.title}
-        subtitle={item.subtitle}
-        shortenedLogoText={item.shortenedLogoText}
-        image={item.image}
-        imageAlt={item.imageAlt}
-        description={item.description}
-        buttonText={item.buttonText}
-        destination={item.destination}
-      />
-    ))
-  }
-</div>
+<MainLayout title="Studio">
+  <div class="grid">
+    {
+      studioLandingPageItems.map((item) => (
+        <StudioCard
+          title={item.title}
+          subtitle={item.subtitle}
+          shortenedLogoText={item.shortenedLogoText}
+          image={item.image}
+          imageAlt={item.imageAlt}
+          description={item.description}
+          buttonText={item.buttonText}
+          destination={item.destination}
+        />
+      ))
+    }
+  </div>
+</MainLayout>
 
 <style>
   .grid {

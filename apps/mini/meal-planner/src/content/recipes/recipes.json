@@ -10,6 +10,9 @@
     { "name": "Popcorn", "type": "snack" },
     { "name": "Carrot Cake", "type": "dessert" },
     { "name": "Grapes", "type": "fruit" },
-    { "name": "Mango", "type": "fruit" }
+    { "name": "Mango", "type": "fruit" },
+    { "name": "Rice", "type": "side" },
+    { "name": "Potatoes", "type": "side" },
+    { "name": "Salad", "type": "side" }
   ]
 }

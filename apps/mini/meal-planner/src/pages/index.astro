@@ -13,39 +13,34 @@ const days = [
 ] as const;
 
 type Day = (typeof days)[number];
-type Meal = { breakfast: string; dinner: string };
-type MealPlan = Record<Day, Meal>;
-type WeeklyItems = { snacks: string; desserts: string; fruits: string };
+type Meal = { main: string; sides: string[] };
+type MealPlan = Record<Day, { breakfast: Meal; dinner: Meal }>;
+type WeeklyItems = { snacks: string[]; desserts: string[]; fruits: string[] };
 
-type Recipe = {
-  name: string;
-  type: "breakfast" | "dinner" | "snack" | "dessert" | "fruit";
-};
-
-const recipesEntry = await getCollection("recipes");
-const recipes: Recipe[] = recipesEntry[0]?.data?.data ?? [];
-
-if (!recipes.length) {
-  console.error("No recipes found or invalid data structure");
-}
+const recipesCollection = await getCollection("recipes");
+const recipes = recipesCollection[0]?.data?.data ?? [];
 
 const breakfastRecipes = recipes.filter(
   (recipe) => recipe.type === "breakfast"
 );
 const dinnerRecipes = recipes.filter((recipe) => recipe.type === "dinner");
 const snacks = recipes.filter((recipe) => recipe.type === "snack");
+const sides = recipes.filter((recipe) => recipe.type === "side");
 const desserts = recipes.filter((recipe) => recipe.type === "dessert");
 const fruits = recipes.filter((recipe) => recipe.type === "fruit");
 
-const initialMealPlan: MealPlan = days.reduce((acc, day) => {
-  acc[day] = { breakfast: "", dinner: "" };
-  return acc;
+const initialMealPlan: MealPlan = days.reduce((accumulator, day) => {
+  accumulator[day] = {
+    breakfast: { main: "", sides: [] },
+    dinner: { main: "", sides: [] },
+  };
+  return accumulator;
 }, {} as MealPlan);
 
 const initialWeeklyItems: WeeklyItems = {
-  snacks: "",
-  desserts: "",
-  fruits: "",
+  snacks: [],
+  desserts: [],
+  fruits: [],
 };
 ---
 
@@ -60,8 +55,11 @@ const initialWeeklyItems: WeeklyItems = {
             <fieldset>
               <legend>{day}</legend>
               <div>
-                <label for={`${day}-breakfast`}>Breakfast:</label>
-                <select id={`${day}-breakfast`} name={`${day}-breakfast`}>
+                <label for={`${day}-breakfast-main`}>Breakfast:</label>
+                <select
+                  id={`${day}-breakfast-main`}
+                  name={`${day}-breakfast-main`}
+                >
                   <option value="">Select a breakfast</option>
                   {breakfastRecipes.map((recipe) => (
                     <option value={recipe.name}>{recipe.name}</option>
@@ -69,10 +67,34 @@ const initialWeeklyItems: WeeklyItems = {
                 </select>
               </div>
               <div>
-                <label for={`${day}-dinner`}>Dinner:</label>
-                <select id={`${day}-dinner`} name={`${day}-dinner`}>
+                <label for={`${day}-breakfast-sides`}>Breakfast Sides:</label>
+                <select
+                  id={`${day}-breakfast-sides`}
+                  name={`${day}-breakfast-sides`}
+                  multiple
+                >
+                  {sides.map((recipe) => (
+                    <option value={recipe.name}>{recipe.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label for={`${day}-dinner-main`}>Dinner:</label>
+                <select id={`${day}-dinner-main`} name={`${day}-dinner-main`}>
                   <option value="">Select a dinner</option>
                   {dinnerRecipes.map((recipe) => (
+                    <option value={recipe.name}>{recipe.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label for={`${day}-dinner-sides`}>Dinner Sides:</label>
+                <select
+                  id={`${day}-dinner-sides`}
+                  name={`${day}-dinner-sides`}
+                  multiple
+                >
+                  {sides.map((recipe) => (
                     <option value={recipe.name}>{recipe.name}</option>
                   ))}
                 </select>
@@ -85,8 +107,7 @@ const initialWeeklyItems: WeeklyItems = {
           <legend>Weekly Items</legend>
           <div>
             <label for="snacks">Snacks:</label>
-            <select id="snacks" name="snacks">
-              <option value="">Select a snack</option>
+            <select id="snacks" name="snacks" multiple>
               {
                 snacks.map((recipe) => (
                   <option value={recipe.name}>{recipe.name}</option>
@@ -96,8 +117,7 @@ const initialWeeklyItems: WeeklyItems = {
           </div>
           <div>
             <label for="desserts">Desserts:</label>
-            <select id="desserts" name="desserts">
-              <option value="">Select a dessert</option>
+            <select id="desserts" name="desserts" multiple>
               {
                 desserts.map((recipe) => (
                   <option value={recipe.name}>{recipe.name}</option>
@@ -107,8 +127,7 @@ const initialWeeklyItems: WeeklyItems = {
           </div>
           <div>
             <label for="fruits">Fruits:</label>
-            <select id="fruits" name="fruits">
-              <option value="">Select a fruit</option>
+            <select id="fruits" name="fruits" multiple>
               {
                 fruits.map((recipe) => (
                   <option value={recipe.name}>{recipe.name}</option>
@@ -131,14 +150,30 @@ const initialWeeklyItems: WeeklyItems = {
               <h3>{day}</h3>
               <p>
                 Breakfast:{" "}
-                <span class="meal breakfast">
-                  {initialMealPlan[day].breakfast || "Not planned yet"}
+                <span class="meal breakfast-main">
+                  {initialMealPlan[day].breakfast.main || "Not planned yet"}
+                </span>
+              </p>
+              <p>
+                Breakfast Sides:{" "}
+                <span class="meal breakfast-sides">
+                  {initialMealPlan[day].breakfast.sides.length > 0
+                    ? initialMealPlan[day].breakfast.sides.join(", ")
+                    : "Not planned yet"}
                 </span>
               </p>
               <p>
                 Dinner:{" "}
-                <span class="meal dinner">
-                  {initialMealPlan[day].dinner || "Not planned yet"}
+                <span class="meal dinner-main">
+                  {initialMealPlan[day].dinner.main || "Not planned yet"}
+                </span>
+              </p>
+              <p>
+                Dinner Sides:{" "}
+                <span class="meal dinner-sides">
+                  {initialMealPlan[day].dinner.sides.length > 0
+                    ? initialMealPlan[day].dinner.sides.join(", ")
+                    : "Not planned yet"}
                 </span>
               </p>
             </div>
@@ -148,17 +183,29 @@ const initialWeeklyItems: WeeklyItems = {
           <h3>Weekly Items</h3>
           <p>
             Snacks: <span class="weekly snacks">
-              {initialWeeklyItems.snacks || "Not planned yet"}
+              {
+                initialWeeklyItems.snacks.length > 0
+                  ? initialWeeklyItems.snacks.join(", ")
+                  : "Not planned yet"
+              }
             </span>
           </p>
           <p>
             Desserts: <span class="weekly desserts">
-              {initialWeeklyItems.desserts || "Not planned yet"}
+              {
+                initialWeeklyItems.desserts.length > 0
+                  ? initialWeeklyItems.desserts.join(", ")
+                  : "Not planned yet"
+              }
             </span>
           </p>
           <p>
             Fruits: <span class="weekly fruits">
-              {initialWeeklyItems.fruits || "Not planned yet"}
+              {
+                initialWeeklyItems.fruits.length > 0
+                  ? initialWeeklyItems.fruits.join(", ")
+                  : "Not planned yet"
+              }
             </span>
           </p>
         </div>
@@ -213,6 +260,12 @@ const initialWeeklyItems: WeeklyItems = {
     fieldset {
       margin-bottom: 1rem;
     }
+
+    /* Update the styling for all multiple select elements */
+    select[multiple] {
+      width: 100%;
+      height: 5em;
+    }
   </style>
 
   <script>
@@ -221,23 +274,46 @@ const initialWeeklyItems: WeeklyItems = {
       "mealPlanDisplay"
     ) as HTMLDivElement;
 
-    type MealPlan = Record<string, { breakfast: string; dinner: string }>;
-    type WeeklyItems = Record<string, string>;
+    type Meal = { main: string; sides: string[] };
+    type MealPlan = Record<string, { breakfast: Meal; dinner: Meal }>;
+    type WeeklyItems = {
+      snacks: string[];
+      desserts: string[];
+      fruits: string[];
+    };
 
     // Initialize mealPlan and weeklyItems
     const mealPlan: MealPlan = {};
-    const weeklyItems: WeeklyItems = {};
+    const weeklyItems: WeeklyItems = {
+      snacks: [],
+      desserts: [],
+      fruits: [],
+    };
 
     // Function to update meal plan when a select element changes
     function handleSelectChange(event: Event) {
       const select = event.target as HTMLSelectElement;
-      const [day, meal] = select.id.split("-");
+      const [day, mealType, itemType] = select.id.split("-");
 
-      if (day && meal) {
-        if (!mealPlan[day]) mealPlan[day] = { breakfast: "", dinner: "" };
-        mealPlan[day][meal as "breakfast" | "dinner"] = select.value;
+      if (day && mealType && itemType) {
+        if (!mealPlan[day]) {
+          mealPlan[day] = {
+            breakfast: { main: "", sides: [] },
+            dinner: { main: "", sides: [] },
+          };
+        }
+        if (itemType === "sides") {
+          mealPlan[day][mealType as "breakfast" | "dinner"].sides = Array.from(
+            select.selectedOptions
+          ).map((option) => option.value);
+        } else {
+          mealPlan[day][mealType as "breakfast" | "dinner"].main = select.value;
+        }
       } else {
-        weeklyItems[select.id] = select.value;
+        const weeklyItemKey = select.id as keyof WeeklyItems;
+        weeklyItems[weeklyItemKey] = Array.from(select.selectedOptions).map(
+          (option) => option.value
+        );
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);
@@ -248,9 +324,6 @@ const initialWeeklyItems: WeeklyItems = {
     selects.forEach((select) => {
       select.addEventListener("change", handleSelectChange);
     });
-
-    // Remove the form submit event listener
-    // form.addEventListener("submit", (e) => { ... });
 
     function updateMealPlanDisplay(
       mealPlan: MealPlan,
@@ -268,21 +341,26 @@ const initialWeeklyItems: WeeklyItems = {
 
       let html = "";
       for (const day of days) {
-        const meals = mealPlan[day] || { breakfast: "", dinner: "" };
+        const meals = mealPlan[day] || {
+          breakfast: { main: "", sides: [] },
+          dinner: { main: "", sides: [] },
+        };
         html += `
           <div class="day-plan">
             <h3>${day}</h3>
-            <p>Breakfast: <span class="meal breakfast">${meals.breakfast || "Not planned yet"}</span></p>
-            <p>Dinner: <span class="meal dinner">${meals.dinner || "Not planned yet"}</span></p>
+            <p>Breakfast: <span class="meal breakfast-main">${meals.breakfast.main || "Not planned yet"}</span></p>
+            <p>Breakfast Sides: <span class="meal breakfast-sides">${meals.breakfast.sides.length > 0 ? meals.breakfast.sides.join(", ") : "Not planned yet"}</span></p>
+            <p>Dinner: <span class="meal dinner-main">${meals.dinner.main || "Not planned yet"}</span></p>
+            <p>Dinner Sides: <span class="meal dinner-sides">${meals.dinner.sides.length > 0 ? meals.dinner.sides.join(", ") : "Not planned yet"}</span></p>
           </div>
         `;
       }
       html += `
         <div class="weekly-items">
           <h3>Weekly Items</h3>
-          <p>Snacks: <span class="weekly snacks">${weeklyItems.snacks || "Not planned yet"}</span></p>
-          <p>Desserts: <span class="weekly desserts">${weeklyItems.desserts || "Not planned yet"}</span></p>
-          <p>Fruits: <span class="weekly fruits">${weeklyItems.fruits || "Not planned yet"}</span></p>
+          <p>Snacks: <span class="weekly snacks">${weeklyItems.snacks.length > 0 ? weeklyItems.snacks.join(", ") : "Not planned yet"}</span></p>
+          <p>Desserts: <span class="weekly desserts">${weeklyItems.desserts.length > 0 ? weeklyItems.desserts.join(", ") : "Not planned yet"}</span></p>
+          <p>Fruits: <span class="weekly fruits">${weeklyItems.fruits.length > 0 ? weeklyItems.fruits.join(", ") : "Not planned yet"}</span></p>
         </div>
       `;
       mealPlanDisplay.innerHTML = html;

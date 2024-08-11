@@ -7,7 +7,14 @@ const recipeCollection = defineCollection({
     data: z.array(
       z.object({
         name: z.string(),
-        type: z.enum(["breakfast", "dinner", "snack", "dessert", "fruit"]),
+        type: z.enum([
+          "breakfast",
+          "dinner",
+          "side",
+          "snack",
+          "dessert",
+          "fruit",
+        ]),
       }),
     ),
   }),
