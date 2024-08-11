@@ -19,30 +19,44 @@ type Meal = { main: string; sides: string[] };
 type MealPlan = Record<Day, { breakfast: Meal; dinner: Meal }>;
 type WeeklyItems = { snacks: string[]; desserts: string[]; fruits: string[] };
 
+// Add this type definition
+type Recipe = {
+  id: string;
+  collection: string;
+  data: {
+    $schema: string;
+    type: string;
+    name: string;
+  };
+};
+
 const recipesCollection = await getCollection("recipes");
-const recipes = recipesCollection[0]?.data?.data ?? [];
+const alphabetizedRecipes = recipesCollection.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
 
-// Sort recipes alphabetically by name
-const sortRecipes = (a: any, b: any) => a.name.localeCompare(b.name);
+// Modify these functions to map the recipes to the expected format
+const mapRecipesToOptions = (recipes: Recipe[]) =>
+  recipes.map((recipe) => ({ name: recipe.data.name }));
 
-const breakfastRecipes = recipes
-  .filter((recipe) => recipe.type === "breakfast")
-  .sort(sortRecipes);
-const dinnerRecipes = recipes
-  .filter((recipe) => recipe.type === "dinner")
-  .sort(sortRecipes);
-const snacks = recipes
-  .filter((recipe) => recipe.type === "snack")
-  .sort(sortRecipes);
-const sides = recipes
-  .filter((recipe) => recipe.type === "side")
-  .sort(sortRecipes);
-const desserts = recipes
-  .filter((recipe) => recipe.type === "dessert")
-  .sort(sortRecipes);
-const fruits = recipes
-  .filter((recipe) => recipe.type === "fruit")
-  .sort(sortRecipes);
+const breakfastRecipes = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "breakfast")
+);
+const dinnerRecipes = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "dinner")
+);
+const snacks = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "snack")
+);
+const sides = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "side")
+);
+const desserts = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "dessert")
+);
+const fruits = mapRecipesToOptions(
+  alphabetizedRecipes.filter((recipe) => recipe.data.type === "fruit")
+);
 
 const initialMealPlan: MealPlan = days.reduce((accumulator, day) => {
   accumulator[day] = {
