@@ -6,13 +6,14 @@ interface Props {
   placeholder?: string;
 }
 
-const { id, label, options, placeholder = "Type or select options" } = Astro.props;
+const { id, label, options, placeholder = "Type to search options" } = Astro.props;
 ---
 
 <div class="multi-select-container">
   <label for={id}>{label}</label>
   <div class="multi-select" id={id}>
     <input type="text" placeholder={placeholder} />
+    <div class="selected-options"></div>
     <div class="options">
       {options.map((option) => (
         <label>
@@ -58,6 +59,26 @@ const { id, label, options, placeholder = "Type or select options" } = Astro.pro
   .multi-select .options label:hover {
     background-color: #f0f0f0;
   }
+
+  .selected-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 5px;
+  }
+
+  .selected-option {
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    padding: 2px 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .remove-option {
+    margin-left: 5px;
+    cursor: pointer;
+  }
 </style>
 
 <script>
@@ -65,12 +86,12 @@ const { id, label, options, placeholder = "Type or select options" } = Astro.pro
     const input = multiSelect.querySelector('input[type="text"]') as HTMLInputElement;
     const options = multiSelect.querySelector('.options') as HTMLDivElement;
     const checkboxes = options.querySelectorAll('input[type="checkbox"]');
+    const selectedOptionsContainer = multiSelect.querySelector('.selected-options') as HTMLDivElement;
 
     input.addEventListener('focus', () => {
       options.style.display = 'block';
     });
 
-    // Add a click event listener to the document
     document.addEventListener('click', (event) => {
       if (!multiSelect.contains(event.target as Node)) {
         options.style.display = 'none';
@@ -91,16 +112,32 @@ const { id, label, options, placeholder = "Type or select options" } = Astro.pro
 
     checkboxes.forEach((checkbox: HTMLInputElement) => {
       checkbox.addEventListener('change', () => {
-        updateInputValue(multiSelect);
+        updateSelectedOptions(multiSelect);
       });
     });
   }
 
-  function updateInputValue(multiSelect: HTMLElement) {
-    const input = multiSelect.querySelector('input[type="text"]') as HTMLInputElement;
+  function updateSelectedOptions(multiSelect: HTMLElement) {
+    const selectedOptionsContainer = multiSelect.querySelector('.selected-options') as HTMLDivElement;
     const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
-    const selectedValues = Array.from(checkboxes).map((cb: HTMLInputElement) => cb.value);
-    input.value = selectedValues.join(', ');
+    
+    selectedOptionsContainer.innerHTML = '';
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      const optionElement = document.createElement('span');
+      optionElement.className = 'selected-option';
+      optionElement.textContent = checkbox.value;
+      
+      const removeButton = document.createElement('span');
+      removeButton.className = 'remove-option';
+      removeButton.textContent = '×';
+      removeButton.onclick = () => {
+        checkbox.checked = false;
+        updateSelectedOptions(multiSelect);
+      };
+      
+      optionElement.appendChild(removeButton);
+      selectedOptionsContainer.appendChild(optionElement);
+    });
   }
 
   // Set up multi-select for all relevant elements
