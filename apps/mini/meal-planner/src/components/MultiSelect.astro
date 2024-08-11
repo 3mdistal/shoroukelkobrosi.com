@@ -1,0 +1,108 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  options: { name: string }[];
+  placeholder?: string;
+}
+
+const { id, label, options, placeholder = "Type or select options" } = Astro.props;
+---
+
+<div class="multi-select-container">
+  <label for={id}>{label}</label>
+  <div class="multi-select" id={id}>
+    <input type="text" placeholder={placeholder} />
+    <div class="options">
+      {options.map((option) => (
+        <label>
+          <input type="checkbox" value={option.name} />
+          {option.name}
+        </label>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .multi-select-container {
+    margin-bottom: 1rem;
+  }
+
+  .multi-select {
+    position: relative;
+    width: 100%;
+  }
+
+  .multi-select input[type="text"] {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .multi-select .options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .multi-select .options label {
+    display: block;
+    padding: 5px;
+  }
+
+  .multi-select .options label:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+
+<script>
+  function setupMultiSelect(multiSelect: HTMLElement) {
+    const input = multiSelect.querySelector('input[type="text"]') as HTMLInputElement;
+    const options = multiSelect.querySelector('.options') as HTMLDivElement;
+    const checkboxes = options.querySelectorAll('input[type="checkbox"]');
+
+    input.addEventListener('focus', () => {
+      options.style.display = 'block';
+    });
+
+    // Add a click event listener to the document
+    document.addEventListener('click', (event) => {
+      if (!multiSelect.contains(event.target as Node)) {
+        options.style.display = 'none';
+      }
+    });
+
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      checkboxes.forEach((checkbox: HTMLInputElement) => {
+        const label = checkbox.parentElement as HTMLLabelElement;
+        if (label.textContent?.toLowerCase().includes(filter)) {
+          label.style.display = 'block';
+        } else {
+          label.style.display = 'none';
+        }
+      });
+    });
+
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      checkbox.addEventListener('change', () => {
+        updateInputValue(multiSelect);
+      });
+    });
+  }
+
+  function updateInputValue(multiSelect: HTMLElement) {
+    const input = multiSelect.querySelector('input[type="text"]') as HTMLInputElement;
+    const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
+    const selectedValues = Array.from(checkboxes).map((cb: HTMLInputElement) => cb.value);
+    input.value = selectedValues.join(', ');
+  }
+
+  // Set up multi-select for all relevant elements
+  document.querySelectorAll('.multi-select').forEach(setupMultiSelect);
+</script>

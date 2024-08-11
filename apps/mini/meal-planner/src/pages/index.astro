@@ -1,6 +1,7 @@
 ---
 import MainLayout from "@/layouts/main-layout.astro";
 import { getCollection } from "astro:content";
+import MultiSelect from "@/components/MultiSelect.astro";
 
 const days = [
   "Monday",
@@ -59,85 +60,66 @@ const initialWeeklyItems: WeeklyItems = {
               <legend>{day}</legend>
               <div>
                 <label for={`${day}-breakfast-main`}>Breakfast:</label>
-                <select
+                <input
+                  list={`${day}-breakfast-main-list`}
                   id={`${day}-breakfast-main`}
                   name={`${day}-breakfast-main`}
-                >
-                  <option value="">Select a breakfast</option>
+                />
+                <datalist id={`${day}-breakfast-main-list`}>
                   {breakfastRecipes.map((recipe) => (
-                    <option value={recipe.name}>{recipe.name}</option>
+                    <option value={recipe.name} />
                   ))}
-                </select>
+                </datalist>
               </div>
-              <div>
-                <label for={`${day}-breakfast-sides`}>Breakfast Sides:</label>
-                <select
-                  id={`${day}-breakfast-sides`}
-                  name={`${day}-breakfast-sides`}
-                  multiple
-                >
-                  {sides.map((recipe) => (
-                    <option value={recipe.name}>{recipe.name}</option>
-                  ))}
-                </select>
-              </div>
+              <MultiSelect
+                id={`${day}-breakfast-sides`}
+                label="Breakfast Sides:"
+                options={sides}
+                placeholder="Type or select sides"
+              />
               <div>
                 <label for={`${day}-dinner-main`}>Dinner:</label>
-                <select id={`${day}-dinner-main`} name={`${day}-dinner-main`}>
-                  <option value="">Select a dinner</option>
+                <input
+                  list={`${day}-dinner-main-list`}
+                  id={`${day}-dinner-main`}
+                  name={`${day}-dinner-main`}
+                />
+                <datalist id={`${day}-dinner-main-list`}>
                   {dinnerRecipes.map((recipe) => (
-                    <option value={recipe.name}>{recipe.name}</option>
+                    <option value={recipe.name} />
                   ))}
-                </select>
+                </datalist>
               </div>
-              <div>
-                <label for={`${day}-dinner-sides`}>Dinner Sides:</label>
-                <select
-                  id={`${day}-dinner-sides`}
-                  name={`${day}-dinner-sides`}
-                  multiple
-                >
-                  {sides.map((recipe) => (
-                    <option value={recipe.name}>{recipe.name}</option>
-                  ))}
-                </select>
-              </div>
+              <MultiSelect
+                id={`${day}-dinner-sides`}
+                label="Dinner Sides:"
+                options={sides}
+                placeholder="Type or select sides"
+              />
             </fieldset>
           ))
         }
 
         <fieldset>
           <legend>Weekly Items</legend>
-          <div>
-            <label for="snacks">Snacks:</label>
-            <select id="snacks" name="snacks" multiple>
-              {
-                snacks.map((recipe) => (
-                  <option value={recipe.name}>{recipe.name}</option>
-                ))
-              }
-            </select>
-          </div>
-          <div>
-            <label for="desserts">Desserts:</label>
-            <select id="desserts" name="desserts" multiple>
-              {
-                desserts.map((recipe) => (
-                  <option value={recipe.name}>{recipe.name}</option>
-                ))
-              }
-            </select>
-          </div>
-          <div>
-            <label for="fruits">Fruits:</label>
-            <select id="fruits" name="fruits" multiple>
-              {
-                fruits.map((recipe) => (
-                  <option value={recipe.name}>{recipe.name}</option>
-                ))
-              }
-            </select>
-          </div>
+          <MultiSelect
+            id="snacks"
+            label="Snacks:"
+            options={snacks}
+            placeholder="Type or select snacks"
+          />
+          <MultiSelect
+            id="desserts"
+            label="Desserts:"
+            options={desserts}
+            placeholder="Type or select desserts"
+          />
+          <MultiSelect
+            id="fruits"
+            label="Fruits:"
+            options={fruits}
+            placeholder="Type or select fruits"
+          />
         </fieldset>
 
         <button type="submit">Save Meal Plan</button>
@@ -293,39 +275,38 @@ const initialWeeklyItems: WeeklyItems = {
       fruits: [],
     };
 
-    // Function to update meal plan when a select element changes
+    // Update handleSelectChange function
     function handleSelectChange(event: Event) {
-      const select = event.target as HTMLSelectElement;
-      const [day, mealType, itemType] = select.id.split("-");
+      const input = event.target as HTMLInputElement;
+      const [day, mealType, itemType] = input.id.split('-');
 
       if (day && mealType && itemType) {
         if (!mealPlan[day]) {
           mealPlan[day] = {
-            breakfast: { main: "", sides: [] },
-            dinner: { main: "", sides: [] },
+            breakfast: { main: '', sides: [] },
+            dinner: { main: '', sides: [] },
           };
         }
-        if (itemType === "sides") {
-          mealPlan[day][mealType as "breakfast" | "dinner"].sides = Array.from(
-            select.selectedOptions
-          ).map((option) => option.value);
+        if (itemType === 'sides') {
+          const multiSelect = input.closest('.multi-select') as HTMLElement;
+          const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
+          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(checkboxes).map((cb: HTMLInputElement) => cb.value);
         } else {
-          mealPlan[day][mealType as "breakfast" | "dinner"].main = select.value;
+          mealPlan[day][mealType as 'breakfast' | 'dinner'].main = input.value;
         }
       } else {
-        const weeklyItemKey = select.id as keyof WeeklyItems;
-        weeklyItems[weeklyItemKey] = Array.from(select.selectedOptions).map(
-          (option) => option.value
-        );
+        const weeklyItemKey = input.closest('.multi-select')?.id as keyof WeeklyItems;
+        const checkboxes = input.closest('.multi-select')?.querySelectorAll('input[type="checkbox"]:checked');
+        weeklyItems[weeklyItemKey] = Array.from(checkboxes || []).map((cb: HTMLInputElement) => cb.value);
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);
     }
 
-    // Add event listeners to all select elements
-    const selects = form.querySelectorAll("select");
-    selects.forEach((select) => {
-      select.addEventListener("change", handleSelectChange);
+    // Add event listeners to all input elements
+    const inputs = form.querySelectorAll('input[type="text"]');
+    inputs.forEach((input) => {
+      input.addEventListener('change', handleSelectChange);
     });
 
     function updateMealPlanDisplay(
