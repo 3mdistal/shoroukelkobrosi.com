@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/main-layout.astro";
 import { getCollection } from "astro:content";
 import MultiSelect from "@/components/MultiSelect.astro";
+import DatalistInput from "@/components/DatalistInput.astro";
 
 const days = [
   "Monday",
@@ -24,14 +25,24 @@ const recipes = recipesCollection[0]?.data?.data ?? [];
 // Sort recipes alphabetically by name
 const sortRecipes = (a: any, b: any) => a.name.localeCompare(b.name);
 
-const breakfastRecipes = recipes.filter(
-  (recipe) => recipe.type === "breakfast"
-).sort(sortRecipes);
-const dinnerRecipes = recipes.filter((recipe) => recipe.type === "dinner").sort(sortRecipes);
-const snacks = recipes.filter((recipe) => recipe.type === "snack").sort(sortRecipes);
-const sides = recipes.filter((recipe) => recipe.type === "side").sort(sortRecipes);
-const desserts = recipes.filter((recipe) => recipe.type === "dessert").sort(sortRecipes);
-const fruits = recipes.filter((recipe) => recipe.type === "fruit").sort(sortRecipes);
+const breakfastRecipes = recipes
+  .filter((recipe) => recipe.type === "breakfast")
+  .sort(sortRecipes);
+const dinnerRecipes = recipes
+  .filter((recipe) => recipe.type === "dinner")
+  .sort(sortRecipes);
+const snacks = recipes
+  .filter((recipe) => recipe.type === "snack")
+  .sort(sortRecipes);
+const sides = recipes
+  .filter((recipe) => recipe.type === "side")
+  .sort(sortRecipes);
+const desserts = recipes
+  .filter((recipe) => recipe.type === "dessert")
+  .sort(sortRecipes);
+const fruits = recipes
+  .filter((recipe) => recipe.type === "fruit")
+  .sort(sortRecipes);
 
 const initialMealPlan: MealPlan = days.reduce((accumulator, day) => {
   accumulator[day] = {
@@ -58,38 +69,22 @@ const initialWeeklyItems: WeeklyItems = {
           days.map((day) => (
             <fieldset>
               <legend>{day}</legend>
-              <div>
-                <label for={`${day}-breakfast-main`}>Breakfast:</label>
-                <input
-                  list={`${day}-breakfast-main-list`}
-                  id={`${day}-breakfast-main`}
-                  name={`${day}-breakfast-main`}
-                />
-                <datalist id={`${day}-breakfast-main-list`}>
-                  {breakfastRecipes.map((recipe) => (
-                    <option value={recipe.name} />
-                  ))}
-                </datalist>
-              </div>
+              <DatalistInput
+                id={`${day}-breakfast-main`}
+                label="Breakfast:"
+                options={breakfastRecipes}
+              />
               <MultiSelect
                 id={`${day}-breakfast-sides`}
                 label="Breakfast Sides:"
                 options={sides}
                 placeholder="Type or select sides"
               />
-              <div>
-                <label for={`${day}-dinner-main`}>Dinner:</label>
-                <input
-                  list={`${day}-dinner-main-list`}
-                  id={`${day}-dinner-main`}
-                  name={`${day}-dinner-main`}
-                />
-                <datalist id={`${day}-dinner-main-list`}>
-                  {dinnerRecipes.map((recipe) => (
-                    <option value={recipe.name} />
-                  ))}
-                </datalist>
-              </div>
+              <DatalistInput
+                id={`${day}-dinner-main`}
+                label="Dinner:"
+                options={dinnerRecipes}
+              />
               <MultiSelect
                 id={`${day}-dinner-sides`}
                 label="Dinner Sides:"
@@ -278,26 +273,35 @@ const initialWeeklyItems: WeeklyItems = {
     // Update handleSelectChange function
     function handleSelectChange(event: Event) {
       const input = event.target as HTMLInputElement;
-      const multiSelect = input.closest('.multi-select');
-      const [day, mealType, itemType] = (multiSelect?.id || input.id).split('-');
+      const multiSelect = input.closest(".multi-select");
+      const [day, mealType, itemType] = (multiSelect?.id || input.id).split(
+        "-"
+      );
 
       if (day && mealType) {
         if (!mealPlan[day]) {
           mealPlan[day] = {
-            breakfast: { main: '', sides: [] },
-            dinner: { main: '', sides: [] },
+            breakfast: { main: "", sides: [] },
+            dinner: { main: "", sides: [] },
           };
         }
-        if (itemType === 'sides' || multiSelect) {
-          const selectedOptions = multiSelect?.querySelectorAll('.selected-option') || [];
-          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(selectedOptions).map((option) => option.textContent?.replace('×', '').trim() || '');
+        if (itemType === "sides" || multiSelect) {
+          const selectedOptions =
+            multiSelect?.querySelectorAll(".selected-option") || [];
+          mealPlan[day][mealType as "breakfast" | "dinner"].sides = Array.from(
+            selectedOptions
+          ).map((option) => option.textContent?.replace("×", "").trim() || "");
         } else {
-          mealPlan[day][mealType as 'breakfast' | 'dinner'].main = input.value;
+          mealPlan[day][mealType as "breakfast" | "dinner"].main = input.value;
         }
       } else {
-        const weeklyItemKey = (multiSelect?.id || input.closest('.multi-select')?.id) as keyof WeeklyItems;
-        const selectedOptions = multiSelect?.querySelectorAll('.selected-option') || [];
-        weeklyItems[weeklyItemKey] = Array.from(selectedOptions).map((option) => option.textContent?.replace('×', '').trim() || '');
+        const weeklyItemKey = (multiSelect?.id ||
+          input.closest(".multi-select")?.id) as keyof WeeklyItems;
+        const selectedOptions =
+          multiSelect?.querySelectorAll(".selected-option") || [];
+        weeklyItems[weeklyItemKey] = Array.from(selectedOptions).map(
+          (option) => option.textContent?.replace("×", "").trim() || ""
+        );
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);
@@ -306,18 +310,18 @@ const initialWeeklyItems: WeeklyItems = {
     // Add event listeners to all input elements and multi-select components
     const inputs = form.querySelectorAll('input[type="text"], input[list]');
     inputs.forEach((input) => {
-      input.addEventListener('change', handleSelectChange);
-      input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
+      input.addEventListener("change", handleSelectChange);
+      input.addEventListener("keydown", (event) => {
+        if ((event as KeyboardEvent).key === "Enter") {
           event.preventDefault();
           handleSelectChange(event);
         }
       });
     });
 
-    const multiSelects = form.querySelectorAll('.multi-select');
+    const multiSelects = form.querySelectorAll(".multi-select");
     multiSelects.forEach((multiSelect) => {
-      multiSelect.addEventListener('optionschange', handleSelectChange);
+      multiSelect.addEventListener("optionschange", handleSelectChange);
     });
 
     function updateMealPlanDisplay(
