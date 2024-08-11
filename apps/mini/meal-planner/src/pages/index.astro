@@ -20,14 +20,17 @@ type WeeklyItems = { snacks: string[]; desserts: string[]; fruits: string[] };
 const recipesCollection = await getCollection("recipes");
 const recipes = recipesCollection[0]?.data?.data ?? [];
 
+// Sort recipes alphabetically by name
+const sortRecipes = (a: any, b: any) => a.name.localeCompare(b.name);
+
 const breakfastRecipes = recipes.filter(
   (recipe) => recipe.type === "breakfast"
-);
-const dinnerRecipes = recipes.filter((recipe) => recipe.type === "dinner");
-const snacks = recipes.filter((recipe) => recipe.type === "snack");
-const sides = recipes.filter((recipe) => recipe.type === "side");
-const desserts = recipes.filter((recipe) => recipe.type === "dessert");
-const fruits = recipes.filter((recipe) => recipe.type === "fruit");
+).sort(sortRecipes);
+const dinnerRecipes = recipes.filter((recipe) => recipe.type === "dinner").sort(sortRecipes);
+const snacks = recipes.filter((recipe) => recipe.type === "snack").sort(sortRecipes);
+const sides = recipes.filter((recipe) => recipe.type === "side").sort(sortRecipes);
+const desserts = recipes.filter((recipe) => recipe.type === "dessert").sort(sortRecipes);
+const fruits = recipes.filter((recipe) => recipe.type === "fruit").sort(sortRecipes);
 
 const initialMealPlan: MealPlan = days.reduce((accumulator, day) => {
   accumulator[day] = {
