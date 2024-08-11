@@ -278,35 +278,46 @@ const initialWeeklyItems: WeeklyItems = {
     // Update handleSelectChange function
     function handleSelectChange(event: Event) {
       const input = event.target as HTMLInputElement;
-      const [day, mealType, itemType] = input.id.split('-');
+      const multiSelect = input.closest('.multi-select');
+      const [day, mealType, itemType] = (multiSelect?.id || input.id).split('-');
 
-      if (day && mealType && itemType) {
+      if (day && mealType) {
         if (!mealPlan[day]) {
           mealPlan[day] = {
             breakfast: { main: '', sides: [] },
             dinner: { main: '', sides: [] },
           };
         }
-        if (itemType === 'sides') {
-          const multiSelect = input.closest('.multi-select') as HTMLElement;
-          const checkboxes = multiSelect.querySelectorAll('input[type="checkbox"]:checked');
-          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(checkboxes).map((cb: HTMLInputElement) => cb.value);
+        if (itemType === 'sides' || multiSelect) {
+          const checkboxes = (multiSelect || input.closest('.multi-select'))?.querySelectorAll('input[type="checkbox"]:checked');
+          mealPlan[day][mealType as 'breakfast' | 'dinner'].sides = Array.from(checkboxes || []).map((cb: HTMLInputElement) => cb.value);
         } else {
           mealPlan[day][mealType as 'breakfast' | 'dinner'].main = input.value;
         }
       } else {
-        const weeklyItemKey = input.closest('.multi-select')?.id as keyof WeeklyItems;
-        const checkboxes = input.closest('.multi-select')?.querySelectorAll('input[type="checkbox"]:checked');
+        const weeklyItemKey = (multiSelect?.id || input.closest('.multi-select')?.id) as keyof WeeklyItems;
+        const checkboxes = (multiSelect || input.closest('.multi-select'))?.querySelectorAll('input[type="checkbox"]:checked');
         weeklyItems[weeklyItemKey] = Array.from(checkboxes || []).map((cb: HTMLInputElement) => cb.value);
       }
 
       updateMealPlanDisplay(mealPlan, weeklyItems);
     }
 
-    // Add event listeners to all input elements
-    const inputs = form.querySelectorAll('input[type="text"]');
+    // Add event listeners to all input elements and multi-select components
+    const inputs = form.querySelectorAll('input[type="text"], input[list]');
     inputs.forEach((input) => {
       input.addEventListener('change', handleSelectChange);
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleSelectChange(event);
+        }
+      });
+    });
+
+    const multiSelects = form.querySelectorAll('.multi-select');
+    multiSelects.forEach((multiSelect) => {
+      multiSelect.addEventListener('optionschange', handleSelectChange);
     });
 
     function updateMealPlanDisplay(
