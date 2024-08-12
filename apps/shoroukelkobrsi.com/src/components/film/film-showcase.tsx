@@ -71,16 +71,16 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
           className={styles.film}
         >
           <div className={styles.filmInfo}>
-            <h2 className={styles.filmTitle}>{film.title}</h2>
+            <h2>{film.title}</h2>
             <div className={styles.filmMeta}>
-              {film.date && (
+              {film.date ? (
                 <span className={styles.filmDate}>
                   {formatSeasonYear(film.date)}
                 </span>
-              )}
-              {film.producer && (
+              ) : null}
+              {film.producer ? (
                 <span className={styles.filmProducer}>{film.producer}</span>
-              )}
+              ) : null}
             </div>
           </div>
           <div className={styles.stillsGrid}>

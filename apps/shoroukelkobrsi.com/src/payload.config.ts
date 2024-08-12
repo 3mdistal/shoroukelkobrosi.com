@@ -5,7 +5,7 @@ import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
 import { getURL } from "./utilities/get-url";
-import { Homepage } from "./globals/homepage";
+import { Homepage, AboutPage } from "./globals";
 import { Users, Media, Films, Stills } from "./collections";
 
 export default buildConfig({
@@ -18,7 +18,7 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  globals: [Homepage],
+  globals: [Homepage, AboutPage],
   collections: [Users, Films, Stills, Media],
   db: postgresAdapter({
     pool: {
