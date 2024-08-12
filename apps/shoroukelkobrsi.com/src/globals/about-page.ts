@@ -42,6 +42,7 @@ export const AboutPage: GlobalConfig = {
             {
               name: "header",
               type: "text",
+              required: true,
             },
             {
               name: "body",
@@ -53,6 +54,7 @@ export const AboutPage: GlobalConfig = {
                   HTMLConverterFeature(),
                 ],
               }),
+              required: true,
             },
             lexicalHTML("body", {
               name: "body_html",
@@ -61,6 +63,7 @@ export const AboutPage: GlobalConfig = {
               name: "image",
               type: "upload",
               relationTo: "media",
+              required: true,
             },
           ],
         },
