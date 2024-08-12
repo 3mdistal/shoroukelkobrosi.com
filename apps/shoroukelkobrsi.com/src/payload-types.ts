@@ -23,6 +23,7 @@ export interface Config {
   };
   globals: {
     homepage: Homepage;
+    'about-page': AboutPage;
   };
   locale: null;
   user: User & {
@@ -167,6 +168,56 @@ export interface PayloadMigration {
 export interface Homepage {
   id: number;
   featuredFilms?: (number | Film)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  intro_html?: string | null;
+  'personal-tidbits'?:
+    | {
+        header: string;
+        body: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        body_html?: string | null;
+        image: number | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'tidbit';
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
