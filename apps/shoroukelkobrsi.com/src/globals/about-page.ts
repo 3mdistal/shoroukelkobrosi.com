@@ -2,6 +2,8 @@ import type { GlobalConfig } from "payload";
 import { revalidateTag } from "next/cache";
 import {
   HTMLConverterFeature,
+  BoldFeature,
+  ItalicFeature,
   lexicalEditor,
   lexicalHTML,
 } from "@payloadcms/richtext-lexical";
@@ -19,8 +21,9 @@ export const AboutPage: GlobalConfig = {
       name: "intro",
       type: "richText",
       editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
+        features: () => [
+          BoldFeature(),
+          ItalicFeature(),
           HTMLConverterFeature({}),
         ],
       }),
@@ -32,7 +35,7 @@ export const AboutPage: GlobalConfig = {
   hooks: {
     afterChange: [
       () => {
-        revalidateTag("homepage");
+        revalidateTag("about-page");
       },
     ],
   },

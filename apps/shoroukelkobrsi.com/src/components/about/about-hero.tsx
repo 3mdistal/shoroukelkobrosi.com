@@ -3,26 +3,19 @@ import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
 import configPromise from "@payload-config";
 import type { AboutPage } from "@/payload-types";
-// import styles from "./about-hero.module.css";
+import styles from "./about-hero.module.css";
 
 const getAboutPage = cache(
   async (): Promise<AboutPage> => {
-    try {
-      const payload: Payload = await getPayloadHMR({
-        config: configPromise,
-      });
+    const payload: Payload = await getPayloadHMR({
+      config: configPromise,
+    });
 
-      const aboutPage = await payload.findGlobal({
-        slug: "about-page",
-      });
+    const aboutPage = await payload.findGlobal({
+      slug: "about-page",
+    });
 
-      console.log("Fetched about page:", aboutPage);
-
-      return aboutPage;
-    } catch (error) {
-      console.error("Error fetching about page:", error);
-      throw error;
-    }
+    return aboutPage;
   },
   ["about-page-cache"],
   {
@@ -37,7 +30,10 @@ export default async function AboutHero(): Promise<React.ReactElement> {
   return (
     <div>
       <h1>About</h1>
-      <div dangerouslySetInnerHTML={{ __html: introHtml ?? "" }} />
+      <div
+        className={styles.intro}
+        dangerouslySetInnerHTML={{ __html: introHtml ?? "" }}
+      />
     </div>
   );
 }
