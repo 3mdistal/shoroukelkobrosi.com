@@ -1,4 +1,4 @@
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { resendAdapter } from "@payloadcms/email-resend";
@@ -20,10 +20,8 @@ export default buildConfig({
   },
   globals: [Homepage, AboutPage],
   collections: [Users, Films, Stills, Media],
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL ?? "",
-    },
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI ?? "",
   }),
   editor: lexicalEditor(),
   email: resendAdapter({

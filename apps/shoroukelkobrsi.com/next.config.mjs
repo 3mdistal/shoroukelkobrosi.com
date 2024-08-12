@@ -28,7 +28,6 @@ const nextConfig = {
         hostname: "shoroukelkobrsi-media.public.blob.teenylilapps.com",
       },
     ],
-    domains: ["**.vercel.app"],
   },
 };
 
