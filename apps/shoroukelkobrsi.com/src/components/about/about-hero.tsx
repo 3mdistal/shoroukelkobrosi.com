@@ -34,6 +34,9 @@ export default async function AboutHero(): Promise<React.ReactElement> {
         className={styles.intro}
         dangerouslySetInnerHTML={{ __html: introHtml ?? "" }}
       />
+      <p>
+        <b>Placeholder for professional/personal toggle.</b>
+      </p>
     </div>
   );
 }

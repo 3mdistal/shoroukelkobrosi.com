@@ -193,6 +193,31 @@ export interface AboutPage {
     [k: string]: unknown;
   } | null;
   intro_html?: string | null;
+  'personal-story'?:
+    | {
+        header?: string | null;
+        body?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        body_html?: string | null;
+        image?: number | Media | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'personal-story';
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

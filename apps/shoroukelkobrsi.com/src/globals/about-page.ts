@@ -24,13 +24,48 @@ export const AboutPage: GlobalConfig = {
         features: () => [
           BoldFeature(),
           ItalicFeature(),
-          HTMLConverterFeature({}),
+          HTMLConverterFeature(),
         ],
       }),
     },
     lexicalHTML("intro", {
       name: "intro_html",
     }),
+    {
+      name: "personal-tidbits",
+
+      type: "blocks",
+      blocks: [
+        {
+          slug: "tidbit",
+          fields: [
+            {
+              name: "header",
+              type: "text",
+            },
+            {
+              name: "body",
+              type: "richText",
+              editor: lexicalEditor({
+                features: () => [
+                  BoldFeature(),
+                  ItalicFeature(),
+                  HTMLConverterFeature(),
+                ],
+              }),
+            },
+            lexicalHTML("body", {
+              name: "body_html",
+            }),
+            {
+              name: "image",
+              type: "upload",
+              relationTo: "media",
+            },
+          ],
+        },
+      ],
+    },
   ],
   hooks: {
     afterChange: [
