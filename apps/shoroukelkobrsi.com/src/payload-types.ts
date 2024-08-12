@@ -192,6 +192,7 @@ export interface AboutPage {
     };
     [k: string]: unknown;
   } | null;
+  intro_html?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
