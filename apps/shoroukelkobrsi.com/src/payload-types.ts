@@ -193,10 +193,10 @@ export interface AboutPage {
     [k: string]: unknown;
   } | null;
   intro_html?: string | null;
-  'personal-story'?:
+  'personal-tidbits'?:
     | {
-        header?: string | null;
-        body?: {
+        header: string;
+        body: {
           root: {
             type: string;
             children: {
@@ -210,12 +210,12 @@ export interface AboutPage {
             version: number;
           };
           [k: string]: unknown;
-        } | null;
+        };
         body_html?: string | null;
-        image?: number | Media | null;
+        image: number | Media;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'personal-story';
+        blockType: 'tidbit';
       }[]
     | null;
   updatedAt?: string | null;
