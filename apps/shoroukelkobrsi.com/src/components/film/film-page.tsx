@@ -1,11 +1,11 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import type { Payload } from "payload";
 import { unstable_cache as cache } from "next/cache";
+import Image from "next/image";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
-import styles from "./film-page.module.css";
 import AspectRatio from "@/components/ui/aspect-ratio";
-import Image from "next/image";
+import styles from "./film-page.module.css";
 
 const getCachedFilm = (slug: string): Promise<Film> =>
   cache(

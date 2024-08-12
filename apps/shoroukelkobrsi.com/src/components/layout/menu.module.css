@@ -3,7 +3,7 @@
   top: 20px;
   right: 20px;
   z-index: var(--layer-2);
-  transition: opacity 0.3s ease-out,
+  transition: opacity 0.3s ease-out;
   cursor: pointer;
   border: none;
   background: none;
@@ -23,7 +23,9 @@
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transition: opacity 0.3s ease-out, display 0.3s ease-out allow-discrete;
+  transition:
+    opacity 0.3s ease-out,
+    display 0.3s ease-out allow-discrete;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -37,7 +39,9 @@
   &[open] {
     display: flex;
     opacity: 1;
-    transition: opacity 0.3s ease-out, display 0.3s ease-out allow-discrete;
+    transition:
+      opacity 0.3s ease-out,
+      display 0.3s ease-out allow-discrete;
   }
 }
 
