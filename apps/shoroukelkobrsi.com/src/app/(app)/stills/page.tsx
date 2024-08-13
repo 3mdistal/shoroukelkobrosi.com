@@ -29,6 +29,13 @@ export default async function StillsPage(): Promise<React.ReactElement> {
   const stills = await getCachedStills();
   const shuffledStills = shuffleArray(stills);
 
+  function createImageUrl(still: Still): string {
+    if (typeof still.image !== "number") {
+      return still.image.url ?? "";
+    }
+    return "";
+  }
+
   return (
     <div className={styles.stillsPage}>
       <h1>Stills</h1>
@@ -36,9 +43,7 @@ export default async function StillsPage(): Promise<React.ReactElement> {
         {shuffledStills.map((still) => (
           <div key={still.id} className={styles.gridItem}>
             <StillImageFrame
-              imageUrl={
-                typeof still.image !== "number" ? (still.image.url ?? "") : ""
-              }
+              imageUrl={createImageUrl(still)}
               location={still.location}
               width={
                 typeof still.image !== "number"
