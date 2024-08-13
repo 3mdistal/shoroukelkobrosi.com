@@ -29,16 +29,20 @@ export default buildConfig({
     defaultFromAddress: "admin@teenylilapps.com",
     defaultFromName: "Shorouk Elkobrsi",
   }) as EmailAdapter,
-  plugins: [
-    vercelBlobStorage({
-      access: "public",
-      addRandomSuffix: true,
-      collections: {
-        [Media.slug]: true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
-    }),
-  ],
+  plugins:
+    process.env.VERCEL_ENV === "production" ||
+    process.env.VERCEL_ENV === "preview"
+      ? [
+          vercelBlobStorage({
+            access: "public",
+            addRandomSuffix: true,
+            collections: {
+              [Media.slug]: true,
+            },
+            token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
+          }),
+        ]
+      : [],
   secret: process.env.PAYLOAD_SECRET ?? "",
   serverURL: getURL(),
   sharp,
