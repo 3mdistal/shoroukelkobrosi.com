@@ -39,6 +39,9 @@ export default async function FilmPage({
 }): Promise<React.ReactElement> {
   const film = await getCachedFilm(slug);
 
+  // Define sizes based on the grid layout
+  const sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
   return (
     <div className={styles.filmPage}>
       <h1>{film.title}</h1>
@@ -62,6 +65,7 @@ export default async function FilmPage({
                     alt={`Still from ${film.title}`}
                     width={width}
                     height={height}
+                    sizes={sizes}
                     style={{ objectFit: "contain" }}
                   />
                 </div>

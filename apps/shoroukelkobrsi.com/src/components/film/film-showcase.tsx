@@ -37,6 +37,9 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
   const featuredFilms = homepage.featuredFilms as Film[];
 
+  // Define sizes based on the grid layout
+  const sizes = "(max-width: 768px) 100vw, 33vw";
+
   return (
     <section className={styles.showcase}>
       {featuredFilms.map((film) => (
@@ -75,6 +78,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
                           alt={`Still from ${film.title}`}
                           width={width}
                           height={height}
+                          sizes={sizes}
                           style={{ objectFit: "contain" }}
                         />
                       </div>
