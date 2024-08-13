@@ -30,6 +30,9 @@ export default async function StillsPage(): Promise<React.ReactElement> {
   const stills = await getCachedStills();
   const shuffledStills = shuffleArray(stills);
 
+  // Define the sizes based on the masonry grid layout
+  const sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
   return (
     <div className={styles.stillsPage}>
       <h1>Stills</h1>
@@ -43,6 +46,7 @@ export default async function StillsPage(): Promise<React.ReactElement> {
                 location={still.location}
                 width={width}
                 height={height}
+                sizes={sizes}
               />
             </div>
           );
