@@ -7,6 +7,7 @@ import configPromise from "@payload-config";
 import type { Film, Homepage } from "@/payload-types";
 import AspectRatio from "@/components/ui/aspect-ratio";
 import { formatSeasonYear } from "@/utilities/date-utils";
+import { createImageUrl, getImageDimensions } from "@/utilities/media";
 import styles from "./film-showcase.module.css";
 
 const getCachedHomepage = cache(
@@ -36,6 +37,9 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
   const featuredFilms = homepage.featuredFilms as Film[];
 
+  // Define sizes based on the grid layout
+  const sizes = "(max-width: 768px) 100vw, 33vw";
+
   return (
     <section className={styles.showcase}>
       {featuredFilms.map((film) => (
@@ -60,27 +64,28 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
           <div className={styles.stillsGrid}>
             {film.stills
               ?.filter((still) => still.featured)
-              .map((still) => (
-                <div className={styles.gridCell} key={still.id}>
-                  <AspectRatio
-                    ratio={16 / 9}
-                    className={styles.aspectRatioWrapper}
-                  >
-                    <div className={styles.imageWrapper}>
-                      <Image
-                        src={
-                          typeof still.image === "object" && still.image.url
-                            ? still.image.url
-                            : "https://unplash.it/1600/900"
-                        }
-                        alt={`Still from ${film.title}`}
-                        fill
-                        style={{ objectFit: "contain" }}
-                      />
-                    </div>
-                  </AspectRatio>
-                </div>
-              ))}
+              .map((still) => {
+                const { width, height } = getImageDimensions(still.image);
+                return (
+                  <div className={styles.gridCell} key={still.id}>
+                    <AspectRatio
+                      ratio={16 / 9}
+                      className={styles.aspectRatioWrapper}
+                    >
+                      <div className={styles.imageWrapper}>
+                        <Image
+                          src={createImageUrl(still.image)}
+                          alt={`Still from ${film.title}`}
+                          width={width}
+                          height={height}
+                          sizes={sizes}
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
+                    </AspectRatio>
+                  </div>
+                );
+              })}
           </div>
         </Link>
       ))}

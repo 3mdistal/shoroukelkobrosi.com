@@ -9,6 +9,7 @@ interface StillImageFrameProps {
   location: string;
   width: number;
   height: number;
+  sizes: string;
 }
 
 export default function StillImageFrame({
@@ -16,6 +17,7 @@ export default function StillImageFrame({
   location,
   width,
   height,
+  sizes,
 }: StillImageFrameProps): React.ReactElement {
   const [isHovered, setIsHovered] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -70,7 +72,12 @@ export default function StillImageFrame({
           transform: `translateY(${offset.toString()}px)`,
         }}
       >
-        <StillImage imageUrl={imageUrl} width={width} height={height} />
+        <StillImage
+          imageUrl={imageUrl}
+          width={width}
+          height={height}
+          sizes={sizes}
+        />
       </div>
       {isHovered && location ? (
         <div className={styles.locationOverlay}>

@@ -8,12 +8,14 @@ interface StillImageProps {
   imageUrl: string;
   width: number;
   height: number;
+  sizes: string;
 }
 
 export default function StillImage({
   imageUrl,
   width,
   height,
+  sizes,
 }: StillImageProps): React.ReactElement {
   const [isVisible, setIsVisible] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -48,6 +50,7 @@ export default function StillImage({
         alt="Still image"
         width={width}
         height={height}
+        sizes={sizes}
         placeholder="blur"
         blurDataURL={`data:image/svg+xml;base64,${btoa(
           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width.toString()} ${height.toString()}">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import configPromise from "@payload-config";
 import type { Film } from "@/payload-types";
 import AspectRatio from "@/components/ui/aspect-ratio";
+import { createImageUrl, getImageDimensions } from "@/utilities/media";
 import styles from "./film-page.module.css";
 
 const getCachedFilm = (slug: string): Promise<Film> =>
@@ -38,6 +39,9 @@ export default async function FilmPage({
 }): Promise<React.ReactElement> {
   const film = await getCachedFilm(slug);
 
+  // Define sizes based on the grid layout
+  const sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
   return (
     <div className={styles.filmPage}>
       <h1>{film.title}</h1>
@@ -50,24 +54,25 @@ export default async function FilmPage({
         </div>
       ) : null}
       <div className={styles.stillsGrid}>
-        {film.stills?.map((still) => (
-          <div key={still.id} className={styles.gridCell}>
-            <AspectRatio ratio={16 / 9} className={styles.aspectRatioWrapper}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={
-                    typeof still.image === "object" && still.image.url
-                      ? still.image.url
-                      : "https://unplash.it/1600/900"
-                  }
-                  alt={`Still from ${film.title}`}
-                  fill
-                  style={{ objectFit: "contain" }}
-                />
-              </div>
-            </AspectRatio>
-          </div>
-        ))}
+        {film.stills?.map((still) => {
+          const { width, height } = getImageDimensions(still.image);
+          return (
+            <div key={still.id} className={styles.gridCell}>
+              <AspectRatio ratio={16 / 9} className={styles.aspectRatioWrapper}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={createImageUrl(still.image)}
+                    alt={`Still from ${film.title}`}
+                    width={width}
+                    height={height}
+                    sizes={sizes}
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+              </AspectRatio>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
