@@ -69,6 +69,17 @@ export const AboutPage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: "logos",
+      type: "array",
+      fields: [
+        {
+          name: "logo",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
   ],
   hooks: {
     afterChange: [

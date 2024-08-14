@@ -19,7 +19,7 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     homepage: Homepage;
@@ -51,7 +51,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   role?: ('admin' | 'editor') | null;
   updatedAt: string;
   createdAt: string;
@@ -69,7 +69,7 @@ export interface User {
  * via the `definition` "films".
  */
 export interface Film {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   date: string;
@@ -87,7 +87,7 @@ export interface Film {
   aspectRatio?: ('4:3' | '5:4' | '16:9' | '2.35:1' | '9:16') | null;
   stills?:
     | {
-        image: number | Media;
+        image: string | Media;
         featured?: boolean | null;
         id?: string | null;
       }[]
@@ -100,7 +100,7 @@ export interface Film {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -119,11 +119,11 @@ export interface Media {
  * via the `definition` "stills".
  */
 export interface Still {
-  id: number;
+  id: string;
   date: string;
   location: string;
   format?: string | null;
-  image: number | Media;
+  image: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -132,10 +132,10 @@ export interface Still {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -155,7 +155,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -166,8 +166,8 @@ export interface PayloadMigration {
  * via the `definition` "homepage".
  */
 export interface Homepage {
-  id: number;
-  featuredFilms?: (number | Film)[] | null;
+  id: string;
+  featuredFilms?: (string | Film)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -176,7 +176,7 @@ export interface Homepage {
  * via the `definition` "about-page".
  */
 export interface AboutPage {
-  id: number;
+  id: string;
   intro?: {
     root: {
       type: string;
@@ -212,10 +212,16 @@ export interface AboutPage {
           [k: string]: unknown;
         };
         body_html?: string | null;
-        image: number | Media;
+        image: string | Media;
         id?: string | null;
         blockName?: string | null;
         blockType: 'tidbit';
+      }[]
+    | null;
+  logos?:
+    | {
+        logo?: string | Media | null;
+        id?: string | null;
       }[]
     | null;
   updatedAt?: string | null;

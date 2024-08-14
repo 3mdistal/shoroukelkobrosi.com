@@ -1,27 +1,6 @@
-import { getPayloadHMR } from "@payloadcms/next/utilities";
-import type { Payload } from "payload";
-import { unstable_cache as cache } from "next/cache";
 import Image from "next/image";
-import configPromise from "@payload-config";
 import type { AboutPage } from "@/payload-types";
-
-const getAboutPage = cache(
-  async (): Promise<AboutPage> => {
-    const payload: Payload = await getPayloadHMR({
-      config: configPromise,
-    });
-
-    const aboutPage = await payload.findGlobal({
-      slug: "about-page",
-    });
-
-    return aboutPage;
-  },
-  ["about-page-cache"],
-  {
-    tags: ["about-page"],
-  },
-);
+import getAboutPage from "./get-about-page";
 
 export default async function AboutPersonalTidbits(): Promise<React.ReactElement> {
   const aboutPage = await getAboutPage();
