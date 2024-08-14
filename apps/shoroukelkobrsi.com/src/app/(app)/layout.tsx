@@ -4,6 +4,7 @@ import "./globals.css";
 import { ViewTransitions } from "next-view-transitions";
 import Menu from "@/components/layout/menu";
 import Footer from "@/components/layout/footer";
+import { RefreshRouteOnSave } from "@/components/utils/refresh-route-on-save";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
           <div id="main-content">
             <main>{children}</main>
             <Footer />
+            <RefreshRouteOnSave />
           </div>
           <Menu />
         </body>

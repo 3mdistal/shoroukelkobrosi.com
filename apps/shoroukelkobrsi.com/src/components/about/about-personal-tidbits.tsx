@@ -50,7 +50,9 @@ function Tidbit({
         <div dangerouslySetInnerHTML={{ __html: tidbit.body_html ?? "" }} />
       </div>
       <div className="image">
-        {imageUrl ? <Image src={imageUrl} alt={tidbit.header} /> : null}
+        {imageUrl ? (
+          <Image src={imageUrl} alt={tidbit.header} width={100} height={100} />
+        ) : null}
       </div>
     </>
   );
