@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./about-content-toggle.module.css";
 
 interface AboutContentToggleProps {
   personalIntro: React.ReactNode;
@@ -24,17 +25,25 @@ export default function AboutContentToggle({
   };
 
   return (
-    <>
-      <button type="button" onClick={toggleContent}>
-        Toggle Content
+    <div className={styles.container}>
+      <button
+        type="button"
+        onClick={toggleContent}
+        className={styles.toggleButton}
+      >
+        {isPersonal ? "Show Professional" : "Show Personal"}
       </button>
-      <div>
-        {isPersonal ? personalPhoto : professionalPhoto}
-        <div>
+      <div className={styles.contentToggle}>
+        <div className={styles.photoContainer}>
+          {isPersonal ? personalPhoto : professionalPhoto}
+        </div>
+        <div className={styles.contentToggleText}>
           {isPersonal ? personalIntro : professionalIntro}
-          {isPersonal ? null : professionalLogos}
+          {isPersonal ? null : (
+            <div className={styles.logos}>{professionalLogos}</div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
