@@ -5,7 +5,7 @@
 - [x] Set up a basic layout component
 - [x] Install and configure Vercel AI SDK
 - [x] Set up testing framework (e.g., Jest, Vitest)
-- [ ] Configure test runners and CI integration
+- [x] Configure test runners and CI integration
 
 ## 2. Design and implement the data model
 - [ ] Create interfaces for specific media types: Movie, TVShow, Book, Game, Music, Podcast, YouTubeVideo, Weblink
