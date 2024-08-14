@@ -11,8 +11,6 @@
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
-    "playwright": "playwright test",
-    "vitest": "vitest",
     "vercel": "vercel"
   },
   "dependencies": {
@@ -27,7 +25,6 @@
     "@payloadcms/storage-vercel-blob": "3.0.0-beta.70",
     "@payloadcms/translations": "3.0.0-beta.70",
     "@payloadcms/ui": "3.0.0-beta.70",
-    "@playwright/test": "^1.45.3",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.14.12",
@@ -46,18 +43,14 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.0.0",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
     "jsdom": "^24.1.1",
     "postcss-jit-props": "^1.0.14",
     "turbo": "^2.0.9",
-    "typescript-plugin-css-modules": "^5.1.0",
-    "vitest": "^2.0.5"
+    "typescript-plugin-css-modules": "^5.1.0"
   },
   "packageManager": "pnpm@9.5.0"
 }
