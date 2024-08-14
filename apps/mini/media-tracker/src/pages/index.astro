@@ -1,8 +1,41 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MediaInput from "../components/MediaInput.astro";
+import type { MediaItem } from "../types/mediaTypes";
+
+// This function will be called when the form is submitted
+const handleSubmit = (item: Partial<MediaItem>) => {
+  // For now, we'll just log the item to the console
+  console.log("New media item:", item);
+  // In the future, we'll add this item to our state management system
+};
 ---
 
 <Layout title="Home">
   <h1>Welcome to Media Tracker</h1>
   <p>Track your favorite movies, TV shows, books, and more!</p>
+
+  <h2>Add New Media</h2>
+  <MediaInput onSubmit={handleSubmit} client:load />
+
+  <script define:vars="">
+    // This script will run on the client side
+    window.handleSubmit = (item) => {
+      console.log("New media item (client-side):", item);
+      // You can add more client-side logic here if needed
+    };
+  </script>
 </Layout>
+
+<style>
+  h1,
+  h2 {
+    color: #333;
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+</style>

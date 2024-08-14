@@ -13,7 +13,7 @@
 - [x] Write unit tests for data models and interfaces
 
 ## 3. Develop the core components
-- [ ] Create a `MediaInput` component for adding new items
+- [x] Create a `MediaInput` component for adding new items
   - [ ] Implement API integration for fetching media info
   - [ ] Add AI-powered natural language input processing using Vercel AI SDK
 - [ ] Implement a `MediaList` component for displaying items
