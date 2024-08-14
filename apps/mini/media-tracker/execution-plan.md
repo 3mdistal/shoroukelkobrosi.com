@@ -8,9 +8,9 @@
 - [x] Configure test runners and CI integration
 
 ## 2. Design and implement the data model
-- [ ] Create interfaces for specific media types: Movie, TVShow, Book, Game, Music, Podcast, YouTubeVideo, Weblink
-- [ ] Implement a common `MediaItem` interface
-- [ ] Write unit tests for data models and interfaces
+- [x] Create interfaces for specific media types: Movie, TVShow, Book, Game, Music, Podcast, YouTubeVideo, Weblink
+- [x] Implement a common `MediaItem` interface
+- [x] Write unit tests for data models and interfaces
 
 ## 3. Develop the core components
 - [ ] Create a `MediaInput` component for adding new items
