@@ -111,6 +111,9 @@ importers:
       '@payloadcms/ui':
         specifier: 3.0.0-beta.70
         version: 3.0.0-beta.70(@types/react@18.3.3)(monaco-editor@0.38.0)(next@15.0.0-rc.0(@playwright/test@1.45.3)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522)(sass@1.77.8))(payload@3.0.0-beta.70(@swc/core@1.6.13(@swc/helpers@0.5.11))(@swc/types@0.1.9)(graphql@16.9.0)(typescript@5.5.4))(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522)
+      '@playwright/test':
+        specifier: ^1.45.3
+        version: 1.45.3
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint
@@ -9047,7 +9050,6 @@ snapshots:
   '@playwright/test@1.45.3':
     dependencies:
       playwright: 1.45.3
-    optional: true
 
   '@qwikdev/astro@0.6.3(@builder.io/qwik@1.8.0(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))(astro@4.13.3(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0)(typescript@5.5.4))(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(less@4.2.0)(sass@1.77.8)(stylus@0.62.0))':
     dependencies:
@@ -13754,15 +13756,13 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  playwright-core@1.45.3:
-    optional: true
+  playwright-core@1.45.3: {}
 
   playwright@1.45.3:
     dependencies:
       playwright-core: 1.45.3
     optionalDependencies:
       fsevents: 2.3.2
-    optional: true
 
   pluralize@8.0.0: {}
 
