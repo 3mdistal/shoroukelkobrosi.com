@@ -4,6 +4,7 @@ const nextConfig = {
   experimental: {
     ppr: true,
     reactCompiler: true,
+    turbo: true,
     // typedRoutes: true, // Not yet available in Turbopack.
   },
   productionBrowserSourceMaps: true,
