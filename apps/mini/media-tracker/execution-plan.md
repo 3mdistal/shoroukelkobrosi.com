@@ -4,7 +4,7 @@
 - [x] Create necessary directories: `src/pages`, `src/components`, `src/layouts`, `src/styles`, `tests`
 - [x] Set up a basic layout component
 - [x] Install and configure Vercel AI SDK
-- [ ] Set up testing framework (e.g., Jest, Vitest)
+- [x] Set up testing framework (e.g., Jest, Vitest)
 - [ ] Configure test runners and CI integration
 
 ## 2. Design and implement the data model
