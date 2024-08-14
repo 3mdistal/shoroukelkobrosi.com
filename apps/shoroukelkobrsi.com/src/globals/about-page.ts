@@ -18,7 +18,7 @@ export const AboutPage: GlobalConfig = {
   },
   fields: [
     {
-      name: "intro",
+      name: "personal-intro",
       type: "richText",
       editor: lexicalEditor({
         features: () => [
@@ -27,58 +27,50 @@ export const AboutPage: GlobalConfig = {
           HTMLConverterFeature(),
         ],
       }),
+      required: true,
     },
-    lexicalHTML("intro", {
-      name: "intro_html",
+    {
+      name: "personal-photo",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+    lexicalHTML("personal-intro", {
+      name: "personal-intro_html",
     }),
     {
-      name: "personal-tidbits",
-
-      type: "blocks",
-      blocks: [
-        {
-          slug: "tidbit",
-          fields: [
-            {
-              name: "header",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "body",
-              type: "richText",
-              editor: lexicalEditor({
-                features: () => [
-                  BoldFeature(),
-                  ItalicFeature(),
-                  HTMLConverterFeature(),
-                ],
-              }),
-              required: true,
-            },
-            lexicalHTML("body", {
-              name: "body_html",
-            }),
-            {
-              name: "image",
-              type: "upload",
-              relationTo: "media",
-              required: true,
-            },
-          ],
-        },
-      ],
+      name: "professional-intro",
+      type: "richText",
+      editor: lexicalEditor({
+        features: () => [
+          BoldFeature(),
+          ItalicFeature(),
+          HTMLConverterFeature(),
+        ],
+      }),
+      required: true,
+    },
+    lexicalHTML("professional-intro", {
+      name: "professional-intro_html",
+    }),
+    {
+      name: "professional-photo",
+      type: "upload",
+      relationTo: "media",
+      required: true,
     },
     {
-      name: "logos",
+      name: "professional-logos",
       type: "array",
       fields: [
         {
           name: "logo",
           type: "upload",
           relationTo: "media",
+          required: true,
         },
       ],
+      required: true,
     },
   ],
   hooks: {

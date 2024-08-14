@@ -5,11 +5,11 @@ import { createImageUrl } from "@/utilities/media";
 
 export default async function AboutProfessionalLogos(): Promise<React.ReactElement> {
   const aboutPage = await getAboutPage();
-  const logos = aboutPage.logos;
+  const logos = aboutPage["professional-logos"];
 
   return (
     <div>
-      {logos?.map((logoItem) => {
+      {logos.map((logoItem) => {
         const logo = logoItem.logo as Media;
         return (
           <Image

@@ -177,7 +177,7 @@ export interface Homepage {
  */
 export interface AboutPage {
   id: string;
-  intro?: {
+  'personal-intro': {
     root: {
       type: string;
       children: {
@@ -191,39 +191,30 @@ export interface AboutPage {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
-  intro_html?: string | null;
-  'personal-tidbits'?:
-    | {
-        header: string;
-        body: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        body_html?: string | null;
-        image: string | Media;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'tidbit';
-      }[]
-    | null;
-  logos?:
-    | {
-        logo?: string | Media | null;
-        id?: string | null;
-      }[]
-    | null;
+  };
+  'personal-photo': string | Media;
+  'personal-intro_html'?: string | null;
+  'professional-intro': {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  'professional-intro_html'?: string | null;
+  'professional-photo': string | Media;
+  'professional-logos': {
+    logo: string | Media;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
