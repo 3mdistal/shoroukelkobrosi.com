@@ -3,7 +3,7 @@
 ## 1. Set up the project structure and testing environment
 - [x] Create necessary directories: `src/pages`, `src/components`, `src/layouts`, `src/styles`, `tests`
 - [x] Set up a basic layout component
-- [ ] Install and configure Vercel AI SDK
+- [x] Install and configure Vercel AI SDK
 - [ ] Set up testing framework (e.g., Jest, Vitest)
 - [ ] Configure test runners and CI integration
 
