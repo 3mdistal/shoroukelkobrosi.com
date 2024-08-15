@@ -4,6 +4,12 @@
   max-width: 1200px;
 }
 
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .toggleButton {
   display: flex;
   justify-content: space-between;
@@ -14,7 +20,7 @@
   border: none;
   background-color: transparent;
   padding: 0.5rem 1rem;
-  width: max(50%, 30ch);
+  width: var(--size-14);
 
   & p {
     color: var(--gray-6);
@@ -28,8 +34,9 @@
 }
 
 .toggleSwitch {
-  --toggle-width: var(--size-11);
+  --toggle-width: var(--size-9);
   --toggle-height: var(--size-4);
+  --horizontal-padding: calc(var(--toggle-width) * 0.02);
   display: flex;
   position: relative;
   justify-content: start;
@@ -37,13 +44,9 @@
   transition: background-color 0.3s ease;
   border-radius: var(--radius-5);
   background-color: var(--gray-4);
-  padding: 0 calc(var(--toggle-width) * 0.015);
+  padding: 0 var(--horizontal-padding);
   width: var(--toggle-width);
   height: var(--toggle-height);
-
-  @media screen and (max-width: 768px) {
-    --toggle-width: var(--size-9);
-  }
 
   & .toggleSlider {
     --height: calc(var(--toggle-height) * 0.85);
@@ -62,7 +65,7 @@
     & .toggleSlider {
       transform: translateX(
         calc(
-          var(--toggle-width) - var(--width) - (var(--toggle-width) * 0.015 * 2)
+          var(--toggle-width) - var(--width) - (var(--horizontal-padding) * 2)
         )
       );
     }

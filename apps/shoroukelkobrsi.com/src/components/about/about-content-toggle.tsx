@@ -26,19 +26,22 @@ export default function AboutContentToggle({
 
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        onClick={toggleContent}
-        className={styles.toggleButton}
-      >
-        <p className={isPersonal ? styles.active : ""}>Personal</p>
-        <div
-          className={`${styles.toggleSwitch} ${isPersonal ? "" : styles.professional}`}
+      <div className={styles.heading}>
+        <h1>Get to know me.</h1>
+        <button
+          type="button"
+          onClick={toggleContent}
+          className={styles.toggleButton}
         >
-          <div className={styles.toggleSlider} />
-        </div>
-        <p className={isPersonal ? "" : styles.active}>Professional</p>
-      </button>
+          <p className={isPersonal ? styles.active : ""}>Personal</p>
+          <div
+            className={`${styles.toggleSwitch} ${isPersonal ? "" : styles.professional}`}
+          >
+            <div className={styles.toggleSlider} />
+          </div>
+          <p className={isPersonal ? "" : styles.active}>Professional</p>
+        </button>
+      </div>
       <div className={styles.contentToggle}>
         <div className={styles.photoContainer}>
           {isPersonal ? personalPhoto : professionalPhoto}
