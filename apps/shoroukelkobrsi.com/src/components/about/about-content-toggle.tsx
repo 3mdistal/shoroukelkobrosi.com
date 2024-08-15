@@ -31,7 +31,13 @@ export default function AboutContentToggle({
         onClick={toggleContent}
         className={styles.toggleButton}
       >
-        {isPersonal ? "Show Professional" : "Show Personal"}
+        <p className={isPersonal ? styles.active : ""}>Personal</p>
+        <div
+          className={`${styles.toggleSwitch} ${isPersonal ? "" : styles.professional}`}
+        >
+          <div className={styles.toggleSlider} />
+        </div>
+        <p className={isPersonal ? "" : styles.active}>Professional</p>
       </button>
       <div className={styles.contentToggle}>
         <div className={styles.photoContainer}>

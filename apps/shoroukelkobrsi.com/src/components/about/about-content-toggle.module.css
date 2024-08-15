@@ -5,13 +5,68 @@
 }
 
 .toggleButton {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
   margin: 0 auto 2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f0f0f0;
+  border: none;
+  background-color: transparent;
   padding: 0.5rem 1rem;
+  width: max(50%, 30ch);
+
+  & p {
+    color: var(--gray-6);
+    font-weight: var(--font-weight-6);
+  }
+
+  & .active {
+    transition: color 0.3s ease;
+    color: var(--gray-12);
+  }
+}
+
+.toggleSwitch {
+  --toggle-width: var(--size-11);
+  --toggle-height: var(--size-4);
+  display: flex;
+  position: relative;
+  justify-content: start;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  border-radius: var(--radius-5);
+  background-color: var(--gray-4);
+  padding: 0 calc(var(--toggle-width) * 0.015);
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+
+  @media screen and (max-width: 768px) {
+    --toggle-width: var(--size-9);
+  }
+
+  & .toggleSlider {
+    --height: calc(var(--toggle-height) * 0.85);
+    --width: calc(var(--height) * 2);
+    z-index: var(--layer-5);
+    transition: transform 0.3s ease;
+    border-radius: var(--radius-5);
+    background-color: var(--gray-0);
+    width: var(--width);
+    height: var(--height);
+  }
+
+  &.professional {
+    background-color: var(--gray-7);
+
+    & .toggleSlider {
+      transform: translateX(
+        calc(
+          var(--toggle-width) - var(--width) - (var(--toggle-width) * 0.015 * 2)
+        )
+      );
+    }
+  }
 }
 
 .contentToggle {
