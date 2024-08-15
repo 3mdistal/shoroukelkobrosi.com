@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./about-content-toggle.module.css";
 
 interface AboutContentToggleProps {
+  aboutHeading: React.ReactNode;
   personalIntro: React.ReactNode;
   professionalIntro: React.ReactNode;
   personalPhoto: React.ReactNode;
@@ -12,6 +13,7 @@ interface AboutContentToggleProps {
 }
 
 export default function AboutContentToggle({
+  aboutHeading,
   personalIntro,
   professionalIntro,
   personalPhoto,
@@ -26,7 +28,7 @@ export default function AboutContentToggle({
 
   return (
     <div className={styles.container}>
-      <h1>Get to know me.</h1>
+      {aboutHeading}
       <button
         type="button"
         onClick={toggleContent}

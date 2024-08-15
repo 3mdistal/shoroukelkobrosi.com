@@ -18,6 +18,11 @@ export const AboutPage: GlobalConfig = {
   },
   fields: [
     {
+      name: "heading",
+      type: "text",
+      required: true,
+    },
+    {
       name: "personal-intro",
       type: "richText",
       editor: lexicalEditor({

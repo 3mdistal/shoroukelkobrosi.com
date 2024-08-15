@@ -177,6 +177,7 @@ export interface Homepage {
  */
 export interface AboutPage {
   id: string;
+  heading: string;
   'personal-intro': {
     root: {
       type: string;
