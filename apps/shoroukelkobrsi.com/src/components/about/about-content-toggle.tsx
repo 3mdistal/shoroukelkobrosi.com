@@ -43,7 +43,16 @@ export default function AboutContentToggle({
         <p className={isPersonal ? "" : styles.active}>Professional</p>
       </button>
       <div className={styles.photoContainer}>
-        {isPersonal ? personalPhoto : professionalPhoto}
+        <div
+          className={`${styles.absolute} ${isPersonal ? styles.hidden : styles.visible}`}
+        >
+          {personalPhoto}
+        </div>
+        <div
+          className={`${styles.absolute} ${isPersonal ? styles.visible : styles.hidden}`}
+        >
+          {professionalPhoto}
+        </div>
       </div>
       <div className={styles.contentToggleText}>
         {isPersonal ? personalIntro : professionalIntro}
