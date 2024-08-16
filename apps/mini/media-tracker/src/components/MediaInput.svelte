@@ -1,14 +1,21 @@
----
-import type { MediaItem } from "../types/mediaTypes";
+<script lang="ts">
+  import type { MediaItem } from "../types/mediaTypes";
 
-interface Props {
-  onSubmit: (item: Partial<MediaItem>) => void;
-}
+  export let onSubmit: (item: Partial<MediaItem>) => void;
 
-const { onSubmit } = Astro.props;
----
+  function handleSubmit(event: Event) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const item: Partial<MediaItem> = {
+      title: formData.get("title") as string,
+      // Add other fields as needed
+    };
+    onSubmit(item);
+  }
+</script>
 
-<form id="media-input-form">
+<form on:submit={handleSubmit}>
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required />
 
@@ -26,16 +33,6 @@ const { onSubmit } = Astro.props;
 
   <button type="submit">Add Media</button>
 </form>
-
-<script define:vars={{ onSubmit }}>
-  const form = document.getElementById("media-input-form");
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const mediaItem = Object.fromEntries(formData.entries());
-    onSubmit(mediaItem);
-  });
-</script>
 
 <style>
   form {
