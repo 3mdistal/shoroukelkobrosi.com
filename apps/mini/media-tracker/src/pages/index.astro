@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MediaInput from "../components/MediaInput.astro";
+import MediaInput from "../components/MediaInput.svelte";
 ---
 
 <Layout title="Home">
@@ -8,7 +8,7 @@ import MediaInput from "../components/MediaInput.astro";
   <p>Track your favorite movies, TV shows, books, and more!</p>
 
   <h2>Add New Media</h2>
-  <MediaInput />
+  <MediaInput client:load />
 </Layout>
 
 <style>

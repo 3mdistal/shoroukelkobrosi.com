@@ -1,22 +1,13 @@
----
-if (Astro.request.method === "POST") {
-  try {
-    const formData = await Astro.request.formData();
-    const title = formData.get("title");
-    const type = formData.get("type");
-    console.log(title, type);
-  } catch (error) {
-    console.error(error);
-  }
-}
----
+<script lang="ts">
+  import { actions } from "astro:actions";
+</script>
 
-<form method="POST">
+<form action={actions.homepage.mediaInput} method="POST">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required />
 
   <label for="type">Type:</label>
-  <select id="type" name="type" required>
+  <select id="type" name="mediaType" required>
     <option value="movie">Movie</option>
     <option value="tvshow">TV Show</option>
     <option value="book">Book</option>
