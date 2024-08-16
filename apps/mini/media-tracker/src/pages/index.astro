@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MediaInput from "../components/MediaInput.svelte";
+import AITest from "../components/AITest.svelte";
 ---
 
 <Layout title="Home">
@@ -9,6 +10,7 @@ import MediaInput from "../components/MediaInput.svelte";
 
   <h2>Add New Media</h2>
   <MediaInput client:load />
+  <AITest client:load />
 </Layout>
 
 <style>
