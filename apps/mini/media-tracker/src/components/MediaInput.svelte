@@ -1,21 +1,31 @@
 <script lang="ts">
   import { actions } from "astro:actions";
 
-  let message: string;
+  let message = "empty string";
+  let messageElement: HTMLParagraphElement;
+  let form: HTMLFormElement;
 
   async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
+    const formData = new FormData(form);
     const result = await actions.homepage.mediaInput(formData);
     if (result.error) {
       return;
     } else {
       message = result.data.message;
+      messageElement.style.opacity = "1";
+      form.reset(); // Reset the form fields
+      setTimeout(() => {
+        messageElement.style.opacity = "0";
+        setTimeout(() => {
+          message = "empty string";
+        }, 1000);
+      }, 2000);
     }
   }
 </script>
 
-<form on:submit={handleSubmit}>
+<form bind:this={form} on:submit={handleSubmit}>
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required />
 
@@ -32,9 +42,8 @@
   </select>
 
   <button type="submit">Add Media</button>
-  {#if message}
-    <p>{message}</p>
-  {/if}
+
+  <p bind:this={messageElement}>{message}</p>
 </form>
 
 <style>
@@ -68,5 +77,10 @@
 
   button:hover {
     background-color: #005fa3;
+  }
+
+  p {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
   }
 </style>

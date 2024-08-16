@@ -17,6 +17,11 @@ export const homepage = {
       ]),
     }),
     handler: async ({ title, mediaType }) => {
+      // is this title actually this mediatype?
+      // if not, use ai to find the correct mediatype and/or title
+      // fetch all sever data
+      // add to database
+
       return {
         success: true,
         message: `${title} added to ${mediaType}s.`,
