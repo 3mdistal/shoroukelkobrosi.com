@@ -1,8 +1,21 @@
 <script lang="ts">
   import { actions } from "astro:actions";
+
+  let message: string;
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const result = await actions.homepage.mediaInput(formData);
+    if (result.error) {
+      return;
+    } else {
+      message = result.data.message;
+    }
+  }
 </script>
 
-<form action={actions.homepage.mediaInput} method="POST">
+<form on:submit={handleSubmit}>
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required />
 
@@ -19,6 +32,9 @@
   </select>
 
   <button type="submit">Add Media</button>
+  {#if message}
+    <p>{message}</p>
+  {/if}
 </form>
 
 <style>

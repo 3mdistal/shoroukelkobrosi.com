@@ -17,10 +17,9 @@ export const homepage = {
       ]),
     }),
     handler: async ({ title, mediaType }) => {
-      console.log("Title", title);
-      console.log("Media", mediaType);
       return {
         success: true,
+        message: `${title} added to ${mediaType}s.`,
       };
     },
   }),
