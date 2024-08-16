@@ -9,7 +9,7 @@
 <div>
   <ul>
     {#each $messages as message}
-      <li>{message.role}: {message.content}</li>
+      <li>{message.role === "user" ? "User" : "AI"}: {message.content}</li>
     {/each}
   </ul>
   <form on:submit={handleSubmit}>
@@ -17,3 +17,10 @@
     <button type="submit">Send</button>
   </form>
 </div>
+
+<style>
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+</style>
