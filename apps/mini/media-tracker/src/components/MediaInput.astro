@@ -1,21 +1,17 @@
-<script lang="ts">
-  import type { MediaItem } from "../types/mediaTypes";
-
-  export let onSubmit: (item: Partial<MediaItem>) => void;
-
-  function handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const item: Partial<MediaItem> = {
-      title: formData.get("title") as string,
-      // Add other fields as needed
-    };
-    onSubmit(item);
+---
+if (Astro.request.method === "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    const title = formData.get("title");
+    const type = formData.get("type");
+    console.log(title, type);
+  } catch (error) {
+    console.error(error);
   }
-</script>
+}
+---
 
-<form on:submit={handleSubmit}>
+<form method="POST">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required />
 
