@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./about-content-toggle.module.css";
 
 interface AboutContentToggleProps {
+  aboutHeading: React.ReactNode;
   personalIntro: React.ReactNode;
   professionalIntro: React.ReactNode;
   personalPhoto: React.ReactNode;
@@ -12,6 +13,7 @@ interface AboutContentToggleProps {
 }
 
 export default function AboutContentToggle({
+  aboutHeading,
   personalIntro,
   professionalIntro,
   personalPhoto,
@@ -26,23 +28,37 @@ export default function AboutContentToggle({
 
   return (
     <div className={styles.container}>
+      {aboutHeading}
       <button
         type="button"
         onClick={toggleContent}
         className={styles.toggleButton}
       >
-        {isPersonal ? "Show Professional" : "Show Personal"}
+        <p className={isPersonal ? styles.active : ""}>Personal</p>
+        <div
+          className={`${styles.toggleSwitch} ${isPersonal ? "" : styles.professional}`}
+        >
+          <div className={styles.toggleSlider} />
+        </div>
+        <p className={isPersonal ? "" : styles.active}>Professional</p>
       </button>
-      <div className={styles.contentToggle}>
-        <div className={styles.photoContainer}>
-          {isPersonal ? personalPhoto : professionalPhoto}
+      <div className={styles.photoContainer}>
+        <div
+          className={`${styles.absolute} ${isPersonal ? styles.hidden : styles.visible}`}
+        >
+          {personalPhoto}
         </div>
-        <div className={styles.contentToggleText}>
-          {isPersonal ? personalIntro : professionalIntro}
-          {isPersonal ? null : (
-            <div className={styles.logos}>{professionalLogos}</div>
-          )}
+        <div
+          className={`${styles.absolute} ${isPersonal ? styles.visible : styles.hidden}`}
+        >
+          {professionalPhoto}
         </div>
+      </div>
+      <div className={styles.contentToggleText}>
+        {isPersonal ? personalIntro : professionalIntro}
+        {isPersonal ? null : (
+          <div className={styles.logos}>{professionalLogos}</div>
+        )}
       </div>
     </div>
   );

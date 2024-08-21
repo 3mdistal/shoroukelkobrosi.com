@@ -1,49 +1,141 @@
 .container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 40% 60%;
+  gap: 2rem;
   margin: 0 auto;
   padding: 2rem;
   max-width: 1200px;
+
+  & h1 {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: center;
+  }
 }
 
 .toggleButton {
-  display: block;
+  display: flex;
+  grid-column: 2;
+  justify-content: space-between;
+  align-items: center;
+  align-self: end;
+  justify-self: center;
+  gap: 0.5rem;
   cursor: pointer;
-  margin: 0 auto 2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f0f0f0;
+  border: none;
+  background-color: transparent;
   padding: 0.5rem 1rem;
+  width: var(--size-14);
+
+  & p {
+    color: var(--gray-6);
+    font-weight: var(--font-weight-6);
+  }
+
+  & .active {
+    transition: color 0.3s ease;
+    color: var(--gray-12);
+  }
 }
 
-.contentToggle {
+.toggleSwitch {
+  --toggle-width: var(--size-9);
+  --toggle-height: var(--size-4);
+  --horizontal-padding: calc(var(--toggle-width) * 0.02);
   display: flex;
-  align-items: flex-start;
-  gap: 2rem;
+  position: relative;
+  justify-content: start;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  border-radius: var(--radius-5);
+  background-color: var(--gray-4);
+  padding: 0 var(--horizontal-padding);
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+
+  & .toggleSlider {
+    --height: calc(var(--toggle-height) * 0.85);
+    --width: calc(var(--height) * 2);
+    z-index: var(--layer-5);
+    transition: transform 0.3s ease;
+    border-radius: var(--radius-5);
+    background-color: var(--gray-0);
+    width: var(--width);
+    height: var(--height);
+  }
+
+  &.professional {
+    background-color: var(--gray-7);
+
+    & .toggleSlider {
+      transform: translateX(
+        calc(
+          var(--toggle-width) - var(--width) - (var(--horizontal-padding) * 2)
+        )
+      );
+    }
+  }
 }
 
 .photoContainer {
-  flex: 0 0 40%;
+  position: relative;
+  grid-row: 2;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+
+  & div.absolute {
+    position: absolute;
+  }
 }
 
 .contentToggleText {
   display: flex;
-  flex: 1;
+  grid-row: 2;
+  grid-column: 2;
   flex-direction: column;
+  align-self: center;
   gap: 1rem;
 }
 
-.logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 @media (max-width: 768px) {
-  .contentToggle {
-    flex-direction: column;
+  .container {
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: 1fr;
+
+    & h1 {
+      grid-row: 1;
+      grid-column: 1;
+    }
+  }
+
+  .toggleButton {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: start;
   }
 
   .photoContainer {
-    flex: 0 0 auto;
-    margin-bottom: 1rem;
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  .contentToggleText {
+    grid-row: 4;
+    grid-column: 1;
   }
 }
