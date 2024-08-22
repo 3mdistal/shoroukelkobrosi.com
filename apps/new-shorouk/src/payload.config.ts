@@ -2,9 +2,11 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { resendAdapter } from '@payloadcms/email-resend'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import { getURL } from '@/utilities/get-url'
 import sharp from 'sharp'
 
 import { Users, Media, Films, Stills } from '@/collections'
@@ -15,9 +17,15 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    avatar: 'gravatar',
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    livePreview: {
+      url: getURL(),
+      globals: ['homepage'],
+      collections: ['films'],
     },
   },
   collections: [Users, Media, Films, Stills],
@@ -29,6 +37,11 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
+  }),
+  email: resendAdapter({
+    apiKey: process.env.RESEND_KEY ?? '',
+    defaultFromAddress: 'admin@teenylilapps.com',
+    defaultFromName: 'Shorouk Elkobrsi',
   }),
   sharp,
   plugins: [
