@@ -1,8 +1,1 @@
-# blank
-
-blank
-
-## Attributes
-
-- **Database**: mongodb
-- **Storage Adapter**: localDisk
+Welcome to the portfolio of Shorouk Elkobrsi, cinematographer.
