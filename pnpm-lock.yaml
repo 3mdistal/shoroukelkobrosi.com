@@ -93,6 +93,9 @@ importers:
       '@payloadcms/richtext-lexical':
         specifier: beta
         version: 3.0.0-beta.90(b6owvgrn4umtw66eu57m4khvz4)
+      '@payloadcms/storage-vercel-blob':
+        specifier: 3.0.0-beta.90
+        version: 3.0.0-beta.90(@aws-sdk/client-s3@3.635.0)(@aws-sdk/lib-storage@3.635.0(@aws-sdk/client-s3@3.635.0))(payload@3.0.0-beta.90(graphql@16.9.0)(typescript@5.5.4))
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint

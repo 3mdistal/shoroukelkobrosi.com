@@ -21,6 +21,7 @@
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-cloud": "beta",
     "@payloadcms/richtext-lexical": "beta",
+    "@payloadcms/storage-vercel-blob": "3.0.0-beta.90",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "cross-env": "^7.0.3",
