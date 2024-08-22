@@ -4,8 +4,8 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { buildConfig, type EmailAdapter } from "payload";
 import sharp from "sharp";
-import { getURL } from "./utilities/get-url";
-import { Homepage, AboutPage } from "./globals";
+import { getURL } from "../../new-shorouk/src/utilities/get-url";
+import { Homepage, AboutPage } from "../../new-shorouk/src/globals";
 import { Users, Media, Films, Stills } from "./collections";
 
 export default buildConfig({
