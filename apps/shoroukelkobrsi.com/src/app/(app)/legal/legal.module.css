@@ -1,0 +1,56 @@
+.legalContainer {
+  max-width: var(--size-content-3);
+  margin: 0 auto;
+  padding: var(--size-6);
+}
+
+.legalContainer h1 {
+  font-size: var(--font-size-5);
+  margin-bottom: var(--size-6);
+}
+
+.legalContainer h2 {
+  font-size: var(--font-size-4);
+  margin-top: var(--size-8);
+  margin-bottom: var(--size-4);
+}
+
+.legalContainer h3 {
+  font-size: var(--font-size-3);
+  margin-top: var(--size-6);
+  margin-bottom: var(--size-3);
+}
+
+.legalContainer h4 {
+  font-size: var(--font-size-2);
+  margin-top: var(--size-4);
+  margin-bottom: var(--size-2);
+}
+
+.legalContainer p,
+.legalContainer ul,
+.legalContainer ol {
+  margin-bottom: var(--size-3);
+}
+
+.legalContainer ul,
+.legalContainer ol {
+  padding-left: var(--size-5);
+}
+
+.legalContainer li {
+  margin-bottom: var(--size-2);
+}
+
+.legalContainer a {
+  color: var(--blue-7);
+  text-decoration: none;
+}
+
+.legalContainer a:hover {
+  text-decoration: underline;
+}
+
+.legalContainer section {
+  margin-bottom: var(--size-8);
+}
