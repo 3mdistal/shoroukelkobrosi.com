@@ -16,7 +16,6 @@
       "@/*": ["./src/*"],
       "@payload-config": ["./src/payload.config.ts"]
     },
-    "target": "ES2017",
-    "types": ["@playwright/test"]
+    "target": "ES2017"
   }
 }
