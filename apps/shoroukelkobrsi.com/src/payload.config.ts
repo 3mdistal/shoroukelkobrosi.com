@@ -1,54 +1,61 @@
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { resendAdapter } from "@payloadcms/email-resend";
-import { buildConfig, type EmailAdapter } from "payload";
-import sharp from "sharp";
-import { getURL } from "./utilities/get-url";
-import { Homepage, AboutPage } from "./globals";
-import { Users, Media, Films, Stills } from "./collections";
+// storage-adapter-import-placeholder
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { resendAdapter } from '@payloadcms/email-resend'
+import path from 'path'
+import { buildConfig } from 'payload'
+import { fileURLToPath } from 'url'
+import { getURL } from '@/utilities/get-url'
+import sharp from 'sharp'
+
+import { Users, Media, Films, Stills } from '@/collections'
+import { Homepage, AboutPage } from '@/globals'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    avatar: "gravatar",
+    avatar: 'gravatar',
+    user: Users.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
     livePreview: {
       url: getURL(),
-      globals: ["homepage"],
-      collections: ["films"],
+      globals: ['homepage'],
+      collections: ['films'],
     },
-    user: Users.slug,
   },
+  collections: [Users, Media, Films, Stills],
   globals: [Homepage, AboutPage],
-  collections: [Users, Films, Stills, Media],
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI ?? "",
-  }),
   editor: lexicalEditor(),
+  secret: process.env.PAYLOAD_SECRET || '',
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI || '',
+  }),
   email: resendAdapter({
-    apiKey: process.env.RESEND_KEY ?? "",
-    defaultFromAddress: "admin@teenylilapps.com",
-    defaultFromName: "Shorouk Elkobrsi",
-  }) as EmailAdapter,
+    apiKey: process.env.RESEND_KEY ?? '',
+    defaultFromAddress: 'admin@teenylilapps.com',
+    defaultFromName: 'Shorouk Elkobrsi',
+  }),
+  sharp,
   plugins: [
     vercelBlobStorage({
       enabled:
-        process.env.VERCEL_ENV === "production" ||
-        process.env.VERCEL_ENV === "preview",
-      access: "public",
+        process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview'
+          ? true
+          : false,
+      access: 'public',
       addRandomSuffix: true,
       collections: {
         [Media.slug]: true,
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
+      token: process.env.BLOB_READ_WRITE_TOKEN ?? '',
     }),
   ],
-  secret: process.env.PAYLOAD_SECRET ?? "",
-  serverURL: getURL(),
-  sharp,
-  typescript: {
-    outputFile: "src/payload-types.ts",
-    declare: {
-      ignoreTSError: true,
-    },
-  },
-});
+})

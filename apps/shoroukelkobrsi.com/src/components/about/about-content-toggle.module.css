@@ -46,7 +46,7 @@
   --horizontal-padding: calc(var(--toggle-width) * 0.02);
   display: flex;
   position: relative;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   transition: background-color 0.3s ease;
   border-radius: var(--radius-5);
@@ -71,9 +71,7 @@
 
     & .toggleSlider {
       transform: translateX(
-        calc(
-          var(--toggle-width) - var(--width) - (var(--horizontal-padding) * 2)
-        )
+        calc(var(--toggle-width) - var(--width) - (var(--horizontal-padding) * 2))
       );
     }
   }

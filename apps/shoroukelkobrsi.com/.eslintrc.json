@@ -1,7 +1,0 @@
-{
-  "extends": ["@repo/eslint-config/next.js"],
-  "rules": {
-    "strict": ["error", "global"],
-    "no-console": ["error", { "allow": ["warn", "error"] }]
-  }
-}
