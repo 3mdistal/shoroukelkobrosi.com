@@ -1,11 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
-export interface FilmsList {
-  title: string
-  slug: string
-}
-
 export const GET = async () => {
   const payload = await getPayload({
     config: configPromise,

@@ -1,21 +1,21 @@
 .filmPage {
-  background-color: #f0f0f0;
-  padding: 2rem;
+  background-color: var(--gray-1);
+  padding: var(--size-fluid-3);
 }
 
 .trailerEmbed {
-  margin: 2rem 0;
+  margin: var(--size-fluid-3) 0;
 }
 
 .trailerEmbed iframe {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--ratio-widescreen);
   width: 100%;
 }
 
 .stillsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-content-1), 1fr));
+  gap: var(--size-fluid-2);
 }
 
 .gridCell {
@@ -23,7 +23,7 @@
 }
 
 .aspectRatioWrapper {
-  background-color: black;
+  background-color: var(--gray-12);
 }
 
 .imageWrapper {
@@ -41,4 +41,48 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--size-fluid-3);
+}
+
+.prev,
+.next {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--gray-9);
+  padding: var(--size-3);
+  background-color: var(--gray-2);
+  border-radius: var(--radius-2);
+  transition: background-color var(--animation-fade-in);
+  width: calc(50% - var(--size-2));
+}
+
+.prev {
+  margin-right: auto;
+}
+
+.next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: var(--gray-3);
+}
+
+.prev span:first-child,
+.next span:first-child {
+  font-weight: var(--font-weight-7);
+  margin-bottom: var(--size-2);
+}
+
+.prev span:last-child,
+.next span:last-child {
+  font-size: var(--font-size-0);
 }
