@@ -7,8 +7,17 @@ export const GET = async () => {
   })
 
   const data = await payload.find({
-    collection: 'users',
+    collection: 'films',
+    sort: '-date',
+    depth: 1,
   })
 
-  return Response.json(data)
+  const films = data.docs.map((film) => {
+    return {
+      title: film.title,
+      slug: film.slug,
+    }
+  })
+
+  return Response.json(films)
 }
