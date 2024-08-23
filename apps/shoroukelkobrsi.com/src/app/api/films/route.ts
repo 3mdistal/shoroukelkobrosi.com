@@ -19,7 +19,7 @@ export const GET = async () => {
 
   const films = data.docs.map((film) => {
     return {
-      title: film,
+      title: film.title,
       slug: film.slug,
     }
   })
