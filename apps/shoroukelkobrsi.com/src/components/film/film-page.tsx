@@ -8,6 +8,7 @@ import AspectRatio from '@/components/ui/aspect-ratio'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import { getURL } from '@/utilities/get-url'
 import { Link } from 'next-view-transitions'
+import TrailerEmbed from '../ui/trailer-embed'
 import styles from './film-page.module.css'
 
 const getCachedFilm = (slug: string): Promise<Film> =>
@@ -90,15 +91,11 @@ export default async function FilmPage({ slug }: { slug: string }): Promise<Reac
         </dl>
         {film.trailer ? (
           <section className={styles.trailerSection} aria-labelledby="trailer-heading">
-            <h3 id="trailer-heading">Trailer</h3>
+            <h3 id="trailer-heading" className="sr-only">
+              Trailer
+            </h3>
             <div className={styles.trailerContainer}>
-              <iframe
-                className={styles.trailerEmbed}
-                src={film.trailer}
-                title={`${film.title} trailer`}
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
+              <TrailerEmbed url={film.trailer} filmTitle={film.title} />
             </div>
           </section>
         ) : null}
