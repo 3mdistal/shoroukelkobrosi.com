@@ -7,6 +7,7 @@ import type { Film } from '@/payload-types'
 import AspectRatio from '@/components/ui/aspect-ratio'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import type { FilmsList } from '@/app/api/films/route'
+import { getURL } from '@/utilities/get-url'
 import styles from './film-page.module.css'
 
 const getCachedFilm = (slug: string): Promise<Film> =>
@@ -35,7 +36,7 @@ const getCachedFilm = (slug: string): Promise<Film> =>
 
 const getAllFilms = cache(
   async (): Promise<FilmsList> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/films`, {
+    const response = await fetch(`${getURL()}/api/films`, {
       next: { tags: ['films'] },
     })
     if (!response.ok) {
@@ -52,6 +53,7 @@ const getAllFilms = cache(
 export default async function FilmPage({ slug }: { slug: string }): Promise<React.ReactElement> {
   const film = await getCachedFilm(slug)
   const films = await getAllFilms()
+  console.log(films)
 
   // Define sizes based on the grid layout
   const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
