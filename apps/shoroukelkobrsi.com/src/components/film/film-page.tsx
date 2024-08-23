@@ -1,46 +1,60 @@
-import { getPayloadHMR } from "@payloadcms/next/utilities";
-import type { Payload } from "payload";
-import { unstable_cache as cache } from "next/cache";
-import Image from "next/image";
-import configPromise from "@payload-config";
-import type { Film } from "@/payload-types";
-import AspectRatio from "@/components/ui/aspect-ratio";
-import { createImageUrl, getImageDimensions } from "@/utilities/media";
-import styles from "./film-page.module.css";
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import type { Payload } from 'payload'
+import { unstable_cache as cache } from 'next/cache'
+import Image from 'next/image'
+import configPromise from '@payload-config'
+import type { Film } from '@/payload-types'
+import AspectRatio from '@/components/ui/aspect-ratio'
+import { createImageUrl, getImageDimensions } from '@/utilities/media'
+import type { FilmsList } from '@/app/api/films/route'
+import styles from './film-page.module.css'
 
 const getCachedFilm = (slug: string): Promise<Film> =>
   cache(
     async () => {
       const payload: Payload = await getPayloadHMR({
         config: configPromise,
-      });
+      })
 
       const response = await payload.find({
-        collection: "films",
+        collection: 'films',
         where: {
           slug: {
             equals: slug,
           },
         },
-      });
+      })
 
-      return response.docs[0];
+      return response.docs[0]
     },
-    ["film-cache", slug],
+    ['film-cache', slug],
     {
       tags: [`film-${slug}`],
     },
-  )();
+  )()
 
-export default async function FilmPage({
-  slug,
-}: {
-  slug: string;
-}): Promise<React.ReactElement> {
-  const film = await getCachedFilm(slug);
+const getAllFilms = cache(
+  async (): Promise<FilmsList> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/films`, {
+      next: { tags: ['films'] },
+    })
+    if (!response.ok) {
+      throw new Error('Failed to fetch films')
+    }
+    return response.json()
+  },
+  ['all-films'],
+  {
+    tags: ['films'],
+  },
+)
+
+export default async function FilmPage({ slug }: { slug: string }): Promise<React.ReactElement> {
+  const film = await getCachedFilm(slug)
+  const films = await getAllFilms()
 
   // Define sizes based on the grid layout
-  const sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
 
   return (
     <div className={styles.filmPage}>
@@ -55,7 +69,7 @@ export default async function FilmPage({
       ) : null}
       <div className={styles.stillsGrid}>
         {film.stills?.map((still) => {
-          const { width, height } = getImageDimensions(still.image);
+          const { width, height } = getImageDimensions(still.image)
           return (
             <div key={still.id} className={styles.gridCell}>
               <AspectRatio ratio={16 / 9} className={styles.aspectRatioWrapper}>
@@ -66,14 +80,14 @@ export default async function FilmPage({
                     width={width}
                     height={height}
                     sizes={sizes}
-                    style={{ objectFit: "contain" }}
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
               </AspectRatio>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }
