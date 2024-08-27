@@ -21,7 +21,7 @@ export async function generateMetadata({
       ...baseMetadata.openGraph,
       title: film.title,
       description: `Discover the visual storytelling and artistic vision behind "${film.title}" - a compelling work in the Anthropotpourri collection`,
-      url: `https://shoroukelkobrsi.com/films/${params.slug}`,
+      url: `https://shoroukelkobrosi.com/films/${params.slug}`,
     },
   }
 }
