@@ -39,7 +39,7 @@ export default buildConfig({
     url: process.env.MONGODB_URI || '',
   }),
   email: resendAdapter({
-    apiKey: process.env.RESEND_KEY ?? '',
+    apiKey: process.env.RESEND_API_KEY ?? '',
     defaultFromAddress: 'admin@shoroukelkobrosi.com',
     defaultFromName: 'Shorouk Elkobrsi',
   }),

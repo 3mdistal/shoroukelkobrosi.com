@@ -32,17 +32,17 @@
       "outputs": [".env.local"]
     },
     "start": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_API_KEY"],
       "persistent": true,
       "cache": false,
       "dependsOn": ["build"]
     },
     "test": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_API_KEY"],
       "cache": false
     },
     "vercel": {
-      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_KEY"],
+      "env": ["PAYLOAD_SECRET", "POSTGRES_URL, RESEND_API_KEY"],
       "cache": false
     }
   }
