@@ -16,7 +16,7 @@ export async function generateMetadata({
   return {
     ...baseMetadata,
     title: film.title,
-    description: `Explore the cinematic journey of "${film.title}" - a captivating film by Shorouk Elkobrsi`,
+    description: `Explore the cinematic journey of "${film.title}" - a captivating film by Shorouk Elkobrosi`,
     openGraph: {
       ...baseMetadata.openGraph,
       title: film.title,

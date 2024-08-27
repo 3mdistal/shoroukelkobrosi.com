@@ -23,8 +23,11 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" className={lora.variable}>
         <body>
-          <div id="main-content">
-            <main>{children}</main>
+          <div
+            id="main-content"
+            style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+          >
+            <main style={{ flex: 1 }}>{children}</main>
             <Footer />
             <RefreshRouteOnSave />
           </div>
