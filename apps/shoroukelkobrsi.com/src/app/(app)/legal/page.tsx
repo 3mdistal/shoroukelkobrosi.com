@@ -153,7 +153,7 @@ export default function LegalPage(): React.ReactElement {
         <h3>9. Contact Us</h3>
         <p>
           If you have any questions about this Privacy Policy, please contact us at{' '}
-          <Link href="mailto:mail@teenylilapps.com">admin@teenylilapps.com</Link>.
+          <Link href="mailto:admin@shoroukelkobrosi.com">admin@shoroukelkobrosi.com</Link>.
         </p>
       </section>
     </div>

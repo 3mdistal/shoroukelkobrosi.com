@@ -40,7 +40,7 @@ export default buildConfig({
   }),
   email: resendAdapter({
     apiKey: process.env.RESEND_KEY ?? '',
-    defaultFromAddress: 'admin@teenylilapps.com',
+    defaultFromAddress: 'admin@shoroukelkobrosi.com',
     defaultFromName: 'Shorouk Elkobrsi',
   }),
   sharp,
