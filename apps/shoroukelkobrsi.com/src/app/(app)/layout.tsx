@@ -1,25 +1,23 @@
-import type { Metadata } from "next";
-import { Lora } from "next/font/google";
-import "./globals.css";
-import { ViewTransitions } from "next-view-transitions";
-import Menu from "@/components/layout/menu";
-import Footer from "@/components/layout/footer";
-import { RefreshRouteOnSave } from "@/components/utils/refresh-route-on-save";
+import type { Metadata } from 'next'
+import { Lora } from 'next/font/google'
+import './globals.css'
+import { ViewTransitions } from 'next-view-transitions'
+import Menu from '@/components/layout/menu'
+import Footer from '@/components/layout/footer'
+import { RefreshRouteOnSave } from '@/components/utils/refresh-route-on-save'
+import { baseMetadata } from '@/components/base-metadata'
 
 const lora = Lora({
-  subsets: ["latin"],
-  variable: "--font-lora",
-});
+  subsets: ['latin'],
+  variable: '--font-lora',
+})
 
-export const metadata: Metadata = {
-  title: "Anthropotpourri",
-  description: "The cinema of Shorouk Elkobrsi.",
-};
+export const metadata: Metadata = baseMetadata
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>): React.ReactElement {
   return (
     <ViewTransitions>
@@ -34,5 +32,5 @@ export default function RootLayout({
         </body>
       </html>
     </ViewTransitions>
-  );
+  )
 }

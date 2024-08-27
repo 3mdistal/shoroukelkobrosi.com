@@ -41,7 +41,7 @@ export default buildConfig({
   email: resendAdapter({
     apiKey: process.env.RESEND_API_KEY ?? '',
     defaultFromAddress: 'admin@shoroukelkobrosi.com',
-    defaultFromName: 'Shorouk Elkobrsi',
+    defaultFromName: 'Shorouk Elkobrosi',
   }),
   sharp,
   plugins: [

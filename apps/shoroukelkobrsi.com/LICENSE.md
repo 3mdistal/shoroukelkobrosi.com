@@ -10,4 +10,4 @@ The source code for this project is licensed under the [Creative Commons Attribu
 
 The content of the website (including but not limited to images, videos, text, and any other media not part of the source code) is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs (CC BY-NC-ND) license](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
-For more information, visit the [legal page](https://shoroukelkobrsi.com/legal).
+For more information, visit the [legal page](https://shoroukelkobrosi.com/legal).

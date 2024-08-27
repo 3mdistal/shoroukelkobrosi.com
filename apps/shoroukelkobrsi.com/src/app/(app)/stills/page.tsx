@@ -1,44 +1,58 @@
-import { getPayloadHMR } from "@payloadcms/next/utilities";
-import type { Payload } from "payload";
-import { unstable_cache as cache } from "next/cache";
-import configPromise from "@payload-config";
-import type { Still } from "@/payload-types";
-import StillImageFrame from "@/components/still/still-image-frame";
-import { shuffleArray } from "@/utilities/shuffle";
-import { createImageUrl, getImageDimensions } from "@/utilities/media";
-import styles from "./stills.module.css";
+import type { Metadata } from 'next'
+import type { Payload } from 'payload'
+import type { Still } from '@/payload-types'
+import { unstable_cache as cache } from 'next/cache'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import configPromise from '@payload-config'
+import StillImageFrame from '@/components/still/still-image-frame'
+import { baseMetadata } from '@/components/base-metadata'
+import { shuffleArray } from '@/utilities/shuffle'
+import { createImageUrl, getImageDimensions } from '@/utilities/media'
+import styles from './stills.module.css'
+
+export const metadata: Metadata = {
+  ...baseMetadata,
+  title: 'Stills - Anthropotpourri',
+  description: 'Photography by Shorouk Elkobrosi.',
+  openGraph: {
+    ...baseMetadata.openGraph,
+    title: 'About - Anthropotpourri',
+    description: 'Learn about Shorouk Elkobrosi and her cinematic work.',
+    url: 'https://shoroukelkobrosi.com/about',
+  },
+}
 
 const getCachedStills = cache(
   async (): Promise<Still[]> => {
     const payload: Payload = await getPayloadHMR({
       config: configPromise,
-    });
+    })
 
     const stills = await payload.find({
-      collection: "stills",
-    });
+      collection: 'stills',
+    })
 
-    return stills.docs;
+    return stills.docs
   },
-  ["stills-cache"],
+  ['stills-cache'],
   {
-    tags: ["stills"],
+    tags: ['stills'],
   },
-);
+)
 
 export default async function StillsPage(): Promise<React.ReactElement> {
-  const stills = await getCachedStills();
-  const shuffledStills = shuffleArray(stills);
+  const stills = await getCachedStills()
+  const shuffledStills = shuffleArray(stills)
 
   // Define the sizes based on the masonry grid layout
-  const sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
 
   return (
     <div className={styles.stillsPage}>
       <h1>Stills</h1>
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => {
-          const { width, height } = getImageDimensions(still.image);
+          const { width, height } = getImageDimensions(still.image)
           return (
             <div key={still.id} className={styles.gridItem}>
               <StillImageFrame
@@ -49,9 +63,9 @@ export default async function StillsPage(): Promise<React.ReactElement> {
                 sizes={sizes}
               />
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

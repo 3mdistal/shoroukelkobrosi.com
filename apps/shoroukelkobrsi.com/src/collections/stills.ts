@@ -1,31 +1,31 @@
-import { type CollectionConfig } from "payload";
+import { type CollectionConfig } from 'payload'
 
 export const Stills: CollectionConfig = {
-  slug: "stills",
+  slug: 'stills',
   admin: {
-    useAsTitle: "location",
+    useAsTitle: 'location',
   },
   fields: [
     {
-      name: "date",
-      type: "date",
+      name: 'date',
+      type: 'date',
       required: true,
     },
     {
-      name: "location",
-      type: "text",
+      name: 'location',
+      type: 'text',
       required: true,
     },
     {
-      name: "format",
-      type: "text",
+      name: 'format',
+      type: 'text',
     },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
       required: true,
     },
   ],
   versions: true,
-};
+}
