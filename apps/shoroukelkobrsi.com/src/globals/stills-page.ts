@@ -8,6 +8,7 @@ export const StillsPage: GlobalConfig = {
     livePreview: {
       url: `${getURL()}/stills`,
     },
+    group: 'Pages',
   },
   fields: [
     {

@@ -49,6 +49,7 @@ export const Films: CollectionConfig = {
       },
     },
     useAsTitle: 'title',
+    group: 'Pages',
   },
   hooks: {
     afterChange: [afterChangeHook],

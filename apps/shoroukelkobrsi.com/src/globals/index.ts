@@ -1,3 +1,3 @@
 export * from './homepage'
-export * from './about'
+export * from './about-page'
 export * from './stills-page'

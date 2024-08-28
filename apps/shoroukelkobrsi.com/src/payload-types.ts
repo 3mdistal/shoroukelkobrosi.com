@@ -22,7 +22,7 @@ export interface Config {
   };
   globals: {
     homepage: Homepage;
-    about: About;
+    'about-page': AboutPage;
     'stills-page': StillsPage;
   };
   locale: null;
@@ -163,9 +163,9 @@ export interface Homepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about".
+ * via the `definition` "about-page".
  */
-export interface About {
+export interface AboutPage {
   id: string;
   heading: string;
   'personal-intro': {

@@ -16,8 +16,8 @@ const maxCharacterCount = {
   professional: 600,
 }
 
-export const About: GlobalConfig = {
-  slug: 'about',
+export const AboutPage: GlobalConfig = {
+  slug: 'about-page',
   access: {
     read: () => true,
   },
@@ -25,6 +25,7 @@ export const About: GlobalConfig = {
     livePreview: {
       url: `${getURL()}/about`,
     },
+    group: 'Pages',
   },
   fields: [
     {

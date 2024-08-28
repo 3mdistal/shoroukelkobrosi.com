@@ -8,6 +8,7 @@ export const Homepage: GlobalConfig = {
     livePreview: {
       url: `${getURL()}`,
     },
+    group: 'Pages',
   },
   fields: [
     {
