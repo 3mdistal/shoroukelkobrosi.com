@@ -46,7 +46,7 @@ export default function AboutContentToggle({
       </div>
       <div className={styles.contentToggleText}>
         {isPersonal ? personalIntro : professionalIntro}
-        {isPersonal ? null : <div className={styles.logos}>{professionalLogos}</div>}
+        {isPersonal ? null : <div>{professionalLogos}</div>}
       </div>
     </div>
   )

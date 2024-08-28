@@ -2,16 +2,16 @@ import { unstable_cache as cache } from 'next/cache'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import type { Payload } from 'payload'
 import configPromise from '@payload-config'
-import type { AboutPage } from '@/payload-types'
+import type { About } from '@/payload-types'
 
 const getAboutPage = cache(
-  async (): Promise<AboutPage> => {
+  async (): Promise<About> => {
     const payload: Payload = await getPayloadHMR({
       config: configPromise,
     })
 
     const aboutPage = await payload.findGlobal({
-      slug: 'about-page',
+      slug: 'about',
     })
 
     return aboutPage
