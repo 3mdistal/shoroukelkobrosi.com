@@ -1,7 +1,4 @@
-import {
-  MigrateUpArgs,
-  MigrateDownArgs,
-} from '@payloadcms/db-mongodb'
+import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-mongodb'
 undefined
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
