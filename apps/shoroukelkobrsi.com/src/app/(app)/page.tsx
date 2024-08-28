@@ -1,5 +1,5 @@
-import FilmShowcase from '@/components/film/film-showcase'
-import Reel from '@/components/film/reel'
+import FilmShowcase from '@/components/homepage/film-showcase'
+import Reel from '@/components/homepage/reel'
 import styles from './page.module.css'
 
 export default function Home(): React.ReactElement {

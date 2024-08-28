@@ -5,6 +5,11 @@ export const Homepage: GlobalConfig = {
   slug: 'homepage',
   fields: [
     {
+      name: 'reel',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'featuredFilms',
       type: 'relationship',
       relationTo: 'films',

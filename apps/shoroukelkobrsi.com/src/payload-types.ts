@@ -169,6 +169,7 @@ export interface PayloadMigration {
  */
 export interface Homepage {
   id: string;
+  reel?: (string | null) | Media;
   featuredFilms?: (string | Film)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;

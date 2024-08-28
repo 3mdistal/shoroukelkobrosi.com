@@ -1,0 +1,75 @@
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-6);
+  padding: var(--size-6) 0;
+}
+
+.film {
+  color: inherit;
+  text-decoration: none;
+}
+
+.filmInfo {
+  margin-bottom: var(--size-6);
+}
+
+.filmMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filmDate,
+.filmProducer {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.filmDate:not(:last-child)::after {
+  display: block;
+  opacity: 0.5;
+  margin: 0 var(--size-3);
+  content: '•';
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .showcase {
+    gap: var(--size-4);
+    padding: var(--size-4) 0;
+  }
+}
+
+.stillsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--size-6);
+  width: 100%;
+}
+
+.gridCell {
+  position: relative;
+}
+
+.aspectRatioWrapper {
+  background-color: black;
+}
+
+.imageWrapper {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.imageWrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
