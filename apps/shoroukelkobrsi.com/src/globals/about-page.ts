@@ -87,6 +87,13 @@ export const AboutPage: GlobalConfig = {
       required: true,
       defaultValue: [{ logo: '/favicon.ico' }, { logo: '/favicon.ico' }, { logo: '/favicon.ico' }],
     },
+    {
+      name: 'OG Image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      defaultValue: '/favicon.ico',
+    },
   ],
   hooks: {
     afterChange: [
