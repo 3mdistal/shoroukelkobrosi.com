@@ -12,13 +12,16 @@ export default function Footer(): React.ReactElement {
           <span>LOGO</span>
         </div>
         <div className={styles.footerCopyright}>
-          <p>&copy; {currentYear} Shorouk Elkobrosi. All rights reserved.</p>
+          <Link href="/legal">
+            &copy; {currentYear} Shorouk Elkobrosi.
+            <br />
+            All rights reserved.
+          </Link>
         </div>
         <nav className={styles.footerNav}>
           <Link href="/">Films</Link>
           <Link href="/about">About</Link>
           <Link href="/stills">Stills</Link>
-          <Link href="/legal">Legal</Link>
         </nav>
         <div className={styles.footerSocial}>
           <a

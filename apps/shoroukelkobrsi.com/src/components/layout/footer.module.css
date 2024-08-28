@@ -1,15 +1,15 @@
 .footer {
   background-color: var(--surface-2);
-  padding: var(--size-10);
   color: var(--text-2);
   display: flex;
   justify-content: center;
+  padding: var(--size-10);
 }
 
 .footerContent {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   gap: var(--size-4);
+  grid-template-columns: repeat(5, 1fr);
   margin: 0 auto;
   max-width: min(calc(--var(content-width-3) * 2), 100%);
   width: 100%;
@@ -20,27 +20,32 @@
 .footerNav,
 .footerSocial,
 .footerToggle {
+  align-items: flex-start;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .footerNav,
 .footerSocial {
-  gap: var(--size-3);
   flex-direction: column;
+  gap: var(--size-3);
 }
 
 .footerNav a,
-.footerSocial a {
+.footerSocial a,
+.footerCopyright a {
   color: var(--text-2);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    font-weight 0.3s ease;
 }
 
 .footerNav a:hover,
-.footerSocial a:hover {
+.footerSocial a:hover,
+.footerCopyright a:hover {
   color: var(--text-1);
+  font-weight: var(--font-weight-5);
 }
 
 @media (max-width: 1200px) {
