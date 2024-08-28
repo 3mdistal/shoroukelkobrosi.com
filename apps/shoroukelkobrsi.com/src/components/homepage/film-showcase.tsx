@@ -1,32 +1,11 @@
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import Image from 'next/image'
 import { Link } from 'next-view-transitions'
-import type { Payload } from 'payload'
-import { unstable_cache as cache } from 'next/cache'
-import configPromise from '@payload-config'
-import type { Film, Homepage } from '@/payload-types'
+import type { Film } from '@/payload-types'
 import AspectRatio from '@/components/ui/aspect-ratio'
 import { formatSeasonYear } from '@/utilities/date-utils'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import styles from './film-showcase.module.css'
-
-const getCachedHomepage = cache(
-  async (): Promise<Homepage> => {
-    const payload: Payload = await getPayloadHMR({
-      config: configPromise,
-    })
-
-    const homepage = await payload.findGlobal({
-      slug: 'homepage',
-    })
-
-    return homepage
-  },
-  ['homepage-cache'],
-  {
-    tags: ['homepage'],
-  },
-)
+import { getCachedHomepage } from './get-cached-homepage'
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
   const homepage = await getCachedHomepage()
