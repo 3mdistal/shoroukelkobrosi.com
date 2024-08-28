@@ -16,7 +16,7 @@ const maxCharacterCount = {
   professional: 600,
 }
 
-export const AboutPage: GlobalConfig = {
+export const About: GlobalConfig = {
   slug: 'about',
   access: {
     read: () => true,
@@ -82,13 +82,6 @@ export const AboutPage: GlobalConfig = {
           required: true,
         },
       ],
-      required: true,
-    },
-    {
-      name: 'og-image',
-      label: 'OG Image',
-      type: 'upload',
-      relationTo: 'media',
       required: true,
     },
   ],
