@@ -47,7 +47,7 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: 'https://unsplash.it/500/500',
+      defaultValue: '/favicon.ico',
     },
     lexicalHTML('personal-intro', {
       name: 'personal-intro_html',
@@ -71,7 +71,7 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: 'https://unsplash.it/500/500',
+      defaultValue: '/favicon.ico',
     },
     {
       name: 'professional-logos',
@@ -85,11 +85,7 @@ export const AboutPage: GlobalConfig = {
         },
       ],
       required: true,
-      defaultValue: [
-        { logo: 'https://unsplash.it/500/500' },
-        { logo: 'https://unsplash.it/500/500' },
-        { logo: 'https://unsplash.it/500/500' },
-      ],
+      defaultValue: [{ logo: '/favicon.ico' }, { logo: '/favicon.ico' }, { logo: '/favicon.ico' }],
     },
   ],
   hooks: {

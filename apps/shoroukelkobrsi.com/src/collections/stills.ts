@@ -26,7 +26,7 @@ export const Stills: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: 'https://unsplash.it/500/500',
+      defaultValue: '/favicon.ico',
     },
   ],
   versions: true,
