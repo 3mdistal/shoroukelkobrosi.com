@@ -22,11 +22,6 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    livePreview: {
-      url: getURL(),
-      globals: ['homepage'],
-      collections: ['films'],
-    },
   },
   collections: [Users, Media, Films],
   globals: [Homepage, About, StillsPage],
