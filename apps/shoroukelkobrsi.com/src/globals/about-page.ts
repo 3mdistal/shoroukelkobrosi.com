@@ -17,7 +17,7 @@ const maxCharacterCount = {
 }
 
 export const AboutPage: GlobalConfig = {
-  slug: 'about-page',
+  slug: 'about',
   admin: {
     livePreview: {
       url: `${getURL()}/about`,
