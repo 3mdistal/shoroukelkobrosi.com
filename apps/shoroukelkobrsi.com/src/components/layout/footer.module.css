@@ -1,18 +1,18 @@
 .footer {
-  background-color: var(--surface-2);
-  color: var(--text-2);
   display: flex;
   justify-content: center;
+  background-color: var(--surface-2);
   padding: var(--size-10);
+  color: var(--text-2);
 }
 
 .footerContent {
   display: grid;
-  gap: var(--size-4);
   grid-template-columns: repeat(5, 1fr);
+  gap: var(--size-4);
   margin: 0 auto;
-  max-width: min(calc(--var(content-width-3) * 2), 100%);
   width: 100%;
+  max-width: min(calc(--var(content-width-3) * 2), 100%);
 }
 
 .footerLogo,
@@ -20,9 +20,9 @@
 .footerNav,
 .footerSocial,
 .footerToggle {
-  align-items: flex-start;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .footerNav,
@@ -34,11 +34,11 @@
 .footerNav a,
 .footerSocial a,
 .footerCopyright a {
-  color: var(--text-2);
-  text-decoration: none;
   transition:
     color 0.3s ease,
     font-weight 0.3s ease;
+  color: var(--text-2);
+  text-decoration: none;
 }
 
 .footerNav a:hover,

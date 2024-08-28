@@ -13,7 +13,9 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "beta",
@@ -42,6 +44,7 @@
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.0-canary.104",
+    "prettier-plugin-css-order": "^2.1.2",
     "typescript": "5.5.4"
   },
   "engines": {

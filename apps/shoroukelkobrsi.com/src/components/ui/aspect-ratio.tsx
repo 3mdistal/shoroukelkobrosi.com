@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
 interface AspectRatioProps {
-  ratio: number;
-  children: React.ReactNode;
-  className?: string;
+  ratio: number
+  children: React.ReactNode
+  className?: string
 }
 
 export default function AspectRatio({
@@ -15,14 +15,14 @@ export default function AspectRatio({
     <div
       className={className}
       style={{
-        position: "relative",
-        width: "100%",
+        position: 'relative',
+        width: '100%',
         paddingBottom: `${((1 / ratio) * 100).toString()}%`,
       }}
     >
       <div
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
@@ -32,5 +32,5 @@ export default function AspectRatio({
         {children}
       </div>
     </div>
-  );
+  )
 }
