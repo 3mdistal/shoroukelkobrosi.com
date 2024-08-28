@@ -10,7 +10,7 @@ import { getURL } from '@/utilities/get-url'
 import sharp from 'sharp'
 
 import { Users, Media, Films, Stills } from '@/collections'
-import { Homepage } from '@/globals'
+import { Homepage, AboutPage } from '@/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,7 +29,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Films, Stills],
-  globals: [Homepage],
+  globals: [Homepage, AboutPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
