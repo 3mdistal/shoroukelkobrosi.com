@@ -1,4 +1,5 @@
 import type { Media } from '@/payload-types'
+import { getURL } from '@/utilities/get-url'
 
 export function createImageUrl(image: Media | number | string | null | undefined): string {
   if (typeof image === 'object' && image !== null && 'url' in image) {

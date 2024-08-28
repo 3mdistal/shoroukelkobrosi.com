@@ -15,6 +15,7 @@ export const Stills: CollectionConfig = {
       name: 'location',
       type: 'text',
       required: true,
+      defaultValue: 'Location',
     },
     {
       name: 'format',
@@ -25,6 +26,7 @@ export const Stills: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+      defaultValue: '/favicon.ico',
     },
   ],
   versions: true,
