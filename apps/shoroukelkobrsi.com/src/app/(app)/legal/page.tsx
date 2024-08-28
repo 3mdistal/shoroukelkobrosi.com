@@ -21,28 +21,22 @@ export default function LegalPage(): React.ReactElement {
         <h3>1. Website Content</h3>
         <p>
           All content on this website, including but not limited to images, videos, text, and any
-          other media not part of the source code, is licensed under the Creative Commons
-          Attribution-NonCommercial-NoDerivs (CC BY-NC-ND) license.
+          other media not part of the source code, is protected under copyright law with All Rights
+          Reserved.
         </p>
         <h4>What this means:</h4>
         <ul>
           <li>
-            You are free to share, copy, and redistribute the content in any medium or format.
+            You may not copy, reproduce, distribute, or create derivative works from any content on
+            this website without explicit permission from the copyright holder.
           </li>
-          <li>
-            You must give appropriate credit, provide a link to the license, and indicate if changes
-            were made.
-          </li>
-          <li>You may not use the material for commercial purposes.</li>
-          <li>
-            If you remix, transform, or build upon the material, you may not distribute the modified
-            material.
-          </li>
+          <li>This includes sharing or reposting content on social media platforms.</li>
+          <li>You may view and access the content for personal, non-commercial use only.</li>
         </ul>
         <p>
-          <Link href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">
-            Full CC BY-NC-ND 4.0 License
-          </Link>
+          For permissions or inquiries regarding the use of any content from this website, please
+          contact us at{' '}
+          <Link href="mailto:admin@shoroukelkobrosi.com">admin@shoroukelkobrosi.com</Link>.
         </p>
 
         <h3>2. Source Code</h3>
