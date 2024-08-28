@@ -1,8 +1,15 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateTag } from 'next/cache'
+import { getURL } from '@/utilities/get-url'
 
 export const Homepage: GlobalConfig = {
   slug: 'homepage',
+  admin: {
+    livePreview: {
+      url: `${getURL()}`,
+    },
+    group: 'Pages',
+  },
   fields: [
     {
       name: 'reel',

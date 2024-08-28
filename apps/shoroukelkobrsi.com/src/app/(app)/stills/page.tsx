@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import type { Payload } from 'payload'
-import type { Still } from '@/payload-types'
+import type { StillsPage } from '@/payload-types'
 import { unstable_cache as cache } from 'next/cache'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
@@ -23,16 +23,16 @@ export const metadata: Metadata = {
 }
 
 const getCachedStills = cache(
-  async (): Promise<Still[]> => {
+  async (): Promise<StillsPage> => {
     const payload: Payload = await getPayloadHMR({
       config: configPromise,
     })
 
-    const stills = await payload.find({
-      collection: 'stills',
+    const stills = await payload.findGlobal({
+      slug: 'stills-page',
     })
 
-    return stills.docs
+    return stills
   },
   ['stills-cache'],
   {
@@ -41,7 +41,8 @@ const getCachedStills = cache(
 )
 
 export default async function StillsPage(): Promise<React.ReactElement> {
-  const stills = await getCachedStills()
+  const stillsPage = await getCachedStills()
+  const stills = stillsPage.stills
   const shuffledStills = shuffleArray(stills)
 
   // Define the sizes based on the masonry grid layout
@@ -52,12 +53,12 @@ export default async function StillsPage(): Promise<React.ReactElement> {
       <h1>Stills</h1>
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => {
-          const { width, height } = getImageDimensions(still.image)
+          const { width, height } = getImageDimensions(still.still)
           return (
             <div key={still.id} className={styles.gridItem}>
               <StillImageFrame
-                imageUrl={createImageUrl(still.image)}
-                location={still.location}
+                imageUrl={createImageUrl(still.still)}
+                location={still.location ? still.location : ''}
                 width={width}
                 height={height}
                 sizes={sizes}

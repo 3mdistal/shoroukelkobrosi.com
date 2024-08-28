@@ -17,7 +17,7 @@ const maxCharacterCount = {
 }
 
 export const AboutPage: GlobalConfig = {
-  slug: 'about',
+  slug: 'about-page',
   access: {
     read: () => true,
   },
@@ -25,6 +25,7 @@ export const AboutPage: GlobalConfig = {
     livePreview: {
       url: `${getURL()}/about`,
     },
+    group: 'Pages',
   },
   fields: [
     {
@@ -82,13 +83,6 @@ export const AboutPage: GlobalConfig = {
           required: true,
         },
       ],
-      required: true,
-    },
-    {
-      name: 'og-image',
-      label: 'OG Image',
-      type: 'upload',
-      relationTo: 'media',
       required: true,
     },
   ],

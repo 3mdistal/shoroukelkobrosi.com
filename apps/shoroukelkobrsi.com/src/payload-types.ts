@@ -14,7 +14,6 @@ export interface Config {
     users: User;
     media: Media;
     films: Film;
-    stills: Still;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -23,7 +22,8 @@ export interface Config {
   };
   globals: {
     homepage: Homepage;
-    about: About;
+    'about-page': AboutPage;
+    'stills-page': StillsPage;
   };
   locale: null;
   user: User & {
@@ -118,19 +118,6 @@ export interface Film {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stills".
- */
-export interface Still {
-  id: string;
-  date: string;
-  location: string;
-  format?: string | null;
-  image: string | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
@@ -176,9 +163,9 @@ export interface Homepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about".
+ * via the `definition` "about-page".
  */
-export interface About {
+export interface AboutPage {
   id: string;
   heading: string;
   'personal-intro': {
@@ -219,7 +206,21 @@ export interface About {
     logo: string | Media;
     id?: string | null;
   }[];
-  'og-image': string | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stills-page".
+ */
+export interface StillsPage {
+  id: string;
+  stills: {
+    still: string | Media;
+    location?: string | null;
+    date?: string | null;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }

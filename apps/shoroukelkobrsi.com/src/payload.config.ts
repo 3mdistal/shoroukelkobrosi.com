@@ -9,8 +9,8 @@ import { fileURLToPath } from 'url'
 import { getURL } from '@/utilities/get-url'
 import sharp from 'sharp'
 
-import { Users, Media, Films, Stills } from '@/collections'
-import { AboutPage, Homepage } from '@/globals'
+import { Users, Media, Films } from '@/collections'
+import { Homepage, AboutPage, StillsPage } from '@/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,14 +22,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    livePreview: {
-      url: getURL(),
-      globals: ['homepage'],
-      collections: ['films'],
-    },
   },
-  collections: [Users, Media, Films, Stills],
-  globals: [Homepage, AboutPage],
+  collections: [Users, Media, Films],
+  globals: [Homepage, AboutPage, StillsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
