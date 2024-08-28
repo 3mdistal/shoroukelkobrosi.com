@@ -6,35 +6,35 @@
 
 .filmArticle {
   flex: 1;
-  padding: var(--size-fluid-4);
-  max-width: calc(var(--size-content-3) * 2);
   margin: 0 auto;
+  padding: var(--size-fluid-4);
   width: 100%;
+  max-width: calc(var(--size-content-3) * 2);
 }
 
 .filmTitle {
-  font-size: var(--font-size-fluid-3);
-  color: var(--text-1);
   margin-bottom: var(--size-4);
+  color: var(--text-1);
+  font-size: var(--font-size-fluid-3);
 }
 
 .filmDetails {
+  margin-bottom: var(--size-5);
+  border-radius: var(--radius-2);
   background-color: var(--surface-3);
   padding: var(--size-4);
-  border-radius: var(--radius-2);
-  margin-bottom: var(--size-5);
 }
 
 .filmMetadata {
   display: grid;
   grid-template-columns: max-content 1fr;
-  gap: var(--size-2) var(--size-4);
   align-items: baseline;
+  gap: var(--size-2) var(--size-4);
 }
 
 .filmMetadata dt {
-  font-weight: var(--font-weight-7);
   color: var(--text-2);
+  font-weight: var(--font-weight-7);
 }
 
 .filmMetadata dd {
@@ -48,16 +48,16 @@
 
 .trailerContainer {
   position: relative;
-  overflow: hidden;
   border-radius: var(--radius-2);
+  overflow: hidden;
 
   & iframe {
     position: absolute;
     top: 0;
     left: 0;
+    background-color: black;
     width: 100%;
     height: 100%;
-    background-color: black;
   }
 }
 
@@ -72,10 +72,10 @@
 }
 
 .stillContainer {
+  transition: box-shadow var(--animation-fade-in);
+  box-shadow: var(--shadow-2);
   border-radius: var(--radius-2);
   overflow: hidden;
-  box-shadow: var(--shadow-2);
-  transition: box-shadow var(--animation-fade-in);
 }
 
 .stillContainer:hover {
@@ -87,11 +87,11 @@
 }
 
 .stillImageWrapper {
-  position: absolute;
-  inset: 0;
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
+  inset: 0;
 }
 
 .stillImage {
@@ -110,13 +110,13 @@
 .nextFilmLink {
   display: flex;
   flex-direction: column;
-  text-decoration: none;
-  color: var(--text-1);
-  padding: var(--size-3);
-  background-color: var(--surface-3);
-  border-radius: var(--radius-2);
   transition: background-color var(--animation-fade-in);
+  border-radius: var(--radius-2);
+  background-color: var(--surface-3);
+  padding: var(--size-3);
   width: calc(50% - var(--size-2));
+  color: var(--text-1);
+  text-decoration: none;
 }
 
 .prevFilmLink {
@@ -135,12 +135,12 @@
 
 .prevFilmLink span:first-child,
 .nextFilmLink span:first-child {
-  font-weight: var(--font-weight-7);
   margin-bottom: var(--size-2);
+  font-weight: var(--font-weight-7);
 }
 
 .prevFilmLink span:last-child,
 .nextFilmLink span:last-child {
-  font-size: var(--font-size-0);
   color: var(--text-2);
+  font-size: var(--font-size-0);
 }

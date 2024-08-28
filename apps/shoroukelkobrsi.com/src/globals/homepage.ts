@@ -1,13 +1,13 @@
-import type { GlobalConfig } from "payload";
-import { revalidateTag } from "next/cache";
+import type { GlobalConfig } from 'payload'
+import { revalidateTag } from 'next/cache'
 
 export const Homepage: GlobalConfig = {
-  slug: "homepage",
+  slug: 'homepage',
   fields: [
     {
-      name: "featuredFilms",
-      type: "relationship",
-      relationTo: "films",
+      name: 'featuredFilms',
+      type: 'relationship',
+      relationTo: 'films',
       hasMany: true,
       index: true,
       admin: {
@@ -18,9 +18,9 @@ export const Homepage: GlobalConfig = {
   hooks: {
     afterChange: [
       () => {
-        revalidateTag("homepage");
+        revalidateTag('homepage')
       },
     ],
   },
   versions: true,
-};
+}

@@ -1,6 +1,6 @@
-import FilmShowcase from "@/components/film/film-showcase";
-import Reel from "@/components/film/reel";
-import styles from "./page.module.css";
+import FilmShowcase from '@/components/film/film-showcase'
+import Reel from '@/components/film/reel'
+import styles from './page.module.css'
 
 export default function Home(): React.ReactElement {
   return (
@@ -12,5 +12,5 @@ export default function Home(): React.ReactElement {
         <FilmShowcase />
       </section>
     </div>
-  );
+  )
 }
