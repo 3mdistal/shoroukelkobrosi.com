@@ -29,6 +29,7 @@ export const AboutPage: GlobalConfig = {
       type: 'text',
       maxLength: 38,
       required: true,
+      defaultValue: 'About',
     },
     {
       name: 'personal-intro',
@@ -39,12 +40,14 @@ export const AboutPage: GlobalConfig = {
         features: () => [BoldFeature(), ItalicFeature(), HTMLConverterFeature()],
       }),
       required: true,
+      defaultValue: 'Personal Intro',
     },
     {
       name: 'personal-photo',
       type: 'upload',
       relationTo: 'media',
       required: true,
+      defaultValue: 'https://unsplash.it/500/500',
     },
     lexicalHTML('personal-intro', {
       name: 'personal-intro_html',
@@ -58,6 +61,7 @@ export const AboutPage: GlobalConfig = {
         features: () => [BoldFeature(), ItalicFeature(), HTMLConverterFeature()],
       }),
       required: true,
+      defaultValue: 'Professional Intro',
     },
     lexicalHTML('professional-intro', {
       name: 'professional-intro_html',
@@ -67,6 +71,7 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+      defaultValue: 'https://unsplash.it/500/500',
     },
     {
       name: 'professional-logos',
@@ -80,6 +85,11 @@ export const AboutPage: GlobalConfig = {
         },
       ],
       required: true,
+      defaultValue: [
+        { logo: 'https://unsplash.it/500/500' },
+        { logo: 'https://unsplash.it/500/500' },
+        { logo: 'https://unsplash.it/500/500' },
+      ],
     },
   ],
   hooks: {
