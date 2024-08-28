@@ -32,7 +32,6 @@ export const AboutPage: GlobalConfig = {
       type: 'text',
       maxLength: 38,
       required: true,
-      defaultValue: 'About',
     },
     {
       name: 'personal-intro',
@@ -49,7 +48,6 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: '/favicon.ico',
     },
     lexicalHTML('personal-intro', {
       name: 'personal-intro_html',
@@ -72,7 +70,6 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: '/favicon.ico',
     },
     {
       name: 'professional-logos',
@@ -86,7 +83,6 @@ export const AboutPage: GlobalConfig = {
         },
       ],
       required: true,
-      defaultValue: [{ logo: '/favicon.ico' }, { logo: '/favicon.ico' }, { logo: '/favicon.ico' }],
     },
     {
       name: 'og-image',
@@ -94,7 +90,6 @@ export const AboutPage: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      defaultValue: '/favicon.ico',
     },
   ],
   hooks: {
