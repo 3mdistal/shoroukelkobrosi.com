@@ -18,6 +18,9 @@ const maxCharacterCount = {
 
 export const AboutPage: GlobalConfig = {
   slug: 'about',
+  access: {
+    read: () => true,
+  },
   admin: {
     livePreview: {
       url: `${getURL()}/about`,
@@ -35,12 +38,11 @@ export const AboutPage: GlobalConfig = {
       name: 'personal-intro',
       type: 'richText',
       label: `Personal Intro. Max ${maxCharacterCount.personal.toString()} characters.`,
-      validate: validateRichTextLength(maxCharacterCount.personal),
+      // validate: validateRichTextLength(maxCharacterCount.personal),
       editor: lexicalEditor({
         features: () => [BoldFeature(), ItalicFeature(), HTMLConverterFeature()],
       }),
       required: true,
-      defaultValue: 'Personal Intro',
     },
     {
       name: 'personal-photo',
@@ -56,12 +58,11 @@ export const AboutPage: GlobalConfig = {
       name: 'professional-intro',
       type: 'richText',
       label: `Professional Intro. Max ${maxCharacterCount.professional.toString()} characters.`,
-      validate: validateRichTextLength(maxCharacterCount.professional),
+      // validate: validateRichTextLength(maxCharacterCount.professional),
       editor: lexicalEditor({
         features: () => [BoldFeature(), ItalicFeature(), HTMLConverterFeature()],
       }),
       required: true,
-      defaultValue: 'Professional Intro',
     },
     lexicalHTML('professional-intro', {
       name: 'professional-intro_html',
@@ -88,7 +89,8 @@ export const AboutPage: GlobalConfig = {
       defaultValue: [{ logo: '/favicon.ico' }, { logo: '/favicon.ico' }, { logo: '/favicon.ico' }],
     },
     {
-      name: 'OG Image',
+      name: 'og-image',
+      label: 'OG Image',
       type: 'upload',
       relationTo: 'media',
       required: true,

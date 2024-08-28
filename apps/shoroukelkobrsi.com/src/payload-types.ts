@@ -218,7 +218,7 @@ export interface About {
     logo: string | Media;
     id?: string | null;
   }[];
-  'OG Image': string | Media;
+  'og-image': string | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

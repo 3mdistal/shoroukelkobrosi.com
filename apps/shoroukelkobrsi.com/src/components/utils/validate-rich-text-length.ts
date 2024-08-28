@@ -5,7 +5,8 @@ interface RichTextNode {
 
 export const validateRichTextLength = (maxCharacterCount: number) => {
   return (value: { root: RichTextNode }): string | true => {
-    const countCharacters = (node: RichTextNode): number => {
+    const countCharacters = (node: RichTextNode | null | undefined): number => {
+      if (!node) return 0
       if (typeof node.text === 'string') {
         return node.text.length
       }

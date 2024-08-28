@@ -10,7 +10,7 @@ import { getURL } from '@/utilities/get-url'
 import sharp from 'sharp'
 
 import { Users, Media, Films, Stills } from '@/collections'
-import { Homepage, AboutPage } from '@/globals'
+import { AboutPage, Homepage } from '@/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
