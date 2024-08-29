@@ -1,35 +1,44 @@
 import { Metadata } from 'next'
 import { baseMetadata } from '@/components/base-metadata'
 import FilmPage from '@/components/film/film-page'
-import { RefreshRouteOnSave } from '@/components/utils/refresh-route-on-save'
 import { getCachedFilm } from '@/components/film/film-fetches'
+import { createImageUrl } from '@/utilities/media'
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }): Promise<Metadata> {
   const film = await getCachedFilm(params.slug)
 
-  return {
-    ...baseMetadata,
-    title: film.title,
-    description: `Explore the cinematic journey of "${film.title}" - a captivating film by Shorouk Elkobrosi`,
-    openGraph: {
-      ...baseMetadata.openGraph,
-      title: film.title,
-      description: `Discover the visual storytelling and artistic vision behind "${film.title}" - a compelling work in the Anthropotpourri collection`,
-      url: `https://shoroukelkobrosi.com/films/${params.slug}`,
-    },
+  if (film['og-info'].length > 0) {
+    return {
+      ...baseMetadata,
+      title: `${film.title} - Anthropotpourri`,
+      description: film['og-info'][0].ogDescription,
+      openGraph: {
+        ...baseMetadata.openGraph,
+        title: `${film.title} - Anthropotpourri`,
+        description: film['og-info'][0].ogDescription,
+        images: [
+          {
+            url: createImageUrl(film['og-info'][0].ogImage),
+            width: 1200,
+            height: 630,
+            alt: 'Anthropotpourri',
+          },
+        ],
+        url: `https://shoroukelkobrosi.com/films/${params.slug}`,
+      },
+    }
+  } else {
+    return baseMetadata
   }
 }
 
 export default function Page({ params }: { params: { slug: string } }): React.ReactElement {
   return (
     <>
-      <RefreshRouteOnSave />
       <FilmPage slug={params.slug} />
     </>
   )

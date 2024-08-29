@@ -1,3 +1,0 @@
-- [ ] Position text and image a bit better.
-- [ ] Position logos a bit better.
-- [ ] Redesign toggle button to stay in a component above the page.

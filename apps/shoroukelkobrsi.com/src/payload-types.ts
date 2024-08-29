@@ -113,6 +113,11 @@ export interface Film {
         id?: string | null;
       }[]
     | null;
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -158,6 +163,11 @@ export interface Homepage {
   id: string;
   reel?: (string | null) | Media;
   featuredFilms?: (string | Film)[] | null;
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -206,6 +216,11 @@ export interface AboutPage {
     logo: string | Media;
     id?: string | null;
   }[];
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -219,6 +234,11 @@ export interface StillsPage {
     still: string | Media;
     location?: string | null;
     date?: string | null;
+    id?: string | null;
+  }[];
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
     id?: string | null;
   }[];
   updatedAt?: string | null;

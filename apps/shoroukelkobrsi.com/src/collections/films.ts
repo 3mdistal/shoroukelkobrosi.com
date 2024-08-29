@@ -8,6 +8,7 @@ import { revalidateTag } from 'next/cache'
 import { slugify } from '@/utilities/slugify'
 import { getURL } from '@/utilities/get-url'
 import { type Film } from '@/payload-types'
+import { OGInfo } from '@/blocks/og-info'
 
 const afterChangeHook: CollectionAfterChangeHook = ({ previousDoc, doc }) => {
   revalidateTag('homepage')
@@ -144,6 +145,7 @@ export const Films: CollectionConfig = {
         },
       ],
     },
+    OGInfo,
   ],
   versions: true,
 }
