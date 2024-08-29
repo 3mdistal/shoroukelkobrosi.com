@@ -1,5 +1,6 @@
 import FilmShowcase from '@/components/homepage/film-showcase'
 import Reel from '@/components/homepage/reel'
+import { Suspense } from 'react'
 import { baseMetadata } from '@/components/base-metadata'
 import type { Metadata } from 'next'
 import { getCachedHomepage } from '@/components/homepage/get-cached-homepage'
@@ -35,7 +36,9 @@ export default function Home(): React.ReactElement {
         <Reel />
       </section>
       <section className={styles.showcaseSection}>
-        <FilmShowcase />
+        <Suspense fallback={<div>Loading...</div>}>
+          <FilmShowcase />
+        </Suspense>
       </section>
     </div>
   )
