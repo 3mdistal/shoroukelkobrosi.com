@@ -1,6 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
 import styles from './legal.module.css'
+import type { Metadata } from 'next'
+import { baseMetadata } from '@/components/base-metadata'
+
+export const metadata: Metadata = {
+  ...baseMetadata,
+  title: 'Legal Information - Anthropotpourri',
+  description: 'Legal information for shoroukelkobrosi.com',
+  openGraph: {
+    ...baseMetadata.openGraph,
+    title: 'Legal Information - Anthropotpourri',
+    description: 'Legal information for shoroukelkobrosi.com',
+    url: 'https://shoroukelkobrosi.com/legal',
+  },
+}
 
 function getFormattedDate(): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }

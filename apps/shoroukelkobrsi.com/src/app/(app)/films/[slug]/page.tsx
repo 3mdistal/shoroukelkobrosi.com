@@ -1,26 +1,23 @@
 import { Metadata } from 'next'
 import { baseMetadata } from '@/components/base-metadata'
 import FilmPage from '@/components/film/film-page'
-import { RefreshRouteOnSave } from '@/components/utils/refresh-route-on-save'
 import { getCachedFilm } from '@/components/film/film-fetches'
 import { createImageUrl } from '@/utilities/media'
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }): Promise<Metadata> {
   const film = await getCachedFilm(params.slug)
 
   return {
     ...baseMetadata,
-    title: film.title,
+    title: `${film.title} - Anthropotpourri`,
     description: film['og-info'][0].ogDescription,
     openGraph: {
       ...baseMetadata.openGraph,
-      title: film.title,
+      title: `${film.title} - Anthropotpourri`,
       description: film['og-info'][0].ogDescription,
       images: [
         {
@@ -38,7 +35,6 @@ export async function generateMetadata({
 export default function Page({ params }: { params: { slug: string } }): React.ReactElement {
   return (
     <>
-      <RefreshRouteOnSave />
       <FilmPage slug={params.slug} />
     </>
   )
