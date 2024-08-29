@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateTag } from 'next/cache'
 import { getURL } from '@/utilities/get-url'
+import { OGInfo } from '@/blocks/og-info'
 
 export const Homepage: GlobalConfig = {
   slug: 'homepage',
@@ -26,6 +27,7 @@ export const Homepage: GlobalConfig = {
         isSortable: true,
       },
     },
+    OGInfo,
   ],
   hooks: {
     afterChange: [

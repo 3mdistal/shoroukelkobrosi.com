@@ -6,7 +6,6 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import { getURL } from '@/utilities/get-url'
 import sharp from 'sharp'
 
 import { Users, Media, Films } from '@/collections'
