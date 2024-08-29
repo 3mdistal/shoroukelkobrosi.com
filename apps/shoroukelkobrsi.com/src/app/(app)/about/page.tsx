@@ -13,24 +13,28 @@ import getAboutPage from '@/components/about/get-about-page'
 export async function generateMetadata(): Promise<Metadata> {
   const aboutPage = await getAboutPage()
 
-  return {
-    ...baseMetadata,
-    title: 'About - Anthropotpourri',
-    description: aboutPage['og-info'][0].ogDescription,
-    openGraph: {
-      ...baseMetadata.openGraph,
+  if (aboutPage['og-info']) {
+    return {
+      ...baseMetadata,
       title: 'About - Anthropotpourri',
       description: aboutPage['og-info'][0].ogDescription,
-      images: [
-        {
-          url: createImageUrl(aboutPage['og-info'][0].ogImage),
-          width: 1200,
-          height: 630,
-          alt: 'Anthropotpourri',
-        },
-      ],
-      url: `https://shoroukelkobrosi.com/about`,
-    },
+      openGraph: {
+        ...baseMetadata.openGraph,
+        title: 'About - Anthropotpourri',
+        description: aboutPage['og-info'][0].ogDescription,
+        images: [
+          {
+            url: createImageUrl(aboutPage['og-info'][0].ogImage),
+            width: 1200,
+            height: 630,
+            alt: 'Anthropotpourri',
+          },
+        ],
+        url: `https://shoroukelkobrosi.com/about`,
+      },
+    }
+  } else {
+    return baseMetadata
   }
 }
 

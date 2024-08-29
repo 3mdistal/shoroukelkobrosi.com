@@ -10,22 +10,26 @@ import styles from './page.module.css'
 export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getCachedHomepage()
 
-  return {
-    ...baseMetadata,
-    description: homepage['og-info'][0].ogDescription,
-    openGraph: {
-      ...baseMetadata.openGraph,
+  if (homepage['og-info']) {
+    return {
+      ...baseMetadata,
       description: homepage['og-info'][0].ogDescription,
-      images: [
-        {
-          url: createImageUrl(homepage['og-info'][0].ogImage),
-          width: 1200,
-          height: 630,
-          alt: 'Anthropotpourri',
-        },
-      ],
-      url: `https://shoroukelkobrosi.com`,
-    },
+      openGraph: {
+        ...baseMetadata.openGraph,
+        description: homepage['og-info'][0].ogDescription,
+        images: [
+          {
+            url: createImageUrl(homepage['og-info'][0].ogImage),
+            width: 1200,
+            height: 630,
+            alt: 'Anthropotpourri',
+          },
+        ],
+        url: `https://shoroukelkobrosi.com`,
+      },
+    }
+  } else {
+    return baseMetadata
   }
 }
 

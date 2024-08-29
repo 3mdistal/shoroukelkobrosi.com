@@ -11,24 +11,28 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const film = await getCachedFilm(params.slug)
 
-  return {
-    ...baseMetadata,
-    title: `${film.title} - Anthropotpourri`,
-    description: film['og-info'][0].ogDescription,
-    openGraph: {
-      ...baseMetadata.openGraph,
+  if (film['og-info']) {
+    return {
+      ...baseMetadata,
       title: `${film.title} - Anthropotpourri`,
       description: film['og-info'][0].ogDescription,
-      images: [
-        {
-          url: createImageUrl(film['og-info'][0].ogImage),
-          width: 1200,
-          height: 630,
-          alt: 'Anthropotpourri',
-        },
-      ],
-      url: `https://shoroukelkobrosi.com/films/${params.slug}`,
-    },
+      openGraph: {
+        ...baseMetadata.openGraph,
+        title: `${film.title} - Anthropotpourri`,
+        description: film['og-info'][0].ogDescription,
+        images: [
+          {
+            url: createImageUrl(film['og-info'][0].ogImage),
+            width: 1200,
+            height: 630,
+            alt: 'Anthropotpourri',
+          },
+        ],
+        url: `https://shoroukelkobrosi.com/films/${params.slug}`,
+      },
+    }
+  } else {
+    return baseMetadata
   }
 }
 

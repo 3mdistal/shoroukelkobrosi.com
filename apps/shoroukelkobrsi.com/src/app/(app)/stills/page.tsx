@@ -14,24 +14,27 @@ import styles from './stills.module.css'
 export async function generateMetadata(): Promise<Metadata> {
   const stillsPage = await getCachedStills()
 
-  return {
-    ...baseMetadata,
-    title: 'Stills - Anthropotpourri',
-    description: stillsPage['og-info'][0].ogDescription,
-    openGraph: {
-      ...baseMetadata.openGraph,
-      title: 'Stills - Anthropotpourri',
+  if (stillsPage['og-info']) {
+    return {
+      ...baseMetadata,
       description: stillsPage['og-info'][0].ogDescription,
-      images: [
-        {
-          url: createImageUrl(stillsPage['og-info'][0].ogImage),
-          width: 1200,
-          height: 630,
-          alt: 'Anthropotpourri',
-        },
-      ],
-      url: `https://shoroukelkobrosi.com/stills`,
-    },
+      openGraph: {
+        ...baseMetadata.openGraph,
+        title: 'Stills - Anthropotpourri',
+        description: stillsPage['og-info'][0].ogDescription,
+        images: [
+          {
+            url: createImageUrl(stillsPage['og-info'][0].ogImage),
+            width: 1200,
+            height: 630,
+            alt: 'Anthropotpourri',
+          },
+        ],
+        url: `https://shoroukelkobrosi.com/stills`,
+      },
+    }
+  } else {
+    return baseMetadata
   }
 }
 
