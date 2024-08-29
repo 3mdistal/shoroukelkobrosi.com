@@ -13,7 +13,7 @@ import getAboutPage from '@/components/about/get-about-page'
 export async function generateMetadata(): Promise<Metadata> {
   const aboutPage = await getAboutPage()
 
-  if (aboutPage['og-info']) {
+  if (aboutPage['og-info'].length > 0) {
     return {
       ...baseMetadata,
       title: 'About - Anthropotpourri',

@@ -11,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const film = await getCachedFilm(params.slug)
 
-  if (film['og-info']) {
+  if (film['og-info'].length > 0) {
     return {
       ...baseMetadata,
       title: `${film.title} - Anthropotpourri`,

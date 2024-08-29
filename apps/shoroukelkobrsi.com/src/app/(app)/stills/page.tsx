@@ -14,7 +14,7 @@ import styles from './stills.module.css'
 export async function generateMetadata(): Promise<Metadata> {
   const stillsPage = await getCachedStills()
 
-  if (stillsPage['og-info']) {
+  if (stillsPage['og-info'].length > 0) {
     return {
       ...baseMetadata,
       description: stillsPage['og-info'][0].ogDescription,

@@ -10,7 +10,7 @@ import styles from './page.module.css'
 export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getCachedHomepage()
 
-  if (homepage['og-info']) {
+  if (homepage['og-info'].length > 0) {
     return {
       ...baseMetadata,
       description: homepage['og-info'][0].ogDescription,
