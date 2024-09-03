@@ -9,7 +9,7 @@ const blogCategories = [
   "Update",
 ] as const;
 
-const blogCollection = defineCollection({
+const blogs = defineCollection({
   type: "content",
   schema: z.object({
     category: z.enum(blogCategories),
@@ -23,7 +23,7 @@ const blogCollection = defineCollection({
   }),
 });
 
-const studioLandingPageCollection = defineCollection({
+const studioLandingPage = defineCollection({
   type: "data",
   schema: z.object({
     items: z.array(
@@ -44,6 +44,6 @@ const studioLandingPageCollection = defineCollection({
 });
 
 export const collections = {
-  blogs: blogCollection,
-  studioLandingPage: studioLandingPageCollection,
+  blogs,
+  studioLandingPage,
 };

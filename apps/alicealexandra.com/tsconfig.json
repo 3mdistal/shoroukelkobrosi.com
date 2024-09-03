@@ -4,7 +4,12 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@builder.io/qwik",
     "paths": {
-      "@/*": ["src/*"]
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "extends": "astro/tsconfigs/strictest"
