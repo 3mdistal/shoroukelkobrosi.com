@@ -9,25 +9,37 @@
     --blur-strength: 10px;
   }
 
+  body {
+    background-color: var(--surface-1);
+  }
+
   h1 {
     margin-bottom: var(--size-3);
-    color: var(--gray-9);
     font-weight: var(--font-weight-9);
     font-size: var(--font-size-5);
   }
 
   h2 {
     margin-bottom: var(--size-2);
-    color: var(--gray-8);
     font-weight: var(--font-weight-7);
     font-size: var(--font-size-4);
   }
 
   h3 {
     margin-bottom: var(--size-2);
-    color: var(--gray-7);
     font-weight: var(--font-weight-6);
     font-size: var(--font-size-3);
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--gray-8);
+    font-family: var(--font-lora);
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--gray-3);
+    }
   }
 }
 
