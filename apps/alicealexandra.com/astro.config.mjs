@@ -13,8 +13,7 @@ export default defineConfig({
     mdx(),
     sitemap(),
     svelte({
-      configFile:
-        "/Users/monkey/Downloads/Coding Projects/teenylilapps/apps/alicealexandra.com/svelte.config.js",
+      configFile: "svelte.config.js",
     }),
     qwikdev(),
   ],
