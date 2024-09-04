@@ -1,4 +1,3 @@
-export * from "./films";
-export * from "./stills";
-export * from "./users";
-export * from "./media";
+export * from './films'
+export * from './users'
+export * from './media'

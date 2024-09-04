@@ -12,9 +12,8 @@ export interface Config {
   };
   collections: {
     users: User;
-    films: Film;
-    stills: Still;
     media: Media;
+    films: Film;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -24,6 +23,7 @@ export interface Config {
   globals: {
     homepage: Homepage;
     'about-page': AboutPage;
+    'stills-page': StillsPage;
   };
   locale: null;
   user: User & {
@@ -33,6 +33,7 @@ export interface Config {
 export interface UserAuthOperations {
   forgotPassword: {
     email: string;
+    password: string;
   };
   login: {
     email: string;
@@ -44,6 +45,7 @@ export interface UserAuthOperations {
   };
   unlock: {
     email: string;
+    password: string;
   };
 }
 /**
@@ -63,6 +65,25 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -92,38 +113,11 @@ export interface Film {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stills".
- */
-export interface Still {
-  id: string;
-  date: string;
-  location: string;
-  format?: string | null;
-  image: string | Media;
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -167,7 +161,13 @@ export interface PayloadMigration {
  */
 export interface Homepage {
   id: string;
+  reel?: (string | null) | Media;
   featuredFilms?: (string | Film)[] | null;
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -177,6 +177,7 @@ export interface Homepage {
  */
 export interface AboutPage {
   id: string;
+  heading: string;
   'personal-intro': {
     root: {
       type: string;
@@ -215,6 +216,31 @@ export interface AboutPage {
     logo: string | Media;
     id?: string | null;
   }[];
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stills-page".
+ */
+export interface StillsPage {
+  id: string;
+  stills: {
+    still: string | Media;
+    location?: string | null;
+    date?: string | null;
+    id?: string | null;
+  }[];
+  'og-info': {
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -228,6 +254,5 @@ export interface Auth {
 
 
 declare module 'payload' {
-  // @ts-ignore 
   export interface GeneratedTypes extends Config {}
 }

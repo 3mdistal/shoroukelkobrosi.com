@@ -1,5 +1,5 @@
-@import "open-props/normalize";
-@import "open-props/style";
+@import 'open-props/normalize';
+@import 'open-props/style';
 
 @layer base {
 }
@@ -9,25 +9,37 @@
     --blur-strength: 10px;
   }
 
+  body {
+    background-color: var(--surface-1);
+  }
+
   h1 {
     margin-bottom: var(--size-3);
-    color: var(--gray-9);
     font-weight: var(--font-weight-9);
     font-size: var(--font-size-5);
   }
 
   h2 {
     margin-bottom: var(--size-2);
-    color: var(--gray-8);
     font-weight: var(--font-weight-7);
     font-size: var(--font-size-4);
   }
 
   h3 {
     margin-bottom: var(--size-2);
-    color: var(--gray-7);
     font-weight: var(--font-weight-6);
     font-size: var(--font-size-3);
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--gray-8);
+    font-family: var(--font-lora);
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--gray-3);
+    }
   }
 }
 
@@ -41,11 +53,20 @@
 }
 
 @layer styles {
-  body {
-    height: 200lvh;
-  }
   main {
     padding-top: var(--menu-height, 60px);
+  }
+
+  .sr-only {
+    position: absolute;
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border-width: 0;
+    white-space: nowrap;
   }
 }
 

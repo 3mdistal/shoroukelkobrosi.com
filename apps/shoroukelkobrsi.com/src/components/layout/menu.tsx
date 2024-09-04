@@ -1,37 +1,37 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Link } from "next-view-transitions";
-import Dialog from "../ui/dialog";
-import styles from "./menu.module.css";
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Link } from 'next-view-transitions'
+import Dialog from '../ui/dialog'
+import styles from './menu.module.css'
 
 export default function Menu(): React.ReactElement {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const router = useRouter()
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     setTimeout(() => {
-      handleCloseMenu();
-      router.push(href);
-    }, 0);
-  };
+      handleCloseMenu()
+      router.push(href)
+    }, 0)
+  }
 
   // todo: menu comes out of display none too quickly
   const handleOpenMenu = (): void => {
-    setIsMenuOpen(true);
-  };
+    setIsMenuOpen(true)
+  }
 
   const handleCloseMenu = (): void => {
-    setIsMenuOpen(false);
-  };
+    setIsMenuOpen(false)
+  }
 
   const menuItems = [
-    { href: "/", label: "Films" },
-    { href: "/stills", label: "Stills" },
-    { href: "/about", label: "About" },
-  ];
+    { href: '/', label: 'Films' },
+    { href: '/stills', label: 'Stills' },
+    { href: '/about', label: 'About' },
+  ]
 
   return (
     <header>
@@ -44,11 +44,7 @@ export default function Menu(): React.ReactElement {
       >
         Menu
       </button>
-      <Dialog
-        isOpen={isMenuOpen}
-        className={styles.fullPageMenu}
-        onClose={handleCloseMenu}
-      >
+      <Dialog isOpen={isMenuOpen} className={styles.fullPageMenu} onClose={handleCloseMenu}>
         <nav id="main-menu">
           <button
             type="button"
@@ -70,5 +66,5 @@ export default function Menu(): React.ReactElement {
         </nav>
       </Dialog>
     </header>
-  );
+  )
 }

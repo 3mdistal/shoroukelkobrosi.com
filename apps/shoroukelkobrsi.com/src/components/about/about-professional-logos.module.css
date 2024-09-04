@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  gap: var(--size-2);
+  height: var(--size-10);
+
+  & div img {
+    width: auto;
+    max-height: 100%;
+  }
+}

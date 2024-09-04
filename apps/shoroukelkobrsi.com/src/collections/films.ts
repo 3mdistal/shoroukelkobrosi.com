@@ -2,40 +2,55 @@ import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
   CollectionConfig,
-} from "payload";
-import { revalidateTag } from "next/cache";
-import { slugify } from "@/utilities/slugify";
-import { getURL } from "@/utilities/get-url";
-import { type Film } from "@/payload-types";
+  Validate,
+} from 'payload'
+import { revalidateTag } from 'next/cache'
+import { slugify } from '@/utilities/slugify'
+import { getURL } from '@/utilities/get-url'
+import { type Film } from '@/payload-types'
+import { OGInfo } from '@/blocks/og-info'
 
 const afterChangeHook: CollectionAfterChangeHook = ({ previousDoc, doc }) => {
-  revalidateTag("homepage");
+  revalidateTag('homepage')
+  revalidateTag('films')
 
-  const oldDoc: Film = previousDoc as Film;
-  const newDoc: Film = doc as Film;
+  const oldDoc: Film = previousDoc as Film
+  const newDoc: Film = doc as Film
 
-  revalidateTag(`film-${oldDoc.slug}`);
-  revalidateTag(`film-${newDoc.slug}`);
-};
+  revalidateTag(`film-${oldDoc.slug}`)
+  revalidateTag(`film-${newDoc.slug}`)
+}
 
 const afterDeleteHook: CollectionAfterDeleteHook = ({ doc }) => {
-  const film: Film = doc as Film;
+  const film: Film = doc as Film
 
-  revalidateTag("homepage");
-  revalidateTag(`film-${film.slug}`);
-};
+  revalidateTag('homepage')
+  revalidateTag('films')
+  revalidateTag(`film-${film.slug}`)
+}
+
+const validateVimeoLink: Validate<string | string[], unknown> = (value) => {
+  if (typeof value === 'string') {
+    const vimeoRegex = /^(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\//
+    if (!vimeoRegex.test(value)) {
+      return 'Trailer must be a valid Vimeo link'
+    }
+  }
+  return true
+}
 
 export const Films: CollectionConfig = {
-  slug: "films",
+  slug: 'films',
   admin: {
-    description: "Films to display both on the homepage and on project pages.",
+    description: 'Films to display both on the homepage and on project pages.',
     livePreview: {
       url: ({ data }) => {
-        const film: Film = data as Film;
-        return `${getURL()}/films/${film.slug}`;
+        const film: Film = data as Film
+        return `${getURL()}/films/${film.slug}`
       },
     },
-    useAsTitle: "title",
+    useAsTitle: 'title',
+    group: 'Pages',
   },
   hooks: {
     afterChange: [afterChangeHook],
@@ -43,92 +58,94 @@ export const Films: CollectionConfig = {
   },
   fields: [
     {
-      name: "title",
-      type: "text",
+      name: 'title',
+      type: 'text',
       required: true,
     },
     {
-      name: "slug",
+      name: 'slug',
       admin: {
         hidden: true,
       },
       required: true,
-      type: "text",
+      type: 'text',
       hooks: {
         beforeValidate: [
           ({ data }) => {
-            return data?.title ? slugify(data.title as string) : undefined;
+            return data?.title ? slugify(data.title as string) : undefined
           },
         ],
       },
     },
     {
-      name: "date",
-      type: "date",
+      name: 'date',
+      type: 'date',
       required: true,
-      label: "Date Completed",
+      label: 'Date Completed',
     },
     {
-      name: "trailer",
-      type: "text",
-      label: "Trailer embed URL (Vimeo or YouTube).",
+      name: 'trailer',
+      type: 'text',
+      label: 'Trailer embed URL (Vimeo only)',
+      validate: validateVimeoLink,
     },
     {
-      name: "director",
-      type: "text",
+      name: 'director',
+      type: 'text',
     },
     {
-      name: "producer",
-      type: "text",
-      label: "Producer or production house.",
+      name: 'producer',
+      type: 'text',
+      label: 'Producer or production house.',
     },
     {
-      name: "format",
-      type: "text",
+      name: 'format',
+      type: 'text',
     },
     {
-      name: "prizes",
-      type: "array",
+      name: 'prizes',
+      type: 'array',
       fields: [
         {
-          name: "prize",
-          type: "text",
+          name: 'prize',
+          type: 'text',
         },
       ],
     },
     {
-      name: "imdbLink",
-      type: "text",
-      label: "IMDb Link",
+      name: 'imdbLink',
+      type: 'text',
+      label: 'IMDb Link',
     },
     {
-      name: "aspectRatio",
-      type: "select",
+      name: 'aspectRatio',
+      type: 'select',
       options: [
-        { label: "4:3", value: "4:3" },
-        { label: "5:4", value: "5:4" },
-        { label: "16:9", value: "16:9" },
-        { label: "2.35:1", value: "2.35:1" },
-        { label: "9:16", value: "9:16" },
+        { label: '4:3', value: '4:3' },
+        { label: '5:4', value: '5:4' },
+        { label: '16:9', value: '16:9' },
+        { label: '2.35:1', value: '2.35:1' },
+        { label: '9:16', value: '9:16' },
       ],
     },
     {
-      name: "stills",
-      type: "array",
+      name: 'stills',
+      type: 'array',
       fields: [
         {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
           required: true,
         },
         {
-          name: "featured",
-          type: "checkbox",
-          label: "Feature on homepage.",
+          name: 'featured',
+          type: 'checkbox',
+          label: 'Feature on homepage.',
         },
       ],
     },
+    OGInfo,
   ],
   versions: true,
-};
+}

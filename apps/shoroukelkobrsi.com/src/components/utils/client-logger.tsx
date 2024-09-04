@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
 export default function ClientLogger({ message }: { message: string }): null {
   useEffect(() => {
-    console.warn(message);
-  }, [message]);
+    console.warn(message)
+  }, [message])
 
-  return null;
+  return null
 }

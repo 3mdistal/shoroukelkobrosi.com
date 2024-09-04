@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import styles from "./still-image.module.css";
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import styles from './still-image.module.css'
 
 interface StillImageProps {
-  imageUrl: string;
-  width: number;
-  height: number;
-  sizes: string;
+  imageUrl: string
+  width: number
+  height: number
+  sizes: string
 }
 
 export default function StillImage({
@@ -17,34 +17,31 @@ export default function StillImage({
   height,
   sizes,
 }: StillImageProps): React.ReactElement {
-  const [isVisible, setIsVisible] = useState(false);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        setIsVisible(entry.isIntersecting)
       },
       { threshold: 0.1 },
-    );
+    )
 
-    const currentRef = imageRef.current;
+    const currentRef = imageRef.current
     if (currentRef) {
-      observer.observe(currentRef);
+      observer.observe(currentRef)
     }
 
     return () => {
       if (currentRef) {
-        observer.unobserve(currentRef);
+        observer.unobserve(currentRef)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   return (
-    <div
-      ref={imageRef}
-      className={`${styles.stillImage} ${isVisible ? styles.visible : ""}`}
-    >
+    <div ref={imageRef} className={`${styles.stillImage} ${isVisible ? styles.visible : ''}`}>
       <Image
         src={imageUrl}
         alt="Still image"
@@ -59,5 +56,5 @@ export default function StillImage({
         )}`}
       />
     </div>
-  );
+  )
 }
