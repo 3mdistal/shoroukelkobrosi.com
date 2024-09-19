@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { getURL } from '@/utilities/get-url'
+import { optimizeImage } from '@/utilities/optimize-image'
 
 export default function ApiTest() {
   const [result, setResult] = useState('')
@@ -31,7 +32,16 @@ export default function ApiTest() {
   async function createMedia(file: File) {
     try {
       const formData = new FormData()
-      formData.append('file', file)
+
+      if (file.type.startsWith('image/')) {
+        // Optimize image before uploading
+        const optimizedBlob = await optimizeImage(file)
+        const optimizedFile = new File([optimizedBlob], file.name, { type: 'image/webp' })
+        formData.append('file', optimizedFile)
+      } else {
+        // For non-image files (e.g., videos), upload without optimization
+        formData.append('file', file)
+      }
 
       const mediaReq = await fetch(`${getURL()}/api/media`, {
         method: 'POST',
