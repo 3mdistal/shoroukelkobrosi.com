@@ -18,6 +18,7 @@ export default function ApiTest() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        mode: 'no-cors',
       })
       const loginData = await loginReq.json()
       console.log('Login response:', loginData)
@@ -37,6 +38,7 @@ export default function ApiTest() {
         method: 'POST',
         credentials: 'include',
         body: formData,
+        mode: 'no-cors',
       })
       const mediaData = await mediaReq.json()
       console.log('Media creation response:', mediaData)
