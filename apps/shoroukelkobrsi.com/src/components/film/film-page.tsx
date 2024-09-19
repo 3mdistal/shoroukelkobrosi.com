@@ -6,6 +6,7 @@ import TrailerEmbed from '../ui/trailer-embed'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import { getCachedFilm, getAllFilms } from '@/components/film/film-fetches'
 import styles from './film-page.module.css'
+import { formatSeasonYear } from '@/utilities/date-utils'
 
 export default async function FilmPage({ slug }: { slug: string }): Promise<React.ReactElement> {
   const film = await getCachedFilm(slug)
@@ -38,13 +39,7 @@ export default async function FilmPage({ slug }: { slug: string }): Promise<Reac
             <dt>Producer</dt>
             <dd>{film.producer}</dd>
             <dt>Release Date</dt>
-            <dd>
-              {new Date(film.date).toLocaleDateString(undefined, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </dd>
+            <dd>{formatSeasonYear(film.date)}</dd>
           </dl>
           {film.trailer ? (
             <section className={styles.trailerSection} aria-labelledby="trailer-heading">
