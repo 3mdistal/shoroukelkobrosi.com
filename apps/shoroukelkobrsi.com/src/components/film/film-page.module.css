@@ -13,9 +13,14 @@
 }
 
 .filmTitle {
-  margin-bottom: var(--size-4);
+  margin-bottom: var(--size-2);
   color: var(--text-1);
   font-size: var(--font-size-fluid-3);
+}
+
+.filmDate {
+  color: var(--text-2);
+  font-size: var(--font-size-1);
 }
 
 .filmDetails {
@@ -26,24 +31,32 @@
 }
 
 .filmMetadata {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: baseline;
-  gap: var(--size-2) var(--size-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-3) var(--size-5);
 }
 
 .filmMetadata dt {
   color: var(--text-2);
-  font-weight: var(--font-weight-7);
+  font-weight: var(--font-weight-6);
+  font-size: var(--font-size-0);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .filmMetadata dd {
   margin: 0;
   color: var(--text-1);
+  font-size: var(--font-size-1);
+}
+
+.metadataItem {
+  display: flex;
+  flex-direction: column;
 }
 
 .trailerSection {
-  margin-top: var(--size-5);
+  margin-bottom: var(--size-6);
 }
 
 .trailerContainer {

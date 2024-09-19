@@ -26,32 +26,50 @@ export default async function FilmPage({ slug }: { slug: string }): Promise<Reac
   return (
     <div className={styles.filmPageContainer}>
       <article className={styles.filmArticle}>
-        <h1 className={styles.filmTitle} tabIndex={-1}>
-          {film.title}
-        </h1>
+        {film.trailer && (
+          <section className={styles.trailerSection} aria-labelledby="trailer-heading">
+            <h2 id="trailer-heading" className="sr-only">
+              Trailer
+            </h2>
+            <div className={styles.trailerContainer}>
+              <TrailerEmbed url={film.trailer} filmTitle={film.title} />
+            </div>
+          </section>
+        )}
+
+        <header className={styles.filmHeader}>
+          <h1 className={styles.filmTitle} tabIndex={-1}>
+            {film.title}
+          </h1>
+          <p className={styles.filmDate}>{formatSeasonYear(film.date)}</p>
+        </header>
+
         <section className={styles.filmDetails} aria-labelledby="film-details-heading">
           <h2 id="film-details-heading" className="sr-only">
             Film Details
           </h2>
           <dl className={styles.filmMetadata}>
-            <dt>Director</dt>
-            <dd>{film.director}</dd>
-            <dt>Producer</dt>
-            <dd>{film.producer}</dd>
-            <dt>Release Date</dt>
-            <dd>{formatSeasonYear(film.date)}</dd>
-          </dl>
-          {film.trailer ? (
-            <section className={styles.trailerSection} aria-labelledby="trailer-heading">
-              <h3 id="trailer-heading" className="sr-only">
-                Trailer
-              </h3>
-              <div className={styles.trailerContainer}>
-                <TrailerEmbed url={film.trailer} filmTitle={film.title} />
+            {film.director && (
+              <div className={styles.metadataItem}>
+                <dt>Dir</dt>
+                <dd>{film.director}</dd>
               </div>
-            </section>
-          ) : null}
+            )}
+            {film.producer && (
+              <div className={styles.metadataItem}>
+                <dt>Prod</dt>
+                <dd>{film.producer}</dd>
+              </div>
+            )}
+            {film.format && (
+              <div className={styles.metadataItem}>
+                <dt>Format</dt>
+                <dd>{film.format}</dd>
+              </div>
+            )}
+          </dl>
         </section>
+
         <section className={styles.stillsSection} aria-labelledby="stills-heading">
           <h2 id="stills-heading" className="sr-only">
             Film Stills
@@ -79,6 +97,7 @@ export default async function FilmPage({ slug }: { slug: string }): Promise<Reac
             })}
           </div>
         </section>
+
         <nav className={styles.filmNavigation} aria-label="Film navigation">
           {adjacentFilms.prev ? (
             <Link href={`/films/${adjacentFilms.prev.slug}`} className={styles.prevFilmLink}>
