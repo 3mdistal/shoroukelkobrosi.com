@@ -17,7 +17,7 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
 
   const featuredFilms = homepage.featuredFilms as Film[]
 
-  // Define sizes based on the grid layout
+  // Define sizes and aspect ratio based on the viewport
   const sizes = '(max-width: 768px) 100vw, 33vw'
 
   return (
@@ -26,19 +26,18 @@ export default async function FilmShowcase(): Promise<React.ReactElement> {
         <FadeIn key={film.id} useIntersectionObserver intersectionMargin={'late'}>
           <Link href={`/films/${film.slug}`} className={styles.film}>
             <div className={styles.filmInfo}>
-              <h2>{film.title}</h2>
+              <h2 className={styles.filmTitle}>{film.title}</h2>
               <div className={styles.filmMeta}>
-                {film.date ? (
+                {film.date && (
                   <span className={styles.filmDate}>{formatSeasonYear(film.date)}</span>
-                ) : null}
-                {film.producer ? (
-                  <span className={styles.filmProducer}>{film.producer}</span>
-                ) : null}
+                )}
+                {film.producer && <span className={styles.filmProducer}>{film.producer}</span>}
               </div>
             </div>
             <div className={styles.stillsGrid}>
               {film.stills
                 ?.filter((still) => still.featured)
+                .slice(0, 3)
                 .map((still) => {
                   const { width, height } = getImageDimensions(still.image)
                   return (
