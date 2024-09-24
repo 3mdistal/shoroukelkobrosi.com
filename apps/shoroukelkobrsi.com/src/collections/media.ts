@@ -4,9 +4,17 @@ export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     group: 'Media',
+    components: {
+      views: {
+        list: {
+          Component: '/custom-components/media-upload',
+        },
+      },
+    },
   },
   access: {
     read: () => true,
+    create: () => true,
   },
   fields: [
     {
@@ -16,5 +24,7 @@ export const Media: CollectionConfig = {
       defaultValue: 'Media',
     },
   ],
-  upload: true,
+  upload: {
+    mimeTypes: ['image/*', 'video/*'],
+  },
 }
