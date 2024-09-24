@@ -1,0 +1,53 @@
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: var(--size-fluid-4);
+  max-width: var(--size-content-3);
+}
+
+.uploadForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4);
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: var(--size-2);
+  font-weight: var(--font-weight-6);
+}
+
+.inputGroup input {
+  border: 1px solid var(--surface-3);
+  border-radius: var(--radius-2);
+  padding: var(--size-2);
+}
+
+.uploadButton {
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-2);
+  background-color: var(--surface-3);
+  padding: var(--size-3);
+  color: var(--text-1);
+}
+
+.uploadButton:hover {
+  background-color: var(--surface-4);
+}
+
+.resultMessage {
+  margin-top: var(--size-4);
+  border-radius: var(--radius-2);
+  background-color: var(--surface-2);
+  padding: var(--size-3);
+  color: var(--text-2);
+}

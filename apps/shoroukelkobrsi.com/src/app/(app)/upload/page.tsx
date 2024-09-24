@@ -3,8 +3,9 @@
 import { useState, useRef } from 'react'
 import { getURL } from '@/utilities/get-url'
 import { optimizeImage } from '@/utilities/optimize-image'
+import styles from './upload.module.css'
 
-export default function ApiTest() {
+export default function UploadPage() {
   const [result, setResult] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [email, setEmail] = useState('')
@@ -75,23 +76,38 @@ export default function ApiTest() {
   }
 
   return (
-    <div>
-      <h1>API Test</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input type="file" accept="image/*,video/*" ref={fileInputRef} />
-      <button onClick={loginAndCreateMedia}>Login and Create Media</button>
-      <p>{result}</p>
+    <div className={styles.uploadContainer}>
+      <h1>Upload</h1>
+      <form className={styles.uploadForm} onSubmit={(e) => e.preventDefault()}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="file">Select File</label>
+          <input id="file" type="file" accept="image/*,video/*" ref={fileInputRef} />
+        </div>
+        <button className={styles.uploadButton} onClick={loginAndCreateMedia}>
+          Login and Upload Media
+        </button>
+      </form>
+      {result && <p className={styles.resultMessage}>{result}</p>}
     </div>
   )
 }
