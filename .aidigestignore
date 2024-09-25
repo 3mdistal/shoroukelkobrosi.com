@@ -1,7 +1,0 @@
-**/.next/**
-**/.turbo/**
-**/.vercel/**
-**/.vscode/**
-**/node_modules/**
-**/playwright-report/**
-**/migrations/**
