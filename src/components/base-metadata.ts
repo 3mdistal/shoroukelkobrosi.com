@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 export const baseMetadata: Metadata = {
+  metadataBase: new URL('https://shoroukelkobrosi.com'),
   title: 'Anthropotpourri',
   description: 'The cinema of Shorouk Elkobrosi.',
   openGraph: {
