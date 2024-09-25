@@ -68,7 +68,7 @@ export default function UploadPage() {
 
     if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files[0]) {
       const selectedFile = fileInputRef.current.files[0]
-      const mediaResult = await createMedia(selectedFile)
+      await createMedia(selectedFile)
       setResult('Operation completed. Check console for details.')
     } else {
       setResult('Please select an image or video file.')

@@ -47,7 +47,7 @@ const MediaUpload: React.FC = () => {
 
     if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files[0]) {
       const selectedFile = fileInputRef.current.files[0]
-      const mediaResult = await createMedia(selectedFile)
+      await createMedia(selectedFile)
       setResult('Upload completed. Check console for details.')
     } else {
       setResult('Please select an image or video file.')

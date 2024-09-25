@@ -8,7 +8,6 @@ import StillImageFrame from '@/components/still/still-image-frame'
 import { baseMetadata } from '@/components/base-metadata'
 import { shuffleArray } from '@/utilities/shuffle'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
-import getAboutPage from '@/components/about/get-about-page'
 import styles from './stills.module.css'
 
 export async function generateMetadata(): Promise<Metadata> {

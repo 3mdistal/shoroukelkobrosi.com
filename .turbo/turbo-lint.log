@@ -1,0 +1,6 @@
+
+
+> shoroukelkobrosi.com@0.0.2 lint /Users/monkey/Downloads/Coding Projects/teenylilapps/apps/shoroukelkobrsi.com
+> cross-env NODE_OPTIONS=--no-deprecation next lint
+
+[32m✔ No ESLint warnings or errors[39m

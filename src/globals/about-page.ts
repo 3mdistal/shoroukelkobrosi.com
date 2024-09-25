@@ -8,7 +8,6 @@ import {
   lexicalHTML,
 } from '@payloadcms/richtext-lexical'
 import { getURL } from '../utilities/get-url'
-import { validateRichTextLength } from '../components/utils/validate-rich-text-length'
 import { OGInfo } from '@/blocks/og-info'
 
 // Adjust max character count here.
