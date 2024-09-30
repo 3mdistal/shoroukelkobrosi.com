@@ -12,7 +12,9 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <HomeClient reel={homepage.reel as string} mobileReel={homepage.mobileReel as string} />
-      <FilmShowcase />
+      <section className={styles.showcaseSection}>
+        <FilmShowcase />
+      </section>
     </main>
   )
 }

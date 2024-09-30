@@ -30,11 +30,11 @@ export default function HomeClient({ reel, mobileReel }: HomeClientProps) {
   }, [])
 
   return (
-    <>
+    <div className={styles.homeClientContainer}>
       <h1 className={styles.title}>Anthropotpourri: The cinema of Shorouk Elkobrosi</h1>
       <div ref={reelRef} className={styles.reelContainer}>
         <Reel reel={reel} mobileReel={mobileReel} />
       </div>
-    </>
+    </div>
   )
 }

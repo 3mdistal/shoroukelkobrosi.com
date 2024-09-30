@@ -11,8 +11,8 @@ import FadeIn from '@/components/ui/fade-in'
 export default async function FilmShowcase(): Promise<React.ReactElement> {
   const homepage = await getCachedHomepage()
 
-  if (!homepage.featuredFilms) {
-    return <div />
+  if (!homepage.featuredFilms || homepage.featuredFilms.length === 0) {
+    return <div className={styles.showcase}>No featured films available.</div>
   }
 
   const featuredFilms = homepage.featuredFilms as Film[]
