@@ -15,9 +15,9 @@ export default function Menu({ title }: MenuProps) {
   useEffect(() => {
     const handleScroll = () => {
       if (navRef.current) {
-        const navHeight = navRef.current.offsetHeight
         const scrollPosition = window.scrollY
         const viewportHeight = window.innerHeight
+        const maxScroll = viewportHeight / 3
 
         if (scrollPosition > 0 && !isScrolled) {
           setIsScrolled(true)
@@ -26,11 +26,14 @@ export default function Menu({ title }: MenuProps) {
         }
 
         // Smooth transition for intermediate scroll positions
-        if (scrollPosition < viewportHeight / 3) {
-          const progress = scrollPosition / (viewportHeight / 3)
-          const newHeight = Math.max(60, navHeight - progress * (navHeight - 60))
-          navRef.current.style.height = `${newHeight}px`
-        }
+        const progress = Math.min(scrollPosition / maxScroll, 1)
+        const startHeight = 33.33
+        const endHeight = (60 / viewportHeight) * 100
+        const newHeight = startHeight - (startHeight - endHeight) * progress
+        const newFontSize = 3 - (3 - 1.25) * progress
+
+        navRef.current.style.setProperty('--nav-height', `${newHeight}vh`)
+        navRef.current.style.setProperty('--title-font-size', `${newFontSize}rem`)
       }
     }
 
@@ -45,9 +48,7 @@ export default function Menu({ title }: MenuProps) {
   return (
     <>
       <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
-        <h1 className={`${styles.title} ${isScrolled ? styles.smallTitle : styles.largeTitle}`}>
-          {title}
-        </h1>
+        <h1 className={styles.title}>{title}</h1>
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
