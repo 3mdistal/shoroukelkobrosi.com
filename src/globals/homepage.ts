@@ -18,6 +18,11 @@ export const Homepage: GlobalConfig = {
       relationTo: 'media',
     },
     {
+      name: 'mobileReel',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'featuredFilms',
       type: 'relationship',
       relationTo: 'films',
