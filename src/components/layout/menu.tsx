@@ -13,6 +13,9 @@ export default function Menu({ title }: MenuProps) {
   const [isMenuButtonVisible, setIsMenuButtonVisible] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
+  // Adjust this value to control the scroll animation speed (lower = faster)
+  const SCROLL_ANIMATION_DURATION = 0 // in milliseconds
+
   useEffect(() => {
     const handleScroll = () => {
       if (navRef.current) {
@@ -32,6 +35,7 @@ export default function Menu({ title }: MenuProps) {
 
         navRef.current.style.setProperty('--nav-height', `${newHeight}vh`)
         navRef.current.style.setProperty('--title-font-size', `${newFontSize}rem`)
+        navRef.current.style.setProperty('transition', `all ${SCROLL_ANIMATION_DURATION}ms ease`)
 
         // Only show menu button when nav is at its smallest size
         setIsMenuButtonVisible(progress === 1)
