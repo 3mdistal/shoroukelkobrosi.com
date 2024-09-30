@@ -10,6 +10,7 @@ interface MenuProps {
 export default function Menu({ title }: MenuProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuButtonVisible, setIsMenuButtonVisible] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -19,11 +20,8 @@ export default function Menu({ title }: MenuProps) {
         const viewportHeight = window.innerHeight
         const maxScroll = viewportHeight / 3
 
-        if (scrollPosition > 0 && !isScrolled) {
-          setIsScrolled(true)
-        } else if (scrollPosition === 0 && isScrolled) {
-          setIsScrolled(false)
-        }
+        const newIsScrolled = scrollPosition > 0
+        setIsScrolled(newIsScrolled)
 
         // Smooth transition for intermediate scroll positions
         const progress = Math.min(scrollPosition / maxScroll, 1)
@@ -34,12 +32,15 @@ export default function Menu({ title }: MenuProps) {
 
         navRef.current.style.setProperty('--nav-height', `${newHeight}vh`)
         navRef.current.style.setProperty('--title-font-size', `${newFontSize}rem`)
+
+        // Only show menu button when nav is at its smallest size
+        setIsMenuButtonVisible(progress === 1)
       }
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isScrolled])
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -50,7 +51,7 @@ export default function Menu({ title }: MenuProps) {
       <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
         <h1 className={styles.title}>{title}</h1>
         <button
-          className={`${styles.menuButton} ${isMenuOpen ? styles.open : ''}`}
+          className={`${styles.menuButton} ${isMenuButtonVisible ? styles.menuButtonVisible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
         >
           Menu

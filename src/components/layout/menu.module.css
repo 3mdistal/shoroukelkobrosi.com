@@ -3,13 +3,21 @@
   top: 50%;
   right: 2rem;
   transform: translateY(-50%);
+  opacity: 0; /* Start with the button invisible */
   z-index: var(--layer-2);
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
   cursor: pointer;
   border: none;
   background: none;
   padding: 0;
+  pointer-events: none; /* Disable interactions when invisible */
   color: black;
   font-size: 1rem;
+}
+
+.menuButtonVisible {
+  opacity: 1;
+  pointer-events: auto; /* Re-enable interactions when visible */
 }
 
 .fullPageMenu {
