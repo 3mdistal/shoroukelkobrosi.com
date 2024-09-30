@@ -10,42 +10,47 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ reel, mobileReel }: HomeClientProps) {
-  const reelRef = useRef<HTMLDivElement>(null)
+  const reelContentRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Set initial scale
-    if (reelRef.current) {
-      reelRef.current.style.transform = 'scale(0.6)'
-    }
-
     const handleScroll = () => {
-      if (reelRef.current) {
+      if (reelContentRef.current && containerRef.current) {
         const scrollPosition = window.scrollY
         const windowHeight = window.innerHeight
-        const reelStartThreshold = windowHeight * -0.2 // Start earlier at 10% of viewport height
-        const reelEndThreshold = windowHeight * 0.3 // End expansion at 30% of viewport height
+        const containerRect = containerRef.current.getBoundingClientRect()
+        const containerTop = containerRect.top + scrollPosition
 
-        if (scrollPosition > reelStartThreshold && scrollPosition < reelEndThreshold) {
+        const reelStartThreshold = containerTop
+        const reelEndThreshold = containerTop + windowHeight * 0.5
+
+        if (scrollPosition < reelStartThreshold) {
+          // Initial state
+          reelContentRef.current.style.transform = 'scale(0.6)'
+        } else if (scrollPosition >= reelStartThreshold && scrollPosition < reelEndThreshold) {
+          // Scaling up
           const progress =
             (scrollPosition - reelStartThreshold) / (reelEndThreshold - reelStartThreshold)
-          const scale = 0.6 + progress * 0.4 // Scale from 0.6 to 1
-          reelRef.current.style.transform = `scale(${scale})`
-        } else if (scrollPosition >= reelEndThreshold) {
-          reelRef.current.style.transform = 'scale(1)' // Maximum scale
+          const scale = 0.6 + progress * 0.4
+          reelContentRef.current.style.transform = `scale(${scale})`
         } else {
-          reelRef.current.style.transform = 'scale(0.6)' // Initial scale
+          // Full size
+          reelContentRef.current.style.transform = 'scale(1)'
         }
       }
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll() // Call once to set initial state
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div className={styles.homeClientContainer}>
-      <div ref={reelRef} className={styles.reelContainer}>
-        <Reel reel={reel} mobileReel={mobileReel} />
+    <div ref={containerRef} className={styles.homeClientContainer}>
+      <div className={styles.reelContainer}>
+        <div ref={reelContentRef} className={styles.reelContent}>
+          <Reel reel={reel} mobileReel={mobileReel} />
+        </div>
       </div>
     </div>
   )
