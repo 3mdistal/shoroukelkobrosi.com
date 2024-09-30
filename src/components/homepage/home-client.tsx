@@ -13,22 +13,27 @@ export default function HomeClient({ reel, mobileReel }: HomeClientProps) {
   const reelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Set initial scale
+    if (reelRef.current) {
+      reelRef.current.style.transform = 'scale(0.6)'
+    }
+
     const handleScroll = () => {
       if (reelRef.current) {
         const scrollPosition = window.scrollY
         const windowHeight = window.innerHeight
-        const reelStartThreshold = windowHeight * 0.1 // Start earlier at 10% of viewport height
-        const reelEndThreshold = windowHeight * 0.6 // End expansion at 60% of viewport height
+        const reelStartThreshold = windowHeight * -0.2 // Start earlier at 10% of viewport height
+        const reelEndThreshold = windowHeight * 0.3 // End expansion at 30% of viewport height
 
         if (scrollPosition > reelStartThreshold && scrollPosition < reelEndThreshold) {
           const progress =
             (scrollPosition - reelStartThreshold) / (reelEndThreshold - reelStartThreshold)
-          const scale = 1 + progress * 0.5 // Adjust the 0.5 to control the maximum scale
+          const scale = 0.6 + progress * 0.4 // Scale from 0.6 to 1
           reelRef.current.style.transform = `scale(${scale})`
         } else if (scrollPosition >= reelEndThreshold) {
-          reelRef.current.style.transform = 'scale(1.5)' // Maximum scale
+          reelRef.current.style.transform = 'scale(1)' // Maximum scale
         } else {
-          reelRef.current.style.transform = 'scale(1)' // Initial scale
+          reelRef.current.style.transform = 'scale(0.6)' // Initial scale
         }
       }
     }

@@ -4,6 +4,7 @@
 }
 
 .reelContainer {
+  transform: scale(0.6); /* Set initial scale */
   transform-origin: center center;
   transition: transform 0.1s ease-out;
   margin: 0 auto;
