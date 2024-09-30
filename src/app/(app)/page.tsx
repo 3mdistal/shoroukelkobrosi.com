@@ -36,6 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home(): React.ReactElement {
   return (
     <div className={styles.homepage}>
+      <section className={styles.titleSection}>
+        <h1 className={styles.mainTitle}>
+          Anthropotpourri: <span className={styles.subtitle}>The cinema of Shorouk Elkobrosi</span>
+        </h1>
+      </section>
       <section className={styles.reelSection}>
         <Reel />
       </section>
