@@ -1,14 +1,14 @@
 import { createImageUrl } from '@/utilities/media'
 import styles from './reel.module.css'
-import { getCachedHomepage } from './get-cached-homepage'
 import { Suspense } from 'react'
 import FadeIn from '../ui/fade-in'
 
-export default async function Reel(): Promise<React.ReactElement> {
-  const homepage = await getCachedHomepage()
-  const reel = homepage.reel
-  const mobileReel = homepage.mobileReel
+interface ReelProps {
+  reel: string
+  mobileReel: string
+}
 
+export default function Reel({ reel, mobileReel }: ReelProps): React.ReactElement {
   return (
     <div className={styles.reelContainer}>
       <Suspense>

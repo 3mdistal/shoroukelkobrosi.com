@@ -33,6 +33,32 @@
   padding: 2rem 0;
 }
 
+.main {
+  /* ... existing styles ... */
+}
+
+.title {
+  transition: all 0.3s ease;
+  padding: 2rem 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.titleInMenu {
+  padding: 0;
+  font-size: 1rem;
+}
+
+.reelContainer {
+  transition: all 0.5s ease;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.reelExpanded {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .mainTitle {
     font-size: var(--font-size-fluid-2);

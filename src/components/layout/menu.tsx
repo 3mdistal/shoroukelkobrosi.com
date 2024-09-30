@@ -1,14 +1,28 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Link } from 'next-view-transitions'
 import Dialog from '../ui/dialog'
 import styles from './menu.module.css'
 
-export default function Menu(): React.ReactElement {
+const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuVisible, setIsMenuVisible] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const titleElement = document.querySelector('h1')
+      if (titleElement) {
+        const titleRect = titleElement.getBoundingClientRect()
+        setIsMenuVisible(titleRect.top <= 0)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault()
@@ -18,7 +32,6 @@ export default function Menu(): React.ReactElement {
     }, 0)
   }
 
-  // todo: menu comes out of display none too quickly
   const handleOpenMenu = (): void => {
     setIsMenuOpen(true)
   }
@@ -34,7 +47,7 @@ export default function Menu(): React.ReactElement {
   ]
 
   return (
-    <header>
+    <header className={`${styles.menu} ${isMenuVisible ? styles.menuVisible : ''}`}>
       <button
         type="button"
         onClick={handleOpenMenu}
@@ -68,3 +81,5 @@ export default function Menu(): React.ReactElement {
     </header>
   )
 }
+
+export default Menu
