@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './menu.module.css'
 
 interface MenuProps {
@@ -10,15 +10,33 @@ interface MenuProps {
 export default function Menu({ title }: MenuProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
+      if (navRef.current) {
+        const navHeight = navRef.current.offsetHeight
+        const scrollPosition = window.scrollY
+        const viewportHeight = window.innerHeight
+
+        if (scrollPosition > 0 && !isScrolled) {
+          setIsScrolled(true)
+        } else if (scrollPosition === 0 && isScrolled) {
+          setIsScrolled(false)
+        }
+
+        // Smooth transition for intermediate scroll positions
+        if (scrollPosition < viewportHeight / 3) {
+          const progress = scrollPosition / (viewportHeight / 3)
+          const newHeight = Math.max(60, navHeight - progress * (navHeight - 60))
+          navRef.current.style.height = `${newHeight}px`
+        }
+      }
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isScrolled])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -26,7 +44,7 @@ export default function Menu({ title }: MenuProps) {
 
   return (
     <>
-      <nav className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
+      <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
         <h1 className={`${styles.title} ${isScrolled ? styles.smallTitle : styles.largeTitle}`}>
           {title}
         </h1>
