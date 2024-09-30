@@ -1,85 +1,60 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Link } from 'next-view-transitions'
-import Dialog from '../ui/dialog'
 import styles from './menu.module.css'
 
-const Menu = () => {
+interface MenuProps {
+  title: string
+}
+
+export default function Menu({ title }: MenuProps) {
+  const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isMenuVisible, setIsMenuVisible] = useState(false)
-  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
-      const titleElement = document.querySelector('h1')
-      if (titleElement) {
-        const titleRect = titleElement.getBoundingClientRect()
-        setIsMenuVisible(titleRect.top <= 0)
-      }
+      setIsScrolled(window.scrollY > 100)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
-    e.preventDefault()
-    setTimeout(() => {
-      handleCloseMenu()
-      router.push(href)
-    }, 0)
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
   }
-
-  const handleOpenMenu = (): void => {
-    setIsMenuOpen(true)
-  }
-
-  const handleCloseMenu = (): void => {
-    setIsMenuOpen(false)
-  }
-
-  const menuItems = [
-    { href: '/', label: 'Films' },
-    { href: '/stills', label: 'Stills' },
-    { href: '/about', label: 'About' },
-  ]
 
   return (
-    <header className={`${styles.menu} ${isMenuVisible ? styles.menuVisible : ''}`}>
-      <button
-        type="button"
-        onClick={handleOpenMenu}
-        className={styles.menuButton}
-        aria-expanded={isMenuOpen}
-        aria-controls="main-menu"
-      >
-        Menu
-      </button>
-      <Dialog isOpen={isMenuOpen} className={styles.fullPageMenu} onClose={handleCloseMenu}>
-        <nav id="main-menu">
-          <button
-            type="button"
-            onClick={handleCloseMenu}
-            className={styles.closeButton}
-            aria-label="Close menu"
-          >
-            &#x2715;
-          </button>
+    <>
+      <nav className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
+        <h1 className={`${styles.title} ${isScrolled ? styles.smallTitle : styles.largeTitle}`}>
+          {title}
+        </h1>
+        <button
+          className={`${styles.menuButton} ${isMenuOpen ? styles.open : ''}`}
+          onClick={toggleMenu}
+        >
+          Menu
+        </button>
+      </nav>
+      <dialog className={styles.fullPageMenu} open={isMenuOpen}>
+        <button className={styles.closeButton} onClick={toggleMenu}>
+          ×
+        </button>
+        <nav>
           <ul>
-            {menuItems.map(({ href, label }) => (
-              <li key={href}>
-                <Link href={href} onClick={handleLinkClick(href)}>
-                  {label}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/about">About</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
           </ul>
         </nav>
-      </Dialog>
-    </header>
+      </dialog>
+    </>
   )
 }
-
-export default Menu
