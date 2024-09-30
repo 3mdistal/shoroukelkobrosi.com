@@ -23,7 +23,6 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" className={lora.variable}>
         <body>
-          <Menu title="Anthropotpourri: The cinema of Shorouk Elkobrosi" />
           <div
             id="main-content"
             style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
@@ -32,6 +31,7 @@ export default function RootLayout({
             <Footer />
             <RefreshRouteOnSave />
           </div>
+          <Menu title="Anthropotpourri: The cinema of Shorouk Elkobrosi" />
         </body>
       </html>
     </ViewTransitions>
