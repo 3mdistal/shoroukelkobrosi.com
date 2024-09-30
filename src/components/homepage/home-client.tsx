@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import styles from '@/app/(app)/page.module.css'
+import styles from './home-client.module.css'
 import Reel from '@/components/homepage/reel'
 
 interface HomeClientProps {
@@ -16,11 +16,19 @@ export default function HomeClient({ reel, mobileReel }: HomeClientProps) {
     const handleScroll = () => {
       if (reelRef.current) {
         const scrollPosition = window.scrollY
-        const reelExpansionThreshold = window.innerHeight * 0.3
-        if (scrollPosition > reelExpansionThreshold) {
-          reelRef.current.classList.add(styles.reelExpanded)
+        const windowHeight = window.innerHeight
+        const reelStartThreshold = windowHeight * 0.1 // Start earlier at 10% of viewport height
+        const reelEndThreshold = windowHeight * 0.6 // End expansion at 60% of viewport height
+
+        if (scrollPosition > reelStartThreshold && scrollPosition < reelEndThreshold) {
+          const progress =
+            (scrollPosition - reelStartThreshold) / (reelEndThreshold - reelStartThreshold)
+          const scale = 1 + progress * 0.5 // Adjust the 0.5 to control the maximum scale
+          reelRef.current.style.transform = `scale(${scale})`
+        } else if (scrollPosition >= reelEndThreshold) {
+          reelRef.current.style.transform = 'scale(1.5)' // Maximum scale
         } else {
-          reelRef.current.classList.remove(styles.reelExpanded)
+          reelRef.current.style.transform = 'scale(1)' // Initial scale
         }
       }
     }

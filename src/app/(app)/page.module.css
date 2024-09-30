@@ -59,17 +59,6 @@
   font-size: 1rem;
 }
 
-.reelContainer {
-  transform: scale(0.6);
-  transition: all 1s ease;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.reelExpanded {
-  transform: scale(1);
-}
-
 @media (max-width: 768px) {
   .mainTitle {
     font-size: var(--font-size-fluid-2);
@@ -78,9 +67,4 @@
   .subtitle {
     font-size: var(--font-size-fluid-0);
   }
-}
-
-.homeClientContainer {
-  width: 100%;
-  overflow: hidden;
 }
