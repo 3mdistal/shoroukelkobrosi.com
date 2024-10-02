@@ -43,6 +43,7 @@
 .filmInfo h2 {
   margin-bottom: var(--size-2);
   color: inherit;
+  font-weight: 400;
   text-align: center;
 }
 
