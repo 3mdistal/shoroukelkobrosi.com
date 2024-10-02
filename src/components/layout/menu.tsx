@@ -83,16 +83,34 @@ export default function Menu() {
         <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>Logo</div>
         <FadeIn duration={500}>
           <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
-            Anthropotpourri:
-            {isScrolled ? ' ' : <br />}
-            The Cinema of Shorouk Elkobrosi
+            Anthropotpourri
+            {isScrolled && ': '}
+            {isScrolled ? (
+              'The Cinema of Shorouk Elkobrsi'
+            ) : (
+              <span className={styles.subtitle}>The Cinema of Shorouk Elkobrosi</span>
+            )}
           </h1>
         </FadeIn>
         <button
           className={`${styles.menuButton} ${isScrolled ? styles.visible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
         >
-          Menu
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
       </nav>
       <Dialog className={styles.fullPageMenu} isOpen={isMenuOpen}>
