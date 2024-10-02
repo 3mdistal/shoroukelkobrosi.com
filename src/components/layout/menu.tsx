@@ -79,20 +79,13 @@ export default function Menu() {
         </button>
       </nav>
       <Dialog className={styles.fullPageMenu} isOpen={isMenuOpen}>
-        <div className={styles.dialogContent}>
-          <h2>
-            <a href="/">Films</a>
-          </h2>
-          <h2>
-            <a href="/stills">Stills</a>
-          </h2>
-          <h2>
-            <a href="/blog">Blog</a>
-          </h2>
-          <h2>
-            <a href="/about">About</a>
-          </h2>
-          <button className={styles.closeButton} onClick={toggleMenu}>
+        <nav id="main-menu">
+          <button
+            type="button"
+            onClick={handleCloseMenu}
+            className={styles.closeButton}
+            aria-label="Close menu"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -108,7 +101,16 @@ export default function Menu() {
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
-        </div>
+          <ul>
+            {menuItems.map(({ href, label }) => (
+              <li key={href}>
+                <Link href={href} onClick={handleLinkClick(href)}>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Dialog>
     </>
   )
