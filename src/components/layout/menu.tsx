@@ -82,16 +82,6 @@ export default function Menu() {
         ref={navRef}
         className={`${styles.nav} ${isScrolled ? styles.scrolled : ''} ${isHidden ? styles.hidden : ''}`}
       >
-        {!isScrolled && (
-          <div className={styles.navBackground}>
-            <Image
-              src="/heroimage.webp"
-              alt="Navigation background"
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-        )}
         <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>
           <Link href="/">
             <Image src="/logo2.webp" alt="Anthropotpourri" width={80} height={80} />
