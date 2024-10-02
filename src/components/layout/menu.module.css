@@ -10,7 +10,7 @@
   animation: none;
   margin-top: var(--size-8);
   background-color: transparent;
-  padding: var(--size-4) var(--size-8);
+  padding: var(--size-2) var(--size-8);
 
   @media screen and (max-width: 768px) {
     padding: var(--size-2) var(--size-2);
@@ -183,4 +183,25 @@
 .closeButton:hover,
 .closeButton:focus {
   opacity: 0.8;
+}
+
+.logo {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: 40px; /* Adjust this value to set the default size */
+  max-width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.logo.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Add responsive sizing for larger screens */
+@media screen and (min-width: 768px) {
+  .logo {
+    width: 60px; /* Adjust this value for larger screens */
+  }
 }
