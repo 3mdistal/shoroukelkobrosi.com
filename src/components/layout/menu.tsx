@@ -10,14 +10,9 @@ interface MenuProps {
 export default function Menu({ title }: MenuProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.matchMedia('(max-width: 768px)').matches)
-    }
-
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const viewportHeight = window.innerHeight
@@ -33,14 +28,11 @@ export default function Menu({ title }: MenuProps) {
     }
 
     window.addEventListener('scroll', handleScroll)
-    window.addEventListener('resize', handleResize)
 
-    handleResize()
     handleScroll()
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
@@ -51,10 +43,10 @@ export default function Menu({ title }: MenuProps) {
   return (
     <>
       <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
-        <div className={styles.logo}>Logo</div>
+        <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>Logo</div>
         <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>{title}</h1>
         <button
-          className={`${styles.menuButton} ${isMenuOpen ? styles.open : ''}`}
+          className={`${styles.menuButton} ${isScrolled ? styles.visible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
         >
           Menu

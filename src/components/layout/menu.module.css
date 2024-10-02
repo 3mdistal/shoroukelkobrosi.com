@@ -150,10 +150,17 @@
 
 .logo,
 .menuButton {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 0; /* Start invisible */
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Disable interactions when invisible */
   color: black;
   font-size: 1rem;
+}
+
+.logo.visible,
+.menuButton.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .menuButton {
@@ -180,8 +187,8 @@
     font-size: 0.875rem; /* Even smaller when scrolled on mobile */
   }
 
-  .logo,
-  .menuButton {
+  .logo.visible,
+  .menuButton.visible {
     font-size: 0.875rem; /* Make logo and menu button text smaller on mobile */
   }
 }
