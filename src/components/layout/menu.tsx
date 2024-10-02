@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { usePathname } from 'next/navigation'
+import { Link } from 'next-view-transitions'
+import { usePathname, useRouter } from 'next/navigation'
 import Dialog from '@/components/ui/dialog'
 import styles from './menu.module.css'
 import FadeIn from '../ui/fade-in'
@@ -13,6 +14,22 @@ export default function Menu() {
   const [isHidden, setIsHidden] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
+  const router = useRouter()
+
+  const handleLinkClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    setTimeout(() => {
+      setIsMenuOpen(false)
+      router.push(href)
+    }, 0)
+  }
+
+  const menuItems = [
+    { href: '/', label: 'Films' },
+    { href: '/stills', label: 'Stills' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/about', label: 'About' },
+  ]
 
   useEffect(() => {
     if (!isHomepage) {
@@ -82,7 +99,7 @@ export default function Menu() {
         <nav id="main-menu">
           <button
             type="button"
-            onClick={handleCloseMenu}
+            onClick={() => setIsMenuOpen(false)}
             className={styles.closeButton}
             aria-label="Close menu"
           >
