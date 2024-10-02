@@ -1,12 +1,12 @@
-.homepage {
+.main {
   display: flex;
   flex-direction: column;
-}
-
-.reelSection {
-  height: 100vh;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .showcaseSection {
-  padding: 2rem 0;
+  padding: var(--size-6) 0;
+  width: 100%;
 }

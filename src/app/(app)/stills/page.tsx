@@ -65,7 +65,6 @@ export default async function StillsPage(): Promise<React.ReactElement> {
 
   return (
     <div className={styles.stillsPage}>
-      <h1>Stills</h1>
       <div className={styles.masonryGrid}>
         {shuffledStills.map((still) => {
           const { width, height } = getImageDimensions(still.still)

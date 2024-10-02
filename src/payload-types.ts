@@ -190,6 +190,7 @@ export interface PayloadMigration {
 export interface Homepage {
   id: string;
   reel?: (string | null) | Media;
+  mobileReel?: (string | null) | Media;
   featuredFilms?: (string | Film)[] | null;
   'og-info': {
     ogImage: string | Media;
