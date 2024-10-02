@@ -4,13 +4,7 @@ export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     group: 'Media',
-    components: {
-      views: {
-        list: {
-          Component: '/custom-components/media-upload',
-        },
-      },
-    },
+    description: 'Warning: Images must be under 4.5MB in size.',
   },
   access: {
     read: () => true,
@@ -25,6 +19,19 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    staticDir: 'media',
     mimeTypes: ['image/*', 'video/*'],
+  },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        const fileSize = data.fileSize
+        const maxSize = 4.5 * 1024 * 1024
+        if (fileSize > maxSize) {
+          throw new Error('File size exceeds 4.5MB limit. Please upload a smaller file.')
+        }
+        return data
+      },
+    ],
   },
 }
