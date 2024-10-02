@@ -1,8 +1,6 @@
 .menuButton {
-  position: absolute;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
+  position: static;
+  transform: none;
   opacity: 0; /* Start with the button invisible */
   z-index: var(--layer-2);
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
@@ -12,6 +10,8 @@
   padding: 0;
   pointer-events: none; /* Disable interactions when invisible */
   color: black;
+  color: black;
+  font-size: 1rem;
   font-size: 1rem;
 }
 
@@ -109,21 +109,83 @@
   top: 0;
   right: 0;
   left: 0;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, calc(0.1 * var(--background-opacity, 0)));
+  background-color: rgba(255, 255, 255, var(--background-opacity, 0));
   padding: 1rem 2rem;
   height: var(--nav-height, 33.33vh);
 }
 
 .title {
+  transition:
+    opacity 0.3s ease,
+    font-size 0.3s ease;
   margin: 0;
-  max-width: 80%;
+  max-width: 60%;
+  color: black;
   font-size: var(--title-font-size, 3rem);
   text-align: center;
 }
 
-.scrolled {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Remove .scrolled and .fullyScrolled classes as they're no longer needed */
+
+/* ... rest of the existing styles ... */
+
+@media (max-width: 768px) {
+  .nav {
+    justify-content: space-between;
+    padding: 0.5rem 1rem; /* Reduce padding on mobile */
+  }
+
+  .title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 70%;
+    overflow: hidden;
+    font-size: var(--title-font-size, 1.5rem); /* Set initial font size for mobile */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .logo,
+  .menuButton {
+    opacity: 1;
+    z-index: 1;
+    pointer-events: auto;
+    font-size: 0.875rem; /* Make logo and menu button text smaller on mobile */
+  }
 }
+
+.logo,
+.menuButton {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.logo.visible,
+.menuButton.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.logo {
+  color: black;
+  font-size: 1rem;
+}
+
+.menuButton {
+  position: static;
+  transform: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: black;
+  font-size: 1rem;
+}
+
+/* ... rest of the existing styles ... */

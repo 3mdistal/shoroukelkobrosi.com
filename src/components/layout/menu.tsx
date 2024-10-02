@@ -11,12 +11,19 @@ export default function Menu({ title }: MenuProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMenuButtonVisible, setIsMenuButtonVisible] = useState(false)
+  const [isFullyScrolled, setIsFullyScrolled] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [titleOpacity, setTitleOpacity] = useState(1)
   const navRef = useRef<HTMLElement>(null)
 
   // Adjust this value to control the scroll animation speed (lower = faster)
   const SCROLL_ANIMATION_DURATION = 0 // in milliseconds
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches)
+    }
+
     const handleScroll = () => {
       if (navRef.current) {
         const scrollPosition = window.scrollY
@@ -31,20 +38,39 @@ export default function Menu({ title }: MenuProps) {
         const startHeight = 33.33
         const endHeight = (60 / viewportHeight) * 100
         const newHeight = startHeight - (startHeight - endHeight) * progress
-        const newFontSize = 3 - (3 - 1.25) * progress
+        const newFontSize = isMobile
+          ? 1.5 - (1.5 - 0.875) * progress // Start at 1.5rem and shrink to 0.875rem on mobile
+          : 3 - (3 - 1.25) * progress // Keep existing behavior for non-mobile
 
         navRef.current.style.setProperty('--nav-height', `${newHeight}vh`)
         navRef.current.style.setProperty('--title-font-size', `${newFontSize}rem`)
+        navRef.current.style.setProperty('--background-opacity', (progress * 0.5).toString())
         navRef.current.style.setProperty('transition', `all ${SCROLL_ANIMATION_DURATION}ms ease`)
 
-        // Only show menu button when nav is at its smallest size
-        setIsMenuButtonVisible(progress === 1)
+        // Fade out title on mobile
+        if (isMobile) {
+          setTitleOpacity(1 - progress)
+        }
+
+        // Show logo and menu button when nav is at its smallest size
+        const isFullyScrolled = progress === 1
+        setIsMenuButtonVisible(isFullyScrolled)
+        setIsFullyScrolled(isFullyScrolled)
       }
     }
 
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('resize', handleResize)
+
+    // Initial checks
+    handleResize()
+    handleScroll()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [isMobile])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -52,10 +78,18 @@ export default function Menu({ title }: MenuProps) {
 
   return (
     <>
-      <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
-        <h1 className={styles.title}>{title}</h1>
+      <nav
+        ref={navRef}
+        className={`${styles.nav} ${isScrolled ? styles.scrolled : ''} ${isFullyScrolled ? styles.fullyScrolled : ''}`}
+      >
+        <div className={`${styles.logo} ${isMenuButtonVisible || isMobile ? styles.visible : ''}`}>
+          Logo
+        </div>
+        <h1 className={styles.title} style={{ opacity: isMobile ? titleOpacity : 1 }}>
+          {title}
+        </h1>
         <button
-          className={`${styles.menuButton} ${isMenuButtonVisible ? styles.menuButtonVisible : ''} ${isMenuOpen ? styles.open : ''}`}
+          className={`${styles.menuButton} ${isMenuButtonVisible || isMobile ? styles.visible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
         >
           Menu
