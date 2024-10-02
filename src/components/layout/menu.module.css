@@ -149,7 +149,9 @@
 .fullPageMenu nav ul li a {
   opacity: 0.5;
   color: white;
+  font-weight: 400;
   font-size: var(--font-size-fluid-2);
+  font-family: var(--font-lora);
   text-decoration: none;
 }
 
@@ -198,7 +200,6 @@
   opacity: 1;
   pointer-events: auto;
 }
-
 /* Add responsive sizing for larger screens */
 @media screen and (min-width: 768px) {
   .logo {
