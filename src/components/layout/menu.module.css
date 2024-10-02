@@ -1,23 +1,73 @@
+.nav {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  animation: none;
+  margin-top: var(--size-8);
+  background-color: transparent;
+  padding: 1rem 2rem;
+}
+
+.nav.scrolled {
+  position: fixed;
+  transform: translateY(0);
+  opacity: 1;
+  animation: none;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  margin-top: 0;
+  box-shadow: var(--shadow-1);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.nav.hidden {
+  position: fixed;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.logo,
+.menuButton {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  color: black;
+  font-size: 1rem;
+}
+
+.logo.visible,
+.menuButton.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.title {
+  transition: font-size 0s;
+  margin: 0;
+  max-inline-size: 100%;
+  color: black;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.titleSmall {
+  font-size: 1.25rem;
+}
+
 .menuButton {
   position: static;
   transform: none;
-  opacity: 0; /* Start with the button invisible */
   z-index: var(--layer-2);
-  transition: opacity 0.3s ease; /* Smooth transition for opacity */
   cursor: pointer;
   border: none;
   background: none;
   padding: 0;
-  pointer-events: none; /* Disable interactions when invisible */
-  color: black;
-  color: black;
-  font-size: 1rem;
-  font-size: 1rem;
-}
-
-.menuButtonVisible {
-  opacity: 1;
-  pointer-events: auto; /* Re-enable interactions when visible */
 }
 
 .fullPageMenu {
@@ -28,6 +78,7 @@
   justify-content: center;
   align-items: center;
   opacity: 0;
+  z-index: var(--layer-3);
   transition:
     opacity 0.3s ease-out,
     display 0.3s ease-out allow-discrete;
@@ -40,14 +91,14 @@
   max-width: 100vw;
   height: 100vh;
   max-height: 100vh;
+}
 
-  &[open] {
-    display: flex;
-    opacity: 1;
-    transition:
-      opacity 0.3s ease-out,
-      display 0.3s ease-out allow-discrete;
-  }
+.fullPageMenu[open] {
+  display: flex;
+  opacity: 1;
+  transition:
+    opacity 0.3s ease-out,
+    display 0.3s ease-out allow-discrete;
 }
 
 .fullPageMenu::backdrop {
@@ -71,18 +122,15 @@
   color: white;
   font-size: var(--font-size-fluid-2);
   text-decoration: none;
+}
 
-  &:hover {
-    opacity: 1;
-  }
+.fullPageMenu nav ul li a:hover {
+  opacity: 1;
+}
 
-  &:active {
-    opacity: 0.8;
-  }
-
-  &.clickedLink {
-    opacity: 0.8;
-  }
+.fullPageMenu nav ul li a:active,
+.fullPageMenu nav ul li a.clickedLink {
+  opacity: 0.8;
 }
 
 .closeButton {
@@ -103,76 +151,9 @@
   opacity: 0.8;
 }
 
-.nav {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-  background-color: transparent;
-  padding: 1rem 2rem;
-}
-
-.nav.scrolled {
-  position: fixed;
-  transform: translateY(-100%);
-  opacity: 0;
-  animation: slideDown 0.3s forwards;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9);
-}
-
-@keyframes slideDown {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.title {
-  transition: font-size 0s; /* Instant transition */
-  margin: 0;
-  max-width: 60%;
-  color: black;
-  font-size: 3rem; /* Large initial size */
-  text-align: center;
-}
-
-.titleSmall {
-  font-size: 1.25rem; /* Smaller size when scrolled */
-}
-
-.logo,
-.menuButton {
-  opacity: 0; /* Start invisible */
-  transition: opacity 0.3s ease;
-  pointer-events: none; /* Disable interactions when invisible */
-  color: black;
-  font-size: 1rem;
-}
-
-.logo.visible,
-.menuButton.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.menuButton {
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
-}
-
 @media (max-width: 768px) {
   .nav {
-    padding: 0.5rem 1rem; /* Reduce padding on mobile */
+    padding: 0.5rem 1rem;
   }
 
   .nav.scrolled {
@@ -180,17 +161,15 @@
   }
 
   .title {
-    font-size: 1.5rem; /* Slightly smaller initial size for mobile */
+    font-size: 1.5rem;
   }
 
   .titleSmall {
-    font-size: 0.875rem; /* Even smaller when scrolled on mobile */
+    font-size: 0.875rem;
   }
 
   .logo.visible,
   .menuButton.visible {
-    font-size: 0.875rem; /* Make logo and menu button text smaller on mobile */
+    font-size: 0.875rem;
   }
 }
-
-/* ... rest of the existing styles ... */
