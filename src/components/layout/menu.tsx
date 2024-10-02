@@ -1,16 +1,25 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import Dialog from '@/components/ui/dialog'
 import styles from './menu.module.css'
 
 export default function Menu() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isHomepage = pathname === '/'
+  const [isScrolled, setIsScrolled] = useState(!isHomepage)
   const [isHidden, setIsHidden] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    if (!isHomepage) {
+      setIsScrolled(true)
+      setIsHidden(false)
+      return
+    }
+
     let lastScrollY = window.scrollY
     const handleScroll = () => {
       const scrollPosition = window.scrollY
@@ -41,7 +50,7 @@ export default function Menu() {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [isHomepage])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)

@@ -31,7 +31,7 @@ export default function RootLayout({
             <Footer />
             <RefreshRouteOnSave />
           </div>
-          <Menu title="Anthropotpourri: The cinema of Shorouk Elkobrosi" />
+          <Menu />
         </body>
       </html>
     </ViewTransitions>
