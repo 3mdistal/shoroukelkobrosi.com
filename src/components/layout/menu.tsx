@@ -52,7 +52,7 @@ export default function Menu({ title }: MenuProps) {
     <>
       <nav ref={navRef} className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.logo}>Logo</div>
-        <h1 className={styles.title}>{title}</h1>
+        <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>{title}</h1>
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}

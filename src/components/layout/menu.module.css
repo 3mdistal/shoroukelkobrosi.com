@@ -136,16 +136,32 @@
 }
 
 .title {
+  transition: font-size 0s; /* Instant transition */
   margin: 0;
   max-width: 60%;
   color: black;
-  font-size: 1.25rem; /* Already shrunk size */
+  font-size: 3rem; /* Large initial size */
   text-align: center;
 }
 
-/* Remove .scrolled and .fullyScrolled classes as they're no longer needed */
+.titleSmall {
+  font-size: 1.25rem; /* Smaller size when scrolled */
+}
 
-/* ... rest of the existing styles ... */
+.logo,
+.menuButton {
+  opacity: 1;
+  pointer-events: auto;
+  color: black;
+  font-size: 1rem;
+}
+
+.menuButton {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
 
 @media (max-width: 768px) {
   .nav {
@@ -157,52 +173,17 @@
   }
 
   .title {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 70%;
-    overflow: hidden;
-    font-size: var(--title-font-size, 1.5rem); /* Set initial font size for mobile */
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 1.5rem; /* Slightly smaller initial size for mobile */
+  }
+
+  .titleSmall {
+    font-size: 0.875rem; /* Even smaller when scrolled on mobile */
   }
 
   .logo,
   .menuButton {
-    opacity: 1;
-    z-index: 1;
-    pointer-events: auto;
     font-size: 0.875rem; /* Make logo and menu button text smaller on mobile */
   }
-}
-
-.logo,
-.menuButton {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.logo.visible,
-.menuButton.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.logo {
-  color: black;
-  font-size: 1rem;
-}
-
-.menuButton {
-  position: static;
-  transform: none;
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
-  color: black;
-  font-size: 1rem;
 }
 
 /* ... rest of the existing styles ... */
