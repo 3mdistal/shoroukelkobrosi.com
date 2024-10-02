@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Dialog from '@/components/ui/dialog'
 import styles from './menu.module.css'
+import FadeIn from '../ui/fade-in'
 
 export default function Menu() {
   const pathname = usePathname()
@@ -63,11 +64,13 @@ export default function Menu() {
         className={`${styles.nav} ${isScrolled ? styles.scrolled : ''} ${isHidden ? styles.hidden : ''}`}
       >
         <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>Logo</div>
-        <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
-          Anthropotpourri:
-          {isScrolled ? ' ' : <br />}
-          The Cinema of Shorouk Elkobrosi
-        </h1>
+        <FadeIn duration={500}>
+          <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
+            Anthropotpourri:
+            {isScrolled ? ' ' : <br />}
+            The Cinema of Shorouk Elkobrosi
+          </h1>
+        </FadeIn>
         <button
           className={`${styles.menuButton} ${isScrolled ? styles.visible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}

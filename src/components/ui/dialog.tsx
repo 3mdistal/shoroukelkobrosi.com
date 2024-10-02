@@ -4,9 +4,10 @@ interface DialogProps {
   isOpen: boolean
   children: React.ReactNode
   className?: string
+  onClose?: () => void
 }
 
-function Dialog({ isOpen, children, className }: DialogProps): React.ReactElement {
+function Dialog({ isOpen, children, className, onClose }: DialogProps): React.ReactElement {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function Dialog({ isOpen, children, className }: DialogProps): React.ReactElemen
   }, [isOpen])
 
   return (
-    <dialog ref={dialogRef} className={className}>
+    <dialog ref={dialogRef} className={className} onClose={onClose}>
       {children}
     </dialog>
   )

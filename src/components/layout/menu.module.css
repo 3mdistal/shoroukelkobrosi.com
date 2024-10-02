@@ -10,7 +10,7 @@
   animation: none;
   margin-top: var(--size-8);
   background-color: transparent;
-  padding: 1rem 2rem;
+  padding: var(--size-4) var(--size-8);
 }
 
 .nav.scrolled {
