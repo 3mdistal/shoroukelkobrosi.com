@@ -81,6 +81,7 @@ const FadeIn: React.FC<FadeInProps> = ({
       style={{
         opacity,
         transition: `opacity ${duration}ms ease-in-out`,
+        display: 'contents',
       }}
     >
       {children}

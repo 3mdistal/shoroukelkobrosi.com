@@ -84,17 +84,22 @@ export default function Menu() {
       >
         <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>
           <Link href="/">
-            <Image src="/templogo2.webp" alt="Anthropotpourri" width={40} height={40} />
+            <Image src="/logo2.webp" alt="Anthropotpourri" width={80} height={80} />
           </Link>
         </div>
         <FadeIn duration={500}>
+          {!isScrolled && (
+            <div className={styles.logoBig}>
+              <Image src="/logo2.webp" alt="Anthropotpourri" width={800} height={800} />
+            </div>
+          )}
           <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
             Anthropotpourri
             {isScrolled && ': '}
             {isScrolled ? (
-              'The Cinema of Shorouk Elkobrsi'
+              'The Cinematography of Shorouk Elkobrosi'
             ) : (
-              <span className={styles.subtitle}>The Cinema of Shorouk Elkobrosi</span>
+              <span className={styles.subtitle}>The Cinematography of Shorouk Elkobrosi</span>
             )}
           </h1>
         </FadeIn>
