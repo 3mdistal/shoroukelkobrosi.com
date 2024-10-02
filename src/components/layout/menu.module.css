@@ -105,31 +105,41 @@
 
 .nav {
   display: flex;
-  position: absolute; /* Change from fixed to absolute */
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  background-color: transparent;
   padding: 1rem 2rem;
 }
 
 .nav.scrolled {
   position: fixed;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, calc(0.1 * var(--background-opacity, 0)));
-  background-color: rgba(255, 255, 255, var(--background-opacity, 0));
+  transform: translateY(-100%);
+  opacity: 0;
+  animation: slideDown 0.3s forwards;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes slideDown {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .title {
-  transition:
-    opacity 0.3s ease,
-    font-size 0.3s ease;
   margin: 0;
   max-width: 60%;
   color: black;
-  font-size: var(--title-font-size, 3rem);
+  font-size: 1.25rem; /* Already shrunk size */
   text-align: center;
 }
 
@@ -139,7 +149,6 @@
 
 @media (max-width: 768px) {
   .nav {
-    justify-content: space-between;
     padding: 0.5rem 1rem; /* Reduce padding on mobile */
   }
 
