@@ -7,9 +7,10 @@ import { createImageUrl } from '@/utilities/media'
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const film = await getCachedFilm(params.slug)
+  const slug = (await params).slug
+  const film = await getCachedFilm(slug)
 
   if (film['og-info'].length > 0) {
     return {
@@ -28,7 +29,7 @@ export async function generateMetadata({
             alt: 'Anthropotpourri',
           },
         ],
-        url: `https://shoroukelkobrosi.com/films/${params.slug}`,
+        url: `https://shoroukelkobrosi.com/films/${slug}`,
       },
     }
   } else {
@@ -36,10 +37,15 @@ export async function generateMetadata({
   }
 }
 
-export default function Page({ params }: { params: { slug: string } }): React.ReactElement {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<React.ReactElement> {
+  const slug = (await params).slug
   return (
     <>
-      <FilmPage slug={params.slug} />
+      <FilmPage slug={slug} />
     </>
   )
 }
