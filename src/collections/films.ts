@@ -5,7 +5,7 @@ import type {
   Validate,
 } from 'payload'
 import { revalidateTag } from 'next/cache'
-import { slugify } from '@/utilities/slugify'
+import slugify from 'slugify'
 import { getURL } from '@/utilities/get-url'
 import { type Film } from '@/payload-types'
 import { OGInfo } from '@/blocks/og-info'
@@ -72,7 +72,7 @@ export const Films: CollectionConfig = {
       hooks: {
         beforeValidate: [
           ({ data }) => {
-            return data?.title ? slugify(data.title as string) : undefined
+            return data?.title ? slugify(data.title as string).toLowerCase() : undefined
           },
         ],
       },
