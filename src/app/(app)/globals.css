@@ -13,6 +13,17 @@
     background-color: var(--surface-1);
   }
 
+  h1,
+  h2,
+  h3 {
+    color: var(--gray-8);
+    font-family: var(--font-lxgw-wen-kai-tc);
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--gray-3);
+    }
+  }
+
   h1 {
     margin-bottom: var(--size-3);
     font-weight: var(--font-weight-9);
@@ -31,15 +42,8 @@
     font-size: var(--font-size-3);
   }
 
-  h1,
-  h2,
-  h3 {
-    color: var(--gray-8);
-    font-family: var(--font-lora);
-
-    @media (prefers-color-scheme: dark) {
-      color: var(--gray-3);
-    }
+  p {
+    font-family: var(--font-lato);
   }
 }
 
