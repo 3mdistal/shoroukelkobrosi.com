@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Lato, LXGW_WenKai_TC } from 'next/font/google'
+import { Lato } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import { ViewTransitions } from 'next-view-transitions'
 import Menu from '@/components/layout/menu'
@@ -13,9 +14,24 @@ const lato = Lato({
   variable: '--font-lato',
 })
 
-const lxgwWenKaiTC = LXGW_WenKai_TC({
-  subsets: ['latin'],
-  weight: ['300', '400', '700'],
+const lxgwWenKaiTC = localFont({
+  src: [
+    {
+      path: './LXGWWenKaiTC-Light.ttf',
+      weight: '300',
+      style: 'light',
+    },
+    {
+      path: './LXGWWenKaiTC-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './LXGWWenKaiTC-Bold.ttf',
+      weight: '700',
+      style: 'bold',
+    },
+  ],
   variable: '--font-lxgw-wen-kai-tc',
 })
 
