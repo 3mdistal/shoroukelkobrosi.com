@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  position: absolute;
+  position: static;
   top: 0;
   right: 0;
   left: 0;
@@ -11,6 +11,7 @@
   z-index: var(--layer-2);
   animation: none;
   margin-top: var(--size-8);
+  margin-bottom: -250px;
   background-color: transparent;
   padding: var(--size-2) var(--size-8);
 
