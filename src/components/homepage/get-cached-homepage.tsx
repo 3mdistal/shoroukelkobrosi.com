@@ -20,7 +20,6 @@ const getHomepageInner = reactCache(async (): Promise<Homepage> => {
 export const getCachedHomepage = nextCache(
   async () => {
     const homepage = await getHomepageInner()
-    console.log('Fetched homepage data:', homepage) // Remove in production
     return homepage
   },
   ['homepage-cache'],

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Lato } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Nunito, Nunito_Sans } from 'next/font/google'
 import './globals.css'
 import { ViewTransitions } from 'next-view-transitions'
 import Menu from '@/components/layout/menu'
@@ -8,31 +7,16 @@ import Footer from '@/components/layout/footer'
 import { RefreshRouteOnSave } from '@/components/utils/refresh-route-on-save'
 import { baseMetadata } from '@/components/base-metadata'
 
-const lato = Lato({
+const nunito = Nunito({
   subsets: ['latin'],
-  weight: ['100', '300', '400', '700', '900'],
-  variable: '--font-lato',
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-nunito',
 })
 
-const lxgwWenKaiTC = localFont({
-  src: [
-    {
-      path: './LXGWWenKaiTC-Light.ttf',
-      weight: '300',
-      style: 'light',
-    },
-    {
-      path: './LXGWWenKaiTC-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: './LXGWWenKaiTC-Bold.ttf',
-      weight: '700',
-      style: 'bold',
-    },
-  ],
-  variable: '--font-lxgw-wen-kai-tc',
+const nunitoSans = Nunito_Sans({
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-nunito-sans',
 })
 
 export const metadata: Metadata = baseMetadata
@@ -44,7 +28,7 @@ export default function RootLayout({
 }>): React.ReactElement {
   return (
     <ViewTransitions>
-      <html lang="en" className={`${lato.variable} ${lxgwWenKaiTC.variable}`}>
+      <html lang="en" className={`${nunito.variable} ${nunitoSans.variable}`}>
         <body>
           <div
             id="main-content"

@@ -11,13 +11,14 @@
 
   body {
     background-color: var(--surface-1);
+    font-family: var(--font-nunito-sans);
   }
 
   h1,
   h2,
   h3 {
     color: var(--gray-8);
-    font-family: var(--font-lxgw-wen-kai-tc);
+    font-family: var(--font-nunito);
 
     @media (prefers-color-scheme: dark) {
       color: var(--gray-3);
@@ -43,7 +44,7 @@
   }
 
   p {
-    font-family: var(--font-lato);
+    font-family: var(--font-nunito-sans);
   }
 }
 
