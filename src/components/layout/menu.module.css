@@ -3,11 +3,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  left: 0;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  scale: 1;
+  justify-content: flex-end;
   z-index: var(--layer-3);
   animation: none;
   margin-top: var(--size-8);
@@ -21,7 +17,6 @@
 
 .nav.scrolled {
   position: fixed;
-  flex-direction: row;
   transform: translateY(0);
   opacity: 1;
   animation: none;
@@ -29,8 +24,8 @@
     transform 0.3s ease,
     opacity 0.3s ease;
   margin-top: 0;
-  box-shadow: var(--shadow-1);
-  background-color: hsla(0, 0%, 100%, 0.7);
+  padding: var(--size-2) var(--size-8);
+  width: 100%;
 
   @media screen and (max-width: 768px) {
     padding: var(--size-2) var(--size-4);
@@ -43,75 +38,21 @@
   opacity: 0;
 }
 
-.logo {
-  transform: scaleX(-1);
-}
-
-.logo,
 .menuButton {
   opacity: 0;
   transition: opacity 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
   pointer-events: none;
   color: black;
   font-size: 1rem;
 }
 
-.logo.visible,
 .menuButton.visible {
   opacity: 1;
   pointer-events: auto;
-}
-
-.logoBig {
-  position: relative;
-  left: var(--size-6);
-  margin-bottom: calc(var(--size-4) * -1);
-  width: 400px;
-  height: auto;
-
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-}
-
-.title {
-  transition: font-size 0s;
-  margin: 0;
-  max-inline-size: 100%;
-  color: hsl(0, 0%, 30%);
-  font-weight: 400;
-  font-size: calc(var(--font-size-fluid-3) * 1.8);
-  font-family: var(--font-nunito);
-  text-align: center;
-}
-
-.subtitle {
-  display: block;
-  font-weight: 300;
-  font-size: var(--font-size-fluid-1);
-  font-family: var(--font-nunito-sans);
-  letter-spacing: calc(var(--font-letterspacing-4) * 1.8);
-}
-
-.titleSmall {
-  color: var(--gray-10);
-  font-size: var(--font-size-2);
-
-  @media screen and (max-width: 768px) {
-    opacity: 0;
-  }
-}
-
-.menuButton {
-  position: static;
-  transform: none;
-  z-index: var(--layer-2);
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
 }
 
 .fullPageMenu {
@@ -210,24 +151,4 @@
 .closeButton:hover,
 .closeButton:focus {
   opacity: 0.8;
-}
-
-.logo {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  width: 40px; /* Adjust this value to set the default size */
-  max-width: 100%;
-  height: auto;
-  pointer-events: none;
-}
-
-.logo.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-/* Add responsive sizing for larger screens */
-@media screen and (min-width: 768px) {
-  .logo {
-    width: 60px; /* Adjust this value for larger screens */
-  }
 }

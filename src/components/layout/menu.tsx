@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'next-view-transitions'
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import Dialog from '@/components/ui/dialog'
-import FadeIn from '../ui/fade-in'
 import styles from './menu.module.css'
 
 export default function Menu() {
@@ -68,7 +66,6 @@ export default function Menu() {
     }
 
     window.addEventListener('scroll', handleScroll)
-
     handleScroll()
 
     return () => {
@@ -82,27 +79,6 @@ export default function Menu() {
         ref={navRef}
         className={`${styles.nav} ${isScrolled ? styles.scrolled : ''} ${isHidden ? styles.hidden : ''}`}
       >
-        <div className={`${styles.logo} ${isScrolled ? styles.visible : ''}`}>
-          <Link href="/">
-            <Image src="/logo2.webp" alt="Anthropotpourri" width={80} height={80} />
-          </Link>
-        </div>
-        <FadeIn duration={500}>
-          {!isScrolled && (
-            <div className={styles.logoBig}>
-              <Image src="/logo2.webp" alt="Anthropotpourri" width={800} height={800} />
-            </div>
-          )}
-          <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
-            Anthropotpourri
-            {isScrolled && ': '}
-            {isScrolled ? (
-              'The Cinematography of Shorouk Elkobrosi'
-            ) : (
-              <span className={styles.subtitle}>The Cinematography of Shorouk Elkobrosi</span>
-            )}
-          </h1>
-        </FadeIn>
         <button
           className={`${styles.menuButton} ${isScrolled ? styles.visible : ''} ${isMenuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
