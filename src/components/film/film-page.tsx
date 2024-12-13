@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Link } from 'next-view-transitions'
 import type { Media } from '@/payload-types'
 import AspectRatio from '@/components/ui/aspect-ratio'
-import TrailerEmbed from '../ui/trailer-embed'
+import VimeoEmbed from '../ui/vimeo-embed'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import { getCachedFilm, getAllFilms } from '@/components/film/film-fetches'
 import styles from './film-page.module.css'
@@ -32,7 +32,7 @@ export default async function FilmPage({ slug }: { slug: string }): Promise<Reac
               Trailer
             </h2>
             <div className={styles.trailerContainer}>
-              <TrailerEmbed url={film.trailer} filmTitle={film.title} />
+              <VimeoEmbed url={film.trailer} filmTitle={film.title} />
             </div>
           </section>
         )}

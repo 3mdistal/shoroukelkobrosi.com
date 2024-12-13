@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'next-view-transitions'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import FadeIn from '../ui/fade-in'
+// import FadeIn from '../ui/fade-in'
 import styles from './site-title.module.css'
 
 export default function SiteTitle() {
@@ -45,22 +45,22 @@ export default function SiteTitle() {
           <Image src="/logo2.webp" alt="Anthropotpourri" width={80} height={80} />
         </Link>
       </div>
-      <FadeIn duration={500}>
-        {!isScrolled && (
-          <div className={styles.logoBig}>
-            <Image src="/logo2.webp" alt="Anthropotpourri" width={800} height={800} />
-          </div>
+      {/* <FadeIn duration={500}> */}
+      {!isScrolled && (
+        <div className={styles.logoBig}>
+          <Image src="/logo2.webp" alt="Anthropotpourri" width={800} height={800} />
+        </div>
+      )}
+      <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
+        Anthropotpourri
+        {isScrolled && ': '}
+        {isScrolled ? (
+          'The Cinematography of Shorouk Elkobrosi'
+        ) : (
+          <span className={styles.subtitle}>The Cinematography of Shorouk Elkobrosi</span>
         )}
-        <h1 className={`${styles.title} ${isScrolled ? styles.titleSmall : ''}`}>
-          Anthropotpourri
-          {isScrolled && ': '}
-          {isScrolled ? (
-            'The Cinematography of Shorouk Elkobrosi'
-          ) : (
-            <span className={styles.subtitle}>The Cinematography of Shorouk Elkobrosi</span>
-          )}
-        </h1>
-      </FadeIn>
+      </h1>
+      {/* </FadeIn> */}
     </header>
   )
 }

@@ -7,6 +7,7 @@ type IntersectionMargin = 'default' | 'early' | 'very_early' | 'late' | 'very_la
 interface FadeInProps {
   children: React.ReactNode
   duration?: number
+  delay?: number
   useIntersectionObserver?: boolean
   intersectionMargin?: IntersectionMargin
   triggerOnce?: boolean
@@ -15,6 +16,7 @@ interface FadeInProps {
 const FadeIn: React.FC<FadeInProps> = ({
   children,
   duration = 500,
+  delay = 0,
   useIntersectionObserver = false,
   intersectionMargin = 'default',
   triggerOnce = true,
@@ -80,8 +82,7 @@ const FadeIn: React.FC<FadeInProps> = ({
       ref={ref}
       style={{
         opacity,
-        transition: `opacity ${duration}ms ease-in-out`,
-        display: 'contents',
+        transition: `opacity ${duration}ms ease-in-out ${delay}ms`,
       }}
     >
       {children}
