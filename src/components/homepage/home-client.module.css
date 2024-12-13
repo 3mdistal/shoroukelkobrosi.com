@@ -1,4 +1,6 @@
 .homeClientContainer {
+  --initial-outer-scale: 0.6;
+  --initial-inner-scale: 1.2;
   position: relative;
   width: 100%;
   height: 200vh;
@@ -18,7 +20,17 @@
 }
 
 .reelContent {
-  transform: scale(0.6);
+  transform: scale(var(--initial-outer-scale));
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.reelInner {
+  transform: scale(var(--initial-inner-scale));
   transform-origin: center center;
   transition: transform 0.1s ease-out;
   width: 100%;
