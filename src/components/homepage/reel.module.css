@@ -1,7 +1,7 @@
 .reelContainer {
   position: relative;
+  aspect-ratio: 16/9;
   width: 100%;
-  height: 100vh;
   overflow: hidden;
 }
 
@@ -13,8 +13,12 @@
   width: 100vw;
   height: 56.25vw;
   min-height: 100%;
-  object-fit: cover;
-  object-position: center;
+}
+
+.vimeoWrapper iframe {
+  background: transparent !important;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) {

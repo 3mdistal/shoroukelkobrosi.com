@@ -189,8 +189,8 @@ export interface PayloadMigration {
  */
 export interface Homepage {
   id: string;
-  reel?: (string | null) | Media;
-  mobileReel?: (string | null) | Media;
+  reel?: string | null;
+  mobileReel?: string | null;
   featuredFilms?: (string | Film)[] | null;
   'og-info': {
     ogImage: string | Media;

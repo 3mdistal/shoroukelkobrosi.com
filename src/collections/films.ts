@@ -2,13 +2,13 @@ import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
   CollectionConfig,
-  Validate,
 } from 'payload'
 import { revalidateTag } from 'next/cache'
 import slugify from 'slugify'
 import { getURL } from '@/utilities/get-url'
 import { type Film } from '@/payload-types'
 import { OGInfo } from '@/blocks/og-info'
+import { validateVimeoLink } from '@/components/utils/validate-vimeo-link'
 
 const afterChangeHook: CollectionAfterChangeHook = ({ previousDoc, doc }) => {
   revalidateTag('homepage')
@@ -27,16 +27,6 @@ const afterDeleteHook: CollectionAfterDeleteHook = ({ doc }) => {
   revalidateTag('homepage')
   revalidateTag('films')
   revalidateTag(`film-${film.slug}`)
-}
-
-const validateVimeoLink: Validate<string | string[], unknown> = (value) => {
-  if (typeof value === 'string') {
-    const vimeoRegex = /^(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\//
-    if (!vimeoRegex.test(value)) {
-      return 'Trailer must be a valid Vimeo link'
-    }
-  }
-  return true
 }
 
 export const Films: CollectionConfig = {
