@@ -15,6 +15,7 @@ function createVimeoEmbed(
       background: background ? '1' : '0',
       loop: background ? '1' : '0',
       muted: background ? '1' : '0',
+      transparent: '0',
     })
     const embedUrl = `https://player.vimeo.com/video/${videoId}?${params.toString()}`
     return embedUrl
