@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'next-view-transitions'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import FadeIn from '../ui/fade-in'
+// import FadeIn from '../ui/fade-in'
 import styles from './site-title.module.css'
 
 export default function SiteTitle() {
