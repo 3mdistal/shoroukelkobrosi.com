@@ -7,10 +7,23 @@
 @layer theme {
   :root {
     --blur-strength: 10px;
+
+    /* Colors */
+    --dark: hsl(228, 14%, 14%);
+    --mid-dark: hsl(330, 2%, 36%);
+    --mid: hsl(0, 3%, 56%);
+    --mid-light: hsl(21, 28%, 84%);
+    --light: hsl(26, 80%, 96%);
+
+    --accent-light: hsl(191, 11%, 70%);
+    --accent-dark: hsl(191, 11%, 40%);
+
+    --accent: light-dark(var(--accent-dark), var(--accent-light));
+    --background-color: light-dark(var(--light), var(--dark));
   }
 
   body {
-    background-color: var(--surface-1);
+    background-color: var(--background-color);
     font-family: var(--font-nunito-sans);
   }
 
@@ -45,6 +58,10 @@
 
   p {
     font-family: var(--font-nunito-sans);
+  }
+
+  a {
+    color: var(--accent);
   }
 }
 
