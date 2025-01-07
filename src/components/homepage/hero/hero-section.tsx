@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import styles from './home-client.module.css'
-import Reel from '@/components/homepage/reel'
+import styles from './hero-section.module.css'
+import Reel from '@/components/homepage/hero/reel/reel'
 
 interface HomeClientProps {
   reel: string

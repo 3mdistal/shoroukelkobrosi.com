@@ -1,8 +1,8 @@
-import FilmShowcase from '@/components/homepage/film-showcase'
+import FilmShowcase from '@/components/homepage/showcase/film-showcase'
 import styles from './page.module.css'
 import { generateMetadata } from './page-metadata'
-import HomeClient from '@/components/homepage/home-client'
-import { getCachedHomepage } from '@/components/homepage/get-cached-homepage'
+import HomeClient from '@/components/homepage/hero/hero-section'
+import { getCachedHomepage } from '@/components/homepage/utils/get-cached-homepage'
 
 export { generateMetadata }
 

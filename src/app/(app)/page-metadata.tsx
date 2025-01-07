@@ -1,6 +1,6 @@
 import { baseMetadata } from '@/components/base-metadata'
 import type { Metadata } from 'next'
-import { getCachedHomepage } from '@/components/homepage/get-cached-homepage'
+import { getCachedHomepage } from '@/components/homepage/utils/get-cached-homepage'
 import { createImageUrl } from '@/utilities/media'
 
 export async function generateMetadata(): Promise<Metadata> {

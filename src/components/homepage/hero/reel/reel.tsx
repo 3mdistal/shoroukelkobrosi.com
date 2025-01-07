@@ -2,8 +2,8 @@
 
 import styles from './reel.module.css'
 import { Suspense, useEffect, useState } from 'react'
-import FadeIn from '../ui/fade-in'
-import VimeoEmbed from '../ui/vimeo-embed'
+import FadeIn from '@/components/ui/fade-in'
+import VimeoEmbed from '@/components/ui/vimeo-embed'
 
 interface ReelProps {
   reel: string | null

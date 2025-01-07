@@ -5,7 +5,7 @@ import AspectRatio from '@/components/ui/aspect-ratio'
 import { formatSeasonYear } from '@/utilities/date-utils'
 import { createImageUrl, getImageDimensions } from '@/utilities/media'
 import styles from './film-showcase.module.css'
-import { getCachedHomepage } from './get-cached-homepage'
+import { getCachedHomepage } from '@/components/homepage/utils/get-cached-homepage'
 import FadeIn from '@/components/ui/fade-in'
 
 export default async function FilmShowcase(): Promise<React.ReactElement> {
