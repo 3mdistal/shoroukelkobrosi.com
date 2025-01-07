@@ -71,7 +71,7 @@
   margin: 0;
   border: none;
   border-radius: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: var(--overlay-darker);
   padding: var(--size-4) var(--size-8);
   width: 100vw;
   max-width: 100vw;

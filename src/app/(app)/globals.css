@@ -18,6 +18,11 @@
     --accent-light: hsl(191, 11%, 70%);
     --accent-dark: hsl(191, 11%, 40%);
 
+    /* Overlay Colors */
+    --overlay-dark: rgba(0, 0, 0, 0.7);
+    --overlay-darker: rgba(0, 0, 0, 0.85);
+    --overlay-light: hsla(0, 0%, 100%, 0.7);
+
     --accent: light-dark(var(--accent-dark), var(--accent-light));
     --background-color: light-dark(var(--light), var(--dark));
   }
