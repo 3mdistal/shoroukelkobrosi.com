@@ -1,81 +1,44 @@
-.header {
+.heroTitle {
   display: flex;
-  position: static;
-  top: 0;
-  right: 0;
-  left: 0;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  scale: 1;
-  z-index: var(--layer-2);
-  animation: none;
-  margin-top: var(--size-8);
-  margin-bottom: -250px;
-  background-color: transparent;
-  padding: var(--size-2) var(--size-8);
-
-  @media screen and (max-width: 768px) {
-    padding: var(--size-2) var(--size-2);
-  }
-}
-
-.header.scrolled {
-  position: fixed;
-  flex-direction: row;
-  transform: translateY(0);
-  opacity: 1;
-  animation: none;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-  margin-top: 0;
-  box-shadow: var(--shadow-1);
-  background-color: hsla(0, 0%, 100%, 0.7);
-
-  @media screen and (max-width: 768px) {
-    padding: var(--size-2) var(--size-4);
-  }
-}
-
-.logo {
-  transform: scaleX(-1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  width: 40px;
-  max-width: 100%;
-  height: auto;
-  pointer-events: none;
-}
-
-.logo.visible {
-  opacity: 1;
-  pointer-events: auto;
+  justify-content: center;
+  width: 100%;
 }
 
 .logoBig {
-  position: relative;
-  left: var(--size-6);
-  margin-bottom: calc(var(--size-4) * -1);
   width: 400px;
   height: auto;
+  margin-left: 4%;
 
   & img {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+
+  @media (prefers-color-scheme: dark) {
+    & img {
+      filter: invert(1) brightness(.8);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 300px;
+  }
 }
 
 .title {
-  transition: font-size 0s;
-  margin: 0;
   max-inline-size: 100%;
-  color: var(--mid-dark);
+  color: light-dark(var(--mid-dark), var(--mid-light));
   font-weight: 400;
   font-size: calc(var(--font-size-fluid-3) * 1.8);
   font-family: var(--font-nunito);
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: calc(var(--font-size-fluid-2) * 1.8);
+  }
 }
 
 .subtitle {
@@ -84,19 +47,14 @@
   font-size: var(--font-size-fluid-1);
   font-family: var(--font-nunito-sans);
   letter-spacing: calc(var(--font-letterspacing-4) * 1.8);
-}
-
-.titleSmall {
-  color: var(--gray-10);
-  font-size: var(--font-size-2);
 
   @media screen and (max-width: 768px) {
-    opacity: 0;
+    font-size: var(--font-size-fluid-0);
   }
 }
 
-@media screen and (min-width: 768px) {
-  .logo {
+.logo {
+  @media screen and (min-width: 768px) {
     width: 60px;
   }
 }

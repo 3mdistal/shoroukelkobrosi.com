@@ -26,14 +26,12 @@ export default function Reel({ reel, mobileReel }: ReelProps): React.ReactElemen
   }, [reel, mobileReel])
 
   return (
-    <div className={styles.reelContainer}>
-      <Suspense>
-        <FadeIn duration={1000} delay={1000}>
-          <div className={styles.vimeoWrapper}>
-            <VimeoEmbed url={currentReel ?? ''} filmTitle={'Reel'} autoplay background />
-          </div>
-        </FadeIn>
-      </Suspense>
-    </div>
+    <Suspense>
+      <FadeIn duration={1000} delay={1000}>
+        <div className={styles.vimeoWrapper}>
+          <VimeoEmbed url={currentReel ?? ''} filmTitle={'Reel'} autoplay background />
+        </div>
+      </FadeIn>
+    </Suspense>
   )
 }

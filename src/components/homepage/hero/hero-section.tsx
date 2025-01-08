@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import styles from './hero-section.module.css'
 import Reel from '@/components/homepage/hero/reel/reel'
+import SiteTitle from './site-title/site-title'
 
 interface HomeClientProps {
   reel: string
@@ -58,6 +59,7 @@ export default function HomeClient({
 
   return (
     <div ref={containerRef} className={styles.homeClientContainer}>
+      <SiteTitle />
       <div className={styles.reelContainer}>
         <motion.div className={styles.reelContent} style={{ scale: outerScale }}>
           <motion.div className={styles.reelInner} style={{ scale: innerScale }}>

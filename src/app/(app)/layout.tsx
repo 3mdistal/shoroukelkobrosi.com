@@ -3,7 +3,6 @@ import { Nunito, Nunito_Sans } from 'next/font/google'
 import './globals.css'
 import { ViewTransitions } from 'next-view-transitions'
 import Menu from '@/components/layout/menu'
-import SiteTitle from '@/components/homepage/hero/site-title/site-title'
 import Footer from '@/components/layout/footer'
 import { RefreshRouteOnSave } from '@/components/utils/refresh-route-on-save'
 import { baseMetadata } from '@/components/base-metadata'
@@ -35,7 +34,6 @@ export default function RootLayout({
             id="main-content"
             style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
           >
-            <SiteTitle />
             <main style={{ flex: 1 }}>{children}</main>
             <Footer />
             <RefreshRouteOnSave />
