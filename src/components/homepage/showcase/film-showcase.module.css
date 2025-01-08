@@ -4,7 +4,8 @@
   gap: var(--size-6);
   margin-inline: auto;
   padding-block: var(--size-13);
-  max-width: calc(100% - var(--size-8));
+  /* max-width: calc(100% - var(--size-8)); */
+  max-width: 95%;
   min-height: 100px;
 
   @media (max-width: 768px) {

@@ -1,22 +1,18 @@
 .homeClientContainer {
   --initial-outer-scale: 0.6;
-  --initial-inner-scale: 1.2;
+  --initial-inner-scale: 1.4;
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 200vh; /* Create scrollable space */
+  min-height: 175vh;
 }
 
 .reelContainer {
-  display: flex;
   position: sticky;
-  top: 0;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
+  top: 5vh;
+  width: 95%;
+  height: 95vh;
 }
 
 .reelContent {
