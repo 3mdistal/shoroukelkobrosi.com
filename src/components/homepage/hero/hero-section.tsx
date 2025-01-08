@@ -63,7 +63,7 @@ export default function HomeClient({
       <div className={styles.reelContainer}>
         <motion.div className={styles.reelContent} style={{ scale: outerScale }}>
           <motion.div className={styles.reelInner} style={{ scale: innerScale }}>
-            <Reel reel={reel} mobileReel={mobileReel} />
+            <Reel desktopReel={reel} mobileReel={mobileReel} />
           </motion.div>
         </motion.div>
       </div>

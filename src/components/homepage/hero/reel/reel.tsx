@@ -6,16 +6,17 @@ import FadeIn from '@/components/ui/fade-in'
 import VimeoEmbed from '@/components/ui/vimeo-embed'
 
 interface ReelProps {
-  reel: string | null
+  desktopReel: string | null
   mobileReel: string | null
 }
 
-export default function Reel({ reel, mobileReel }: ReelProps): React.ReactElement {
-  const [currentReel, setCurrentReel] = useState(reel)
+export default function Reel({ desktopReel, mobileReel }: ReelProps): React.ReactElement {
+  const [currentVideo, setCurrentVideo] = useState(desktopReel)
 
   useEffect(() => {
     const handleResize = () => {
-      setCurrentReel(window.innerWidth <= 768 ? mobileReel : reel)
+      const isMobile = window.innerWidth <= 768
+      setCurrentVideo(isMobile ? mobileReel : desktopReel)
     }
 
     handleResize()
@@ -23,13 +24,13 @@ export default function Reel({ reel, mobileReel }: ReelProps): React.ReactElemen
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [reel, mobileReel])
+  }, [desktopReel, mobileReel])
 
   return (
     <Suspense>
       <FadeIn duration={1000} delay={1000}>
         <div className={styles.vimeoWrapper}>
-          <VimeoEmbed url={currentReel ?? ''} filmTitle={'Reel'} autoplay background />
+          <VimeoEmbed url={currentVideo ?? ''} filmTitle="Reel" autoplay background />
         </div>
       </FadeIn>
     </Suspense>
