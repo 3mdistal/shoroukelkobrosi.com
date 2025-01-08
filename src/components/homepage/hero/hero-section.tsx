@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import styles from './hero-section.module.css'
 import Reel from '@/components/homepage/hero/reel/reel'
 import SiteTitle from './site-title/site-title'
+import { timelineValues } from './animation-timeline'
 
 interface HomeClientProps {
   reel: string
@@ -68,18 +69,16 @@ export default function HomeClient({ reel, mobileReel }: HomeClientProps) {
 
   return (
     <div ref={containerRef} className={styles.homeClientContainer}>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        <SiteTitle />
-      </motion.div>
+      <SiteTitle />
       <motion.div
         className={styles.reelContainer}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+        transition={{
+          duration: timelineValues.fadeDuration,
+          delay: timelineValues.reelDelay + 0.5,
+          ease: 'easeOut',
+        }}
       >
         <motion.div className={styles.reelContent} style={{ scale: outerScale }}>
           <motion.div className={styles.reelInner} style={{ scale: innerScale }}>

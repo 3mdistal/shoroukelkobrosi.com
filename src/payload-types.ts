@@ -8,278 +8,279 @@
 
 export interface Config {
   auth: {
-    users: UserAuthOperations
-  }
+    users: UserAuthOperations;
+  };
   collections: {
-    users: User
-    media: Media
-    films: Film
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
+    users: User;
+    media: Media;
+    films: Film;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
   db: {
-    defaultIDType: string
-  }
+    defaultIDType: string;
+  };
   globals: {
-    homepage: Homepage
-    'about-page': AboutPage
-    'stills-page': StillsPage
-  }
-  locale: null
+    homepage: Homepage;
+    'about-page': AboutPage;
+    'stills-page': StillsPage;
+  };
+  locale: null;
   user: User & {
-    collection: 'users'
-  }
+    collection: 'users';
+  };
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string
-  role?: ('admin' | 'editor') | null
-  updatedAt: string
-  createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
-  password?: string | null
+  id: string;
+  role?: ('admin' | 'editor') | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string
-  alt: string
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "films".
  */
 export interface Film {
-  id: string
-  title: string
-  slug: string
-  date: string
-  trailer?: string | null
-  director?: string | null
-  producer?: string | null
-  format?: string | null
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  trailer?: string | null;
+  director?: string | null;
+  producer?: string | null;
+  format?: string | null;
   prizes?:
     | {
-        prize?: string | null
-        id?: string | null
+        prize?: string | null;
+        id?: string | null;
       }[]
-    | null
-  imdbLink?: string | null
-  aspectRatio?: ('4:3' | '5:4' | '16:9' | '2.35:1' | '9:16') | null
+    | null;
+  imdbLink?: string | null;
+  aspectRatio?: ('4:3' | '5:4' | '16:9' | '2.35:1' | '9:16') | null;
   stills?:
     | {
-        image: string | Media
-        featured?: boolean | null
-        id?: string | null
+        image: string | Media;
+        featured?: boolean | null;
+        id?: string | null;
       }[]
-    | null
+    | null;
   'og-info': {
-    ogImage: string | Media
-    ogDescription: string
-    id?: string | null
-  }[]
-  updatedAt: string
-  createdAt: string
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string
+  id: string;
   document?:
     | ({
-        relationTo: 'users'
-        value: string | User
+        relationTo: 'users';
+        value: string | User;
       } | null)
     | ({
-        relationTo: 'media'
-        value: string | Media
+        relationTo: 'media';
+        value: string | Media;
       } | null)
     | ({
-        relationTo: 'films'
-        value: string | Film
-      } | null)
-  globalSlug?: string | null
+        relationTo: 'films';
+        value: string | Film;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'users'
-    value: string | User
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'users';
+    value: string | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string
+  id: string;
   user: {
-    relationTo: 'users'
-    value: string | User
-  }
-  key?: string | null
+    relationTo: 'users';
+    value: string | User;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: string;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homepage".
  */
 export interface Homepage {
-  id: string
-  reel?: string | null
-  mobileReel?: string | null
-  featuredFilms?: (string | Film)[] | null
+  id: string;
+  reel?: string | null;
+  mobileReel?: string | null;
+  featuredFilms?: (string | Film)[] | null;
   'og-info': {
-    ogImage: string | Media
-    ogDescription: string
-    id?: string | null
-  }[]
-  updatedAt?: string | null
-  createdAt?: string | null
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-page".
  */
 export interface AboutPage {
-  id: string
-  heading: string
+  id: string;
+  heading: string;
   'personal-intro': {
     root: {
-      type: string
+      type: string;
       children: {
-        type: string
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  'personal-photo': string | Media
-  'personal-intro_html'?: string | null
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  'personal-photo': string | Media;
+  'personal-intro_html'?: string | null;
   'professional-intro': {
     root: {
-      type: string
+      type: string;
       children: {
-        type: string
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  'professional-intro_html'?: string | null
-  'professional-photo': string | Media
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  'professional-intro_html'?: string | null;
+  'professional-photo': string | Media;
   'professional-logos': {
-    logo: string | Media
-    id?: string | null
-  }[]
+    logo: string | Media;
+    id?: string | null;
+  }[];
   'og-info': {
-    ogImage: string | Media
-    ogDescription: string
-    id?: string | null
-  }[]
-  updatedAt?: string | null
-  createdAt?: string | null
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stills-page".
  */
 export interface StillsPage {
-  id: string
+  id: string;
   stills: {
-    still: string | Media
-    location?: string | null
-    date?: string | null
-    id?: string | null
-  }[]
+    still: string | Media;
+    location?: string | null;
+    date?: string | null;
+    id?: string | null;
+  }[];
   'og-info': {
-    ogImage: string | Media
-    ogDescription: string
-    id?: string | null
-  }[]
-  updatedAt?: string | null
-  createdAt?: string | null
+    ogImage: string | Media;
+    ogDescription: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
